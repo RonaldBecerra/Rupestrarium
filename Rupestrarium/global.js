@@ -289,7 +289,7 @@ function initializeImagesDescriptions(){
 
 	descriptions[0][1][2] = {
 		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos y Zoomorfos generan representaciones Antropogeozoomorfas`,
-		kind: `ANTROPOGEOZOOMORFA`,
+		kind: `ANTROpññññooooooooooooooñoooooooooooooooooooooooolOGEOZOOMORFA`,
 	};
 
 	descriptions[0][2][1] = {
@@ -341,14 +341,14 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["english"];
 
 	descriptions[0][0][0] = {
-		description: "Figures that represent the human being, whole body, head, hands and feet prints, image abstraction",
+		description: `Figures that represent the human being, whole body, head, hands and feet prints, image abstraction`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Fopli di Nadro</span><br>Valcamonica<br>Italy, Europe`, // 0
 			`Petroglyph<br> <span style="font-style:italic">Alia, Goddess of<br> Fertility and of Love</span><br>Saudi Arabia<br>Africa`, // 1
 			`Rock Art Painting<br> <span style="font-style:italic">Kakadu National Park</span><br>Australia<br>Oceania`, // 2
 			`Rock Art Painting<br> <span style="font-style:italic">Kakadu National Park</span><br>Australia<br>Oceania` // 3
 		],
-		kind: "ANTHROPOMORPHIC",
+		kind: `ANTHROPOMORPHIC`,
 	};
 
 	descriptions[1][1][1] = {
@@ -482,5 +482,3 @@ const rockPainting2 = [
 	[Root+"cuerpo_antro2.png", Root+"cuerpo_geo2.png", Root+"cuerpo_zoo2.png"],
 	[Root+"inferior_antro2.png", Root+"inferior_geo2.png", Root+"inferior_zoo2.png"],
 ];
-
-Root = "img/art";
