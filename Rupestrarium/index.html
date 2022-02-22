@@ -123,52 +123,10 @@
 			</div>
 
 			<!-- Here is the place of the buttons "Presentation", "Introduction", "Instructions", "Credits" and "Contact", plus the Cave of the hands image-->
-			<div id="leftColumnMenu" class="columnMenu" style="left: 40px;">
+			<div id="leftColumnMenu" class="columnMenu" style="left: 40px;"></div>
 
-				<!-- Presentación -->
-				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black'; loadTextImage(0)"><b id="textButton0" class="text_mb"></b></button>
-
-				<!-- Introducción -->
-				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(1)"><b id="textButton1" class="text_mb"></b></button>
-
-				<!-- Instrucciones -->
-				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(2)"><b id="textButton2" class="text_mb"></b></button>
-
-				<!-- Créditos --> 
-				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(3)"><b id="textButton3" class="text_mb"></b></button>
-
-				<!-- Contacto -->
-				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(4)"><b id="textButton4" class="text_mb"></b></button>
-
-				<img id="image_Y" style="width: 100%; height: 80%" src="img/Cueva_de_las_manos.jpg">
-
-			</div>
-
-			<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the Cave of the hands image-->
-			<div id="rightColumnMenu" class="columnMenu" style="right: 40px;">
-
-				<!-- Petroglifos 1 -->
-				<button class="menuButton gray_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(0);loadFigure(0);getDescription();"><b id="textButton5" class="text_mb"></b></button>
-
-				<!-- Petroglifos 2 -->
-				<button class="menuButton gray_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(1);loadFigure(1);getDescription();"><b id="textButton6" class="text_mb"></b></button>
-
-				<!-- Pinturas rupestres 1 -->
-				<button class="menuButton orange_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(2);loadFigure(2);getDescription();"><b id="textButton7" class="text_mb"></b></button>
-
-				<!-- Pinturas rupestres 2 -->
-				<button class="menuButton orange_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(3);loadFigure(3);getDescription();"><b id="textButton8" class="text_mb"></b></button>
-
-				<!-- Recapitulemos -->
-				<button class="menuButton red_mb" onclick="restoreButtonsColor();this.style.background='black';loadRec()"><b id="textButton9" class="text_mb"></b></button>
-
-				<!-- Espacio docente -->
-				<button class="menuButton red_mb"><b id="textButton10" class="text_mb"></b></button>
-
-				<!-- In this section there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg" -->
-				<div id="def" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 100%; height: 80%"></div>
-
-			</div>
+			<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the description of an art or the South of Morocco image-->
+			<div id="rightColumnMenu" class="columnMenu" style="right: 40px;"></div>
 			
 			<div id="images" >
 				<div id="desc"></div>
@@ -211,8 +169,8 @@
 
 			// Here we put everything that needs to be initialized when the page is loaded
 			window.onload = function(){
-				change_language('spanish');
 				generateColumnMenus();
+				change_language('spanish');
 				loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 			}
 
@@ -235,7 +193,7 @@
 				// --- Right side
 				div = document.getElementById("rightColumnMenu");
 				str = "";
-				while (k < 4){ // Number of buttons with the same structure on the right side
+				while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
 					str += `<button class="menuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreButtonsColor(); this.style.background='black'; rec=0;`;
 					str += `loadDef(`+k.toString()+`); loadFigure(`+k.toString()+`); getDescription();">`;
 					str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
@@ -243,10 +201,10 @@
 					i += 1;
 				}
 				// "Recapitulate" and "For teachers only" buttons
-				str += `<button class="menuButton red_mb" onclick="restoreButtonsColor();this.style.background='black';loadRec()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+				str += `<button class="menuButton red_mb" onclick="restoreButtonsColor(); this.style.background='black'; loadRec()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 				str += `<button class="menuButton red_mb"><b id="textButton`+(i+1).toString()+`" class="text_mb"></b></button>`;
 
-				// Description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
+				// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
 				str += `<div id="def" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 100%; height: 80%"></div>`;
 				div.innerHTML = str;
 			}
