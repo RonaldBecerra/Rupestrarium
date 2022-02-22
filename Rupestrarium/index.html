@@ -9,7 +9,7 @@
 	<body>
 		<div class="whole" style="display: flex; flex-direction: column; justify-content: flex-start;">
 			<!-- Header, with light brown color -->
-			<div style="background: #cc6600; position: fixed; width: 100%; height: 23%; display: flex; flex-direction: column; justify-content: flex-end;"> 
+			<div style="background: #cc6600; position: absolute; width: 100%; height: 23%; display: flex; flex-direction: column; justify-content: flex-end;"> 
 				<!-- NOTA: HAY QUE ARREGLAR LA IMAGEN, QUE NO LOGRO QUE SE VEA COMO ANTES -->
 				<div class="centeredFlex stoneTexture">
 					<div class="centeredFlex" style="width: 25%">
@@ -25,12 +25,17 @@
 			</div>
 
 			<!-- Middle section with red color-->
-			<div style="background: #a03322; position: absolute; width: 100%; height: 100%; top: 23%; display: flex; flex-direction: column; justify-content: flex-start;">
+			<div style="background: #a03322; position: absolute; width: 100%; height: 77%; top: 23%; display: flex; flex-direction: column; justify-content: flex-start;">
 
 				<div id="titulo">Figuras Rupestres</div>
 
 				<!-- Main section -->
-				<div style="position: relative; left: 40px; right: 40px; display: flex; flex-direction: row;">
+				<div style="position: relative; display: flex; flex-direction: row;">
+
+					<div style="position: relative; width: 4%; height: 100%; display: flex; justify-content: center; align-items: flex-end">
+						<div style="transform: rotate(270deg); font-family: 'FontRupes'; font-weight: bold; font-size: 0.75vw; text-align: center; color: white">Cueva de las manos - Argentina</div>
+					</div>
+
 					<!-- Here is the place of the buttons "Presentation", "Introduction", "Instructions", "Credits" and "Contact", plus the Cave of the hands image-->
 					<div id="leftColumnMenu" class="columnMenu"></div>
 
@@ -52,6 +57,8 @@
 
 					<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the description of an art or the South of Morocco image-->
 					<div id="rightColumnMenu" class="columnMenu"></div>
+
+					<div style="position: relative; width: 4%; height: 100%"></div>
 				</div>
 
 				<!-- A TODO LO DE ABAJO ESTO FALTA HACERLE AJUSTES -->
