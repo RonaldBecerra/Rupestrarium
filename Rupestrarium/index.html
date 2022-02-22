@@ -23,11 +23,56 @@
 				left: 0;
 			}	
 
-			.button{
-				background: transparent;
-				width: 20%;
+			/*For the menus that may appear on the left and/or the right of the view*/
+			.columnMenu{
+				position: absolute; 
+				top: 200px; 
+				width: 20%; 
+				bottom: 0px; 
+				display: flex; 
+				flex-direction: column; 
+				justify-content: flex-start; 
+				align-items: center; 
+				background-image: url('img/fondo_intro.jpg');
+			}
+
+			/* ------------ FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
+
+			/*Buttons that display the different main views */
+			.menuButton{
+				background-size: cover;
+				width: 100%;
 				height: 6.5vh;
 				outline: none;
+				font-family: 'FontRupes'; 
+				font-size: 2vw;
+			}
+
+			/*Text of a lateral menu button*/
+			.text_mb{
+				color: white;
+				font-weight: lighter;
+				font-size: smaller;
+			}
+
+			/*Subclass of menuButton*/
+			.darkRed_mb{
+				background-image: url(./img/button/button_darkred.png);
+			}
+
+			/*Subclass of menuButton*/
+			.red_mb{
+				background-image: url(./img/button/button_red.png);
+			}
+
+			/*Subclass of menuButton*/
+			.gray_mb{
+				background-image: url(./img/button/button_gray.png);
+			}
+
+			/*Subclass of menuButton*/
+			.orange_mb{
+				background-image: url(./img/button/button_orange.png);
 			}
 
 			p {
@@ -61,7 +106,6 @@
 		<div class="parent" style="height: 100%;">
 			<img src="img/brown.png" style="position: absolute; width: 100%;height: 200px;">
 			<div id="pinturas-back" style="position:absolute;top:200px;left:20%;width:60%;bottom: 0px;"></div>
-			<div style="position: absolute;top: 200px;left: 40px;width: 20%;bottom: 0px;"><img style="height: 100%;width: 100%;" src="img/fondo_intro.jpg" ></div>
 			<div style="position: absolute;top: 200px;right: 40px;width: 20%;bottom: 0px;"><img style="height: 100%;width: 100%;" src="img/fondo_intro.jpg" ></div>
 			<img src="img/textura de piedra.png" style="position: absolute;left: 0; width: 25%;height: 160px;top: 40px;">
 			<img src="img/textura de piedra.png" style="position: absolute;left: 25%; width: 25%;height: 160px;top: 40px;">
@@ -77,73 +121,73 @@
 			<div style="position: absolute;top: 160px;left: 0px;width: 40px;bottom: 0px;">
 				<img style="height: 100%;width: 100%;" src="img/red.png" >
 			</div>
-			<img src="img/button_gray.png" style="position: absolute; width: 20%;top: 200px;right: 40px;height: 6.5vh;">
-			<img src="img/button_gray.png" style="position: absolute; width: 20%;top: calc(200px + 6.5vh);right: 40px;height: 6.5vh;">
-			<img src="img/button_orange.png" style="position: absolute; width: 20%;top: calc(200px + 13vh);right: 40px;height: 6.5vh;">
-			<img src="img/button_orange.png" style="position: absolute; width: 20%;top: calc(200px + 19.5vh);right: 40px;height: 6.5vh;">
-			<img src="img/button_red.png" style="position: absolute; width: 20%;top: calc(200px + 26vh);right: 40px;height: 6.5vh;">
-			<img src="img/button_darkred.png" style="position: absolute; width: 20%;top: 200px;left: 40px;height: 6.5vh;">
-			<img src="img/button_darkred.png" style="position: absolute; width: 20%;top: calc(200px + 6.5vh);left: 40px;height: 6.5vh;">
-			<img src="img/button_darkred.png" style="position: absolute; width: 20%;top: calc(200px + 13vh);left: 40px;height: 6.5vh;">
-			<img src="img/button_darkred.png" style="position: absolute; width: 20%;top: calc(200px + 19.5vh);left: 40px;height: 6.5vh;">
-			<img src="img/button_darkred.png" style="position: absolute; width: 20%;top: calc(200px + 26vh);left: 40px;height: 6.5vh;">
 
-			<!-- Presentación -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: 200px;left: 40px;" onclick="borrar();this.style.background='black'; loadTextImage(0)"><b id="textButton0" style="color: white;font-weight: lighter;font-family: FontRupes;font-size: smaller;"></b></button>
+			<!-- Here is the place of the buttons "Presentation", "Introduction", "Instructions", "Credits" and "Contact", plus the Cave of the hands image-->
+			<div id="leftColumnMenu" class="columnMenu" style="left: 40px;">
 
-			<!-- Introducción -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 6.5vh);left: 40px;" onclick="borrar();this.style.background='black';loadTextImage(1)"><b id="textButton1" style="color: white;font-weight: lighter;font-size: smaller;"></b></button>
+				<!-- Presentación -->
+				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black'; loadTextImage(0)"><b id="textButton0" class="text_mb"></b></button>
 
-			<!-- Instrucciones -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 13vh);left: 40px" onclick="borrar();this.style.background='black';loadTextImage(2)"><b id="textButton2" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+				<!-- Introducción -->
+				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(1)"><b id="textButton1" class="text_mb"></b></button>
 
-			<!-- Créditos --> 
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 19.5vh);left: 40px;" onclick="borrar();this.style.background='black';loadTextImage(3)"><b id="textButton3" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+				<!-- Instrucciones -->
+				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(2)"><b id="textButton2" class="text_mb"></b></button>
 
-			<!-- Contacto -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 26vh);left: 40px;" onclick="borrar();this.style.background='black';loadTextImage(4)"><b id="textButton4" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+				<!-- Créditos --> 
+				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(3)"><b id="textButton3" class="text_mb"></b></button>
 
-			<!-- Petroglifos 1 -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: 200px;right: 40px;" onclick="borrar();this.style.background='black';rec=0;loadDef(0);loadFigure(0);getDescription();"><b id="textButton5" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+				<!-- Contacto -->
+				<button class="menuButton darkRed_mb" onclick="restoreButtonsColor();this.style.background='black';loadTextImage(4)"><b id="textButton4" class="text_mb"></b></button>
 
-			<!-- Petroglifos 2 -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 6.5vh);right: 40px;" onclick="borrar();this.style.background='black';rec=0;loadDef(1);loadFigure(1);getDescription();"><b id="textButton6" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+				<img id="image_Y" style="width: 100%; height: 80%" src="img/Cueva_de_las_manos.jpg">
 
-			<!-- Pinturas rupestres 1 -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 13vh);right: 40px;" onclick="borrar();this.style.background='black';rec=0;loadDef(2);loadFigure(2);getDescription();"><b id="textButton7" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+			</div>
 
-			<!-- Pinturas rupestres 2 -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 19.5vh);right: 40px;" onclick="borrar();this.style.background='black';rec=0;loadDef(3);loadFigure(3);getDescription();"><b id="textButton8" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+			<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the Cave of the hands image-->
+			<div id="rightColumnMenu" class="columnMenu" style="right: 40px;">
 
-			<!-- Recapitulemos -->
-			<button class="button" style="position: absolute;font-family: 'FontRupes';font-size: 2vw; top: calc(200px + 26vh);right: 40px;" onclick="borrar();this.style.background='black';loadRec()"><b id="textButton9" style="color: white;font-weight: lighter;font-size: smaller"></b></button>
+				<!-- Petroglifos 1 -->
+				<button class="menuButton gray_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(0);loadFigure(0);getDescription();"><b id="textButton5" class="text_mb"></b></button>
+
+				<!-- Petroglifos 2 -->
+				<button class="menuButton gray_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(1);loadFigure(1);getDescription();"><b id="textButton6" class="text_mb"></b></button>
+
+				<!-- Pinturas rupestres 1 -->
+				<button class="menuButton orange_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(2);loadFigure(2);getDescription();"><b id="textButton7" class="text_mb"></b></button>
+
+				<!-- Pinturas rupestres 2 -->
+				<button class="menuButton orange_mb" onclick="restoreButtonsColor();this.style.background='black';rec=0;loadDef(3);loadFigure(3);getDescription();"><b id="textButton8" class="text_mb"></b></button>
+
+				<!-- Recapitulemos -->
+				<button class="menuButton red_mb" onclick="restoreButtonsColor();this.style.background='black';loadRec()"><b id="textButton9" class="text_mb"></b></button>
+
+				<!-- Espacio docente -->
+				<button class="menuButton red_mb"><b id="textButton10" class="text_mb"></b></button>
+
+				<!-- In this section there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg" -->
+				<div id="def" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 100%; height: 80%"></div>
+
+			</div>
 			
 			<div id="images" >
 				<div id="desc"></div>
 				<div id="hands"></div>
-				<div id="head" ></div>
-				<div id="body" ></div>
-				<div id="bot" ></div>
+				<div id="head"></div>
+				<div id="body"></div>
+				<div id="bot"></div>
 				<div id="rotulos" style="position: absolute;bottom: 12vh;right:calc(50px + 20%);width:200px;"></div>
-				<div id="def" >
-					<div style="position: absolute; left: 77.5%;top: 60.2vh; width: 27%;bottom: 7vh;">
-						<img id="image_Z" style="height: 93%;width: 74%;" src="img/Sur_de_marruecos.jpg">
-					</div>
-				</div>
+
 				<div id="img">
 					<div style="position: absolute; right: 36.5%;top: 200px; width: 27%;bottom: 7vh;">
 						<img id="image_X" style="height: 100%;width: 100%;" src="img/IMAGEN.png">
-					</div>
-				</div>
-				<div id="img">
-					<div style="position: absolute; right: 74.6%; top: 64.5vh; width: 18.9%;bottom: 7vh;">
-						<img id="image_Y" style="height: auto;width: 74.2%;" src="img/Cueva_de_las_manos.jpg">
 					</div>
 				</div>
 				<div id="tiulo"style="position: absolute;top: 25%;left: 50%;transform: translate(-50%, -50%);font-family: 'FontRupes';font-weight: light;font-size: 2vw;text-align: center;color: white;">Figuras Rupestres</div>
 				<div id="tiulo"style="position: absolute;top: 90.2%;left: 8%;;font-family: 'FontRupes';font-weight: bold;font-size: 0.75vw;text-align: center;">Cueva de las manos - Argentina</div>
 			</div>
 
+			<!-- ESTO CAMBIARLO POR UN DIV CON BACKGROUND BLACK, Y BORRAR LA IMAGEN black.png -->
 			<img src="img/black.png" style="position: absolute;bottom: 0px; width: 100%; height: 7vh;">
 			<img src="img/footer_nuevo_ed.png" style="position: absolute;bottom: 0px; width: 26%;left: 37%; height: 7vh;">
 			<a target="_blank" href="https://www.facebook.com/anarvenezuela/"><img onmouseover="this.style.height = '5.6vh'" onmouseout="this.style.height = '5.3vh'" src="img/icono-facebook.png" style="position: absolute;bottom: 3px;left: 61%; height: 5.3vh;"></a>
@@ -161,13 +205,50 @@
 
 		<script>
 
+			function getRandomInt(min, max){
+				return Math.floor(Math.random(min, max) * (max - min)) + min;
+			}
+
 			// Here we put everything that needs to be initialized when the page is loaded
 			window.onload = function(){
 				change_language('spanish');
+				generateColumnMenus();
+				loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 			}
 
-			function getRandomInt(min, max){
-				return Math.floor(Math.random(min, max) * (max - min)) + min;
+			// Poblate the "leftColumnMenu" and "rightColumnMenu" divs
+			function generateColumnMenus(){
+				let str, div, i, j;
+				i = k = 0;
+
+				// --- Left side
+				div = document.getElementById("leftColumnMenu");
+				str = "";
+				while(i < 5){ // Number of buttons on the left side
+					str += `<button class="menuButton darkRed_mb" onclick="restoreButtonsColor(); this.style.background='black'; loadTextImage(`+i.toString()+`)">`;
+					str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+					i += 1;
+				}
+				str += `<img id="image_Y" style="width: 100%; height: 80%" src="img/Cueva_de_las_manos.jpg">`;
+				div.innerHTML = str;
+
+				// --- Right side
+				div = document.getElementById("rightColumnMenu");
+				str = "";
+				while (k < 4){ // Number of buttons with the same structure on the right side
+					str += `<button class="menuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreButtonsColor(); this.style.background='black'; rec=0;`;
+					str += `loadDef(`+k.toString()+`); loadFigure(`+k.toString()+`); getDescription();">`;
+					str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+					k += 1;
+					i += 1;
+				}
+				// "Recapitulate" and "For teachers only" buttons
+				str += `<button class="menuButton red_mb" onclick="restoreButtonsColor();this.style.background='black';loadRec()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+				str += `<button class="menuButton red_mb"><b id="textButton`+(i+1).toString()+`" class="text_mb"></b></button>`;
+
+				// Description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
+				str += `<div id="def" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 100%; height: 80%"></div>`;
+				div.innerHTML = str;
 			}
 
 			function change_language(newLanguage){
@@ -204,32 +285,42 @@
 				}
 			}
 
-			function borrar(){
+			// Since menu buttons turn black when selected, when we choose another we must first restore the color of the previous one.
+			// We are currently not controlling which one was selected, so we have to iterate over them all
+			function restoreButtonsColor(){
 				var elems = document.getElementsByTagName('button');
 				for (var i = 0; i < elems.length; i++) {
-					elems[i].style.background = 'transparent';
+					elems[i].style.removeProperty('background'); // This property is which could have the black color
 				}
 			}
 
-			// Load definitions of Petroglyphs and Rock Paintings
-			function loadDef(num){
-				type = num;
+			// Load definitions of Petroglyphs and Rock Paintings or to restore the "Sur_de_marruecos.jpg" image
+			function loadDef(num=null){
 				var div = document.getElementById("def");
 
-				const fontSize = '1.80';
+				// Case when we must put the "Sur_de_marruecos.jpg" image in its position
+				if (num == null){
+					div.innerHTML = `<img id="image_Z" style="height: 100%; width: 100%;" src="img/Sur_de_marruecos.jpg">`;
+				}
 
-				let str = `<p style="font-family: 'FontTexto';font-size:` + fontSize;
-				str += `vmin;line-height:1;position: absolute;top:calc(200px + 32vh);right: 42px;width: 19%;height:calc(100vh - 200px - 39.5vh) "><b>`;
-				str += definitions_texts[language][num];
-				str += `</b></p>`;
+				// Case when we must load the definition of a Petroglyph or Rock painting
+				else{
+					type = num;
+					const fontSize = '1.80';
 
-				div.innerHTML = str;
+					let str = `<p style="font-family: 'FontTexto';font-size:` + fontSize;
+					str += `vmin;line-height:1;position: absolute;top:calc(200px + 32vh);right: 42px;width: 19%;height:calc(100vh - 200px - 39.5vh) "><b>`;
+					str += definitions_texts[language][num];
+					str += `</b></p>`;
+
+					div.innerHTML = str;
+				}
 			}
 
 			function loadInfoDocente(){
 				espdoc = 1;
 				figures = -1;
-				resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "def", "pinturas-back", "rec"]);
+				resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "pinturas-back", "rec"]);
 				nextInfo();
 			}
 
@@ -274,7 +365,8 @@
 				pregunta = 0;
 				figures = -1;
 				rec = 1;
-				resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "def", "rotulos", "espdoc", "pinturas-back"]);
+				loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
+				resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "espdoc", "pinturas-back"]);
 				nextPreg();
 			}
 
@@ -370,7 +462,8 @@
 			function loadTextImage(num){
 				figures = -1;
 				rec = 0;
-				resetInnerHTML(["hands", "head", "body", "bot", "rec", "desc", "def", "rotulos", "espdoc", "pinturas-back"]);
+				loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
+				resetInnerHTML(["hands", "head", "body", "bot", "rec", "desc", "rotulos", "espdoc", "pinturas-back"]);
 				
 				let im = imagesThatVaryWithLanguage[language];
 				const imagesSources = [im.presentacion_nuevo, im.intro_nuevo, im.instruc_nuevo, im.creditos_nuevo, im.contacto_nuevo];
