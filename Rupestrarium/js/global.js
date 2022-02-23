@@ -33,7 +33,7 @@ const buttons_texts = {
 		"Pinturas Rupestres 1", // 7
 		"Pinturas Rupestres 2", // 8
 		"Recapitulemos", // 9
-		//"Espacio Docente", // 10
+		"Espacio Docente", // 10
 	],
 	english: [
 		"Presentation", // 0
@@ -46,7 +46,7 @@ const buttons_texts = {
 		"Rock Paintings 1", // 7
 		"Rock Paintings 2", // 8
 		"Recapitulate", // 9
-		//"For Teachers only", // 10
+		"For Teachers only", // 10
 	]
 };
 
@@ -289,7 +289,7 @@ function initializeImagesDescriptions(){
 
 	descriptions[0][1][2] = {
 		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos y Zoomorfos generan representaciones Antropogeozoomorfas`,
-		kind: `ANTROpññññooooooooooooooñoooooooooooooooooooooooolOGEOZOOMORFA`,
+		kind: `ANTROPOGEOZOOMORFA`,
 	};
 
 	descriptions[0][2][1] = {
@@ -435,7 +435,7 @@ function initializeImagesDescriptions(){
 }
 initializeImagesDescriptions();
 
-// ##################################  IMAGES ##############################
+// -----------------------------  IMAGES --------------------------------
 const imagesThatVaryWithLanguage = {
 	spanish: {
 		end: "img/text/fin.png",
