@@ -142,7 +142,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "Realizar diversas figuras mezclando partes aleatoriamente, e identificarlas escribiendo el nombre de la figura realizada",
+			question: "Realiza diversas figuras mezclando partes aleatoriamente,<br>e identifícalas escribiendo el nombre de la figura realizada",
 			options: [],
 		},
 	],
@@ -245,7 +245,7 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["spanish"];
 
 	descriptions[0][0][0] = {
-		description: "Figuras que representan al ser humano, de cuerpo entero, la cabeza, con huellas de manos y pies,como abstracción de la imagen",
+		description: "Figuras que representan al ser humano, de cuerpo entero,<br> la cabeza, con huellas de manos y pies,<br>como abstracción de la imagen",
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Flopi di Nadro</span><br>Valcamónica<br>Italia, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Alia, Diosa de la<br> fertilidad y del amor</span><br>Arabia Saudita<br>África`, // 1
@@ -256,7 +256,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][1][1] = {
-		description: `Representaciones con elementos gráficos como puntos, líneas, círculos, o imágenes abstractas, compuestas con los mismos elementos`,
+		description: `Representaciones con elementos gráficos como puntos,<br>líneas, círculos, o imágenes abstractas, compuestas<br>con los mismos elementos`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>España, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">El Bolsillo</span><br>Río Guasanare,<br> estado Zulia<br>Venezuela, Sudamérica`, // 1
@@ -267,11 +267,11 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][2][2] = {
-		description: `Figuras de animales o con sus rasgos, recreando la naturaleza con un fin específico`,
+		description: `Figuras de animales o con sus rasgos, recreando la naturaleza<br>con un fin específico`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Toro Muerto</span><br>Arequipa<br>Perú, Sudamérica`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Las Girafas</span><br>Tadrat Acacus<br>Argelia, África`, // 1
-			`Pintura Rupestre<br> <span style="font-style:italic">Parque Nacional Cerro <br>de Capivara</span><br>Piaiui<br>Brasil, Sudamérica`, // 2
+			`Pintura Rupestre<br> <span style="font-style:italic">Parque Nacional<br>Cerro de Capivara</span><br>Piaiui<br>Brasil, Sudamérica`, // 2
 			`Pintura Rupestre<br> <span style="font-style:italic">Cerro Azul</span><br>Guaviare<br>Colombia, Sudamérica`, // 3
 		],
 		kind: `ZOOMORFA`,
@@ -289,7 +289,7 @@ function initializeImagesDescriptions(){
 
 	descriptions[0][1][2] = {
 		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos y Zoomorfos generan representaciones Antropogeozoomorfas`,
-		kind: `ANTROpññññooooooooooooooñoooooooooooooooooooooooolOGEOZOOMORFA`,
+		kind: `ANTROPOGEOZOOMORFA`,
 	};
 
 	descriptions[0][2][1] = {
@@ -308,17 +308,17 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][0][2] = {
-		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos Y Zoomorfos generan representaciones Geozooantropomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos y Zoomorfos generan representaciones<br>Geoantropozoomorfa`,
 		kind: `GEOANTROPOZOOMORFA`,
 	};
 
 	descriptions[1][2][0] = {
-		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos y Antropomorfos generan representaciones Geozooantropomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos<br>y Antropomorfos, generan representaciones<br>Geozooantropomorfas`,
 		kind: `GEOZOOANTROPOMORFA`,
 	};
 
 	descriptions[2][2][0] = descriptions[2][0][2] = descriptions[0][2][2] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos generan representaciones Zooantropomorfas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos<br>generan representaciones Zooantropomorfas`,
 		kind: `ZOOANTROPOMORFA`,
 	};
 
