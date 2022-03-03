@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: 62.5%;
+}	
+ 
+
+header {
+    background-color: #cc6600;
+    width: 100%; 
+    height: 22vh; 
+    display: flex; 
+    align-items: flex-end;
+}
+header .stone-texture {
+    width: 100%;
+    height: 122px;
+    background-color: #cfc8c2;
+    background-image: url("./img/textura-de-piedra.png");
+    background-size: calc(100% / 4) auto;
+    background-repeat: space;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
+.stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
+.stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
+.stone-texture div {display: flex; justify-content: center; align-items: center;}
+
+
+main {
+    background: #a03322;
+    width: 100%;
+    height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* align-items: flex-end; */
+}
+main > h1 {
+    /* align-self: flex-start; */
+    font-family: 'FontRupes'; 
+	font-weight: lighter; 
+	font-size: 1.7vw; 
+	/* text-align: center;  */
+	color: white;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+main .main-container {
+    background-color: #cc6600;
+    width: 1270px;
+    height: 90%;
+    margin-top: auto;
+    /* align-self: flex-end; */
+}
+
+
+footer {
+    background-color: black;
+}
+
+/* header img {
+    display: block; 
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} */
+
+
+
+/* 
+body {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url(./img/fondo_petro.png);
+}
+
+.parent {
+    position: relative;
+    top: 0;
+    left: 0;
+}	
+
+.button{
+    background: transparent;
+    width: 20%;
+    height: 6.5vh;
+    outline: none;
+}
+
+p {
+    font-family: "bauhaus";
+    font-size: 1.5vw;
+}
+
+/* input[type=radio] {
+    width: 1.5em;
+    height: 1.5em;
+} */
+
+@font-face {
+    font-family:FontRupes;
+    src: url(./ttf/BAHAMASN.ttf);
+}
+
+@font-face {
+    font-family: FontTexto;
+    src: url(./ttf/Florsn01.ttf);
+}
+
+@font-face {
+    font-family: FontSub;
+    src: url(./ttf/BAHAMASB.ttf);
+} 

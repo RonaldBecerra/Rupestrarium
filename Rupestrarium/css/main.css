@@ -54,9 +54,9 @@ main {
 
 /* For the header section that has the RUPESTRARIUM title */
 .stoneTexture{
-	background-image: url('../img/textura de piedra.png'); 
-	background-repeat: repeat; 
-	height: 75%; 
+	background-image: url('../img/textura-de-piedra.png'); 
+	background-size: calc(100% / 4) 75%;
+    background-repeat: space;
 	flex-direction: row;
 }
 
