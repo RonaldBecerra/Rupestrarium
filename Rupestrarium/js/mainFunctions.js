@@ -12,9 +12,10 @@ window.onload = function(){
 	generateColumnMenus();
 	change_language('spanish');
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
+	loadCentralImage(5); // Put the initial central image in its place
 }
 
-// Poblate the "leftColumnMenu" and "rightColumnMenu" divs
+// To poblate the "leftColumnMenu" and "rightColumnMenu" divs
 function generateColumnMenus(){
 	let str, div, i, j;
 	i = k = 0;
@@ -23,7 +24,7 @@ function generateColumnMenus(){
 	div = document.getElementById("leftColumnMenu");
 	str = "";
 	while(i < 5){ // Number of buttons on the left side
-		str += `<button class="menuButton darkRed_mb" onclick="restoreButtonsColor(); this.style.background='black'; loadTextImage(`+i.toString()+`)">`;
+		str += `<button class="menuButton darkRed_mb" onclick="restoreButtonsColor(); this.style.background='black'; loadCentralImage(`+i.toString()+`)">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		i += 1;
 	}
@@ -254,19 +255,21 @@ function submitForm(){
 	window.location.href = str;
 }
 
-// Loads an image that has text, so it cannot be automatically translated when the language is changed.
-// Another image should be loaded in that case (NOT IMPLEMENTED YET)
-function loadTextImage(num){
+/* Loads an image that will be shown in the center.
+   Normally that image has text, so it cannot be automatically translated when the language is changed.
+   Another image should be loaded in that case (NOT IMPLEMENTED YET)
+*/
+function loadCentralImage(num){
 	figures = -1;
 	rec = 0;
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetInnerHTML(["hands", "head", "body", "bot", "rec", "desc", "rotulos", "espdoc", "pinturas-back"]);
 	
 	let im = imagesThatVaryWithLanguage[language];
-	const imagesSources = [im.presentacion_nuevo, im.intro_nuevo, im.instruc_nuevo, im.creditos_nuevo, im.contacto_nuevo];
+	const imagesSources = [im.presentacion_nuevo, im.intro_nuevo, im.instruc_nuevo, im.creditos_nuevo, im.contacto_nuevo, "img/imagen_inicial.png"];
 
 	document.getElementById("img").innerHTML = 
-		'<div style="position: absolute;top: 200px;right:36.5%;width: 27%;bottom: 7vh;"><img style="height: 100%;width: 100%;" src='+imagesSources[num]+'></div>';
+		'<img class="whole" style="position: relative" src='+imagesSources[num]+'>';
 }
 
 // Get description of the current image according to which combination the user has stablished
