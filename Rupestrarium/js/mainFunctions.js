@@ -117,7 +117,7 @@ function loadDef(num=null){
 		type = num;
 		const fontSize = '1.75';
 
-		let str = `<p style="width: 95%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`
+		let str = `<p style="width: 95%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`;
 		str += definitions_texts[language][num];
 		str += `</b></p>`;
 
@@ -140,7 +140,7 @@ function nextInfo(){
 	}
 }
 
-function nextInfoEs(){
+/*function nextInfoEs(){
 	document.getElementById("espdoc").innerHTML =
 		`<img style="position:absolute; top:220px;width:35vw;left:30vw;height:25vw;" src="img/cuadro.png">
 		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:12vh; right: 25vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
@@ -166,7 +166,7 @@ function nextInfoEn(){
 				<label>Email</label><input type ="email" name="CorreoMaestra" placeholder = "Enter your email"> 
 			</p>
 		</form>`
-}
+}*/
 
 // Recapitulate
 function loadRec(){
@@ -293,9 +293,12 @@ function getDescription(){
 			`<p style="font-family:'FontTexto';color:` + color + `; text-align:left;font-size:1.75vh;"><b>` + object.rotulos[type] + `</b></p>`;
 	}
 	document.getElementById("desc").innerHTML = 
-		`<p style='position:absolute;top:208px;left:0;right:0;margin: auto;text-align: center;font-family: "FontTexto";font-size: 2.5vh;text-align: center;font-weight:600;width:35em;color:` + color +`;'>`+ object.description + `</p>`
+		`<p style='position:absolute; top:208px; left:0; right:0; margin:auto; text-align:center; 
+					font-family:"FontTexto"; font-size: 2.5vh; font-weight:600; width:35em; color:` + color +`;'>`+ 
+					object.description + 
+		`</p>`
 
-		+ `<p style='position:absolute;bottom:7.75vh;left:0;right:0;margin: auto;text-align: center; font-family: "FontSub";font-size: 3vh;font-weight:600;width:30em;color:` + color +`;'>` + object.kind + `</p>`;
+		+ `<p style='position:absolute; bottom:7.75vh; left:0; right:0; margin:auto; text-align: center; font-family: "FontSub"; font-size: 3vh; font-weight:600; width:30em; color:` + color +`;'>` + object.kind + `</p>`;
 }
 
 // Load the corresponding figure, divided into three sections 
