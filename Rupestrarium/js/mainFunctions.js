@@ -12,7 +12,8 @@ window.onload = function(){
 	generateColumnMenus();
 	change_language('spanish');
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	loadCentralImage(5); // Put the initial central image in its place
+	resetInnerHTML(["main-background"]); // Put the background image of the central section
+	loadCentralImage(5); // Put the initial central image in its place (it is not the same as the background)
 }
 
 // To poblate the "leftColumnMenu" and "rightColumnMenu" divs
@@ -46,7 +47,7 @@ function generateColumnMenus(){
 	str += `<button class="menuButton red_mb"><b id="textButton`+(i+1).toString()+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
-	str += `<div id="def" style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%; height: 80%"></div>`;
+	str += `<div id="def" class="centeredFlex" style="flex-direction: row; width: 100%; height: 80%"></div>`;
 	div.innerHTML = str;
 }
 
@@ -80,7 +81,16 @@ function change_language(newLanguage){
 // Make empty the inner of a HTML object
 function resetInnerHTML(array){
 	for (i=0; i < array.length; i++){
-		document.getElementById(array[i]).innerHTML = "";
+		let str = array[i];
+		let elem = document.getElementById(array[i]);
+
+		// Reset the default background image of the central section
+		if (str === "main-background"){
+			elem.style.backgroundImage = "url('img/fondo_petro.png')";
+		}
+		else {
+			elem.innerHTML = "";
+		}
 	}
 }
 
@@ -99,15 +109,15 @@ function loadDef(num=null){
 
 	// Case when we must put the "Sur_de_marruecos.jpg" image in its position
 	if (num == null){
-		div.innerHTML = `<img id="image_Z" style="height: 100%; width: 100%;" src="img/Sur_de_marruecos.jpg">`;
+		div.innerHTML = `<img class="whole" src="img/Sur_de_marruecos.jpg">`;
 	}
 
 	// Case when we must load the definition of a Petroglyph or Rock painting
 	else{
 		type = num;
-		const fontSize = '1.70';
+		const fontSize = '1.75';
 
-		let str = `<p style="width: 95%; height: 80%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`
+		let str = `<p style="width: 95%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`
 		str += definitions_texts[language][num];
 		str += `</b></p>`;
 
@@ -118,7 +128,7 @@ function loadDef(num=null){
 function loadInfoDocente(){
 	espdoc = 1;
 	figures = -1;
-	resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "pinturas-back", "rec"]);
+	resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "main-background", "rec"]);
 	nextInfo();
 }
 
@@ -164,7 +174,7 @@ function loadRec(){
 	figures = -1;
 	rec = 1;
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "espdoc", "pinturas-back"]);
+	resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "espdoc", "main-background"]);
 	nextPreg();
 }
 
@@ -263,7 +273,7 @@ function loadCentralImage(num){
 	figures = -1;
 	rec = 0;
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetInnerHTML(["hands", "head", "body", "bot", "rec", "desc", "rotulos", "espdoc", "pinturas-back"]);
+	resetInnerHTML(["hands", "head", "body", "bot", "rec", "desc", "rotulos", "espdoc", "main-background"]);
 	
 	let im = imagesThatVaryWithLanguage[language];
 	const imagesSources = [im.presentacion_nuevo, im.intro_nuevo, im.instruc_nuevo, im.creditos_nuevo, im.contacto_nuevo, "img/imagen_inicial.png"];
@@ -295,22 +305,22 @@ function loadFigure(num){
 		case 0:
 			figures = 0;
 			currentFigure = petroglyph1;
-			resetInnerHTML(["pinturas-back"]);
+			resetInnerHTML(["main-background"]);
 			break;
 		case 1:
 			figures = 0;
 			currentFigure = petroglyph2;
-			resetInnerHTML(["pinturas-back"]);
+			resetInnerHTML(["main-background"]);
 			break;
 		case 2:
 			figures = 1;
 			currentFigure = rockPainting1;
-			document.getElementById("pinturas-back").innerHTML = "<img src = 'img/art/fondo_pintura.png' style = 'width:100%;height:100%;'>"
+			document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
 			break;
 		case 3:
 			figures = 1;
 			currentFigure = rockPainting2;
-			document.getElementById("pinturas-back").innerHTML = "<img src = 'img/art/fondo_pintura.png' style = 'width:100%;height:100%;'>"
+			document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
 			break;
 		default:
 			break;
