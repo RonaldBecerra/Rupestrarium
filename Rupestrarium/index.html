@@ -1,98 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 	<head>
-		<meta http-equiv="Content-Type" charset="utf-8">
-		<title>Rupestrarium</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8"><title>Rupestrarium</title>
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 
 	<body>
-		<div class="whole" style="display: flex; flex-direction: column; justify-content: flex-start;">
-			<!-- Header, with light brown color -->
-			<div style="background: #cc6600; position: absolute; width: 100%; height: 23%; display: flex; flex-direction: column; justify-content: flex-end;"> 
-				<!-- NOTA: HAY QUE ARREGLAR LA IMAGEN, QUE NO LOGRO QUE SE VEA COMO ANTES -->
-				<div class="centeredFlex stoneTexture">
-					<div class="centeredFlex" style="width: 25%">
-						<img src="img/logo FUNDABITAT.png" style="width: 28%; height: auto">
-					</div>
-					<div class="centeredFlex" style="width: 50%">
-						<img src="img/titulo RUPESTRARIUM.png" style="width: 80%;">
-					</div>
-					<div class="centeredFlex" style="width: 25%">
-						<img src="img/logo ANAR.png" style="width: 48%">
-					</div>
+		<!-- Header, with light brown color -->
+		<header>
+			<!-- Logo container, with stone texture background  -->
+			<div class="stone-texture">
+				<div class="div1">
+					<img src="./img/logo-FUNDABITAT.png" style="width: 28%; height: auto; margin: 0 auto">
+				</div>
+				<div class="div2">
+					<img src="img/titulo RUPESTRARIUM.png" style="width: 80%;">
+				</div>
+				<div class="div3">
+					<img src="img/logo ANAR.png" style="width: 48%">
 				</div>
 			</div>
+		</header>
 
-			<!-- Middle section with red color-->
-			<div style="background: #a03322; position: absolute; width: 100%; height: 77%; top: 23%; display: flex; flex-direction: column; justify-content: flex-start;">
+		<!-- Middle section with red color-->
+		<main>
+			<div class="centeredFlex" style="height: 8%">
+				<div id="title">Figuras Rupestres</div>
+			</div>
 
-				<div id="titulo">Figuras Rupestres</div>
+			<!-- Central section that has contents displayed horizontally-->
+			<div class="main-container" style="height: 92%">
 
-				<!-- Main section -->
-				<div style="position: relative; display: flex; flex-direction: row;">
-
-					<div style="position: relative; width: 4%; height: 100%; display: flex; justify-content: center; align-items: flex-end">
-						<div style="transform: rotate(270deg); font-family: 'FontRupes'; font-weight: bold; font-size: 0.75vw; text-align: center; color: white">Cueva de las manos - Argentina</div>
-					</div>
-
-					<!-- Here is the place of the buttons "Presentation", "Introduction", "Instructions", "Credits" and "Contact", plus the Cave of the hands image-->
-					<div id="leftColumnMenu" class="columnMenu"></div>
-					<div class="whole" style="position: relative; background-image: url('img/fondo_petro.png');">
-						<!-- A TODO ESTO INTERNO FALTA HACERLE AJUSTES -->
-						<div id="desc"></div>
-						<div id="hands"></div>
-						<div id="head"></div>
-						<div id="body"></div>
-						<div id="bot"></div>
-						<div id="rotulos" style="position: absolute; bottom: 12vh; right:calc(50px + 20%); width:200px;"></div>
-
-						<div id="img">
-							<div style="position: absolute; right: 36.5%;top: 200px; width: 27%;bottom: 7vh;">
-								<img id="image_X" style="height: 100%;width: 100%;" src="img/IMAGEN.png">
-							</div>
-						</div>
-					</div>
-
-					<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the description of an art or the South of Morocco image-->
-					<div id="rightColumnMenu" class="columnMenu"></div>
-
-					<div style="position: relative; width: 4%; height: 100%"></div>
+				<div class="border">
+					<div id="main-left-label" class="vertical-text-bottom-to-top">Cueva de las manos - Argentina</div>
 				</div>
 
-				<!-- A TODO LO DE ABAJO ESTO FALTA HACERLE AJUSTES -->
+				<!-- Here is the place of the buttons "Presentation", "Introduction", "Instructions", "Credits" and "Contact", plus the Cave of the hands image-->
+				<div id="leftColumnMenu" class="columnMenu"></div>
 
 				<!-- This is the section that is on the center of the view, which is the place of the images and quiz questions -->
-				<div id="pinturas-back" style="position:absolute; top:200px; left:20%; width:60%; bottom: 0px;"></div>
-				<div id="tiulo"style="position: absolute;top: 90.2%;left: 8%;;font-family: 'FontRupes';font-weight: bold;font-size: 0.75vw;text-align: center;">Cueva de las manos - Argentina</div>
+				<div id="main-background" class="whole centeredFlex" style="position: relative">
+					
+					<!-- These are views that will be poblated later according to the user's navigation -->
+					<div id="img"></div>
+					<div id="desc"></div>
+					<div id="hands"></div>
+					<div id="head"></div>
+					<div id="body"></div>
+					<div id="bot"></div>
+					<div id="rotulos" style="position: absolute; bottom: 12vh; right:calc(50px + 20%); width:200px;"></div>
+
+					<!-- Esto antes estaba fuera, incluso del main container -->
+					<div id="rec" ></div>
+					<div id="espdoc"></div>
 				</div>
 
-				<div id="rec" ></div>
-				<div id="espdoc"></div>
+				<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the description of an art or the South of Morocco image-->
+				<div id="rightColumnMenu" class="columnMenu"></div>
 
+				<div class="border">
+					<div id="main-right-label" class="vertical-text-bottom-to-top">Sur de Marruecos - África</div>
+				</div>
 
 			</div>
-		</div>
+
+		</main>
 
 		<footer>
 			<div class="centeredFlex" style="flex-direction: row;">
-				<div class="centeredFlex">
+				<div>
 					<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height: 60%;">
 				</div>
 
-				<div class="centeredFlex" style="padding-left: 1%;">
+				<div style="padding-left: 1%;">
 					<img src="img/footer/uk.png" onclick="change_language('english');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height: 60%;">
 				</div>
 
 				<img src="img/footer/footer_nuevo_ed.png" style="width: 26%; height: 100%;">
 
-				<a class="centeredFlex" target="_blank" href="https://www.facebook.com/anarvenezuela/">
+				<a target="_blank" href="https://www.facebook.com/anarvenezuela/">
 					<img src="img/footer/icono-facebook.png" onmouseover="this.style.height='80%'" onmouseout="this.style.height='70%'" style="height: 70%;">
 				</a>
-				<a class="centeredFlex" style="padding-left: 1%;" target="_blank" href="mailto:anarvenezuela@gmail.com">
+				<a style="padding-left: 1%;" target="_blank" href="mailto:anarvenezuela@gmail.com">
 					<img src="img/footer/icono-e-mail.png" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height: 60%;">
 				</a>
-				<a class="centeredFlex" style="padding-left: 1%;" target="_blank">
+				<a style="padding-left: 1%;" target="_blank">
 					<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='93%'" onmouseout="this.style.height='83%'" style="height: 83%;">
 				</a>
 
