@@ -142,9 +142,9 @@ function nextInfo(){
 
 function nextInfoEs(){
 	document.getElementById("espdoc").innerHTML =
-		`<img style="position:absolute; top:220px;width:35vw;left:30vw;height:25vw;" src="img/cuadro.png">
-		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:12vh; right: 25vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
-		<form style="position:absolute; top:210px;left:37%">
+		`<img style="position:absolute; top:4vh; width:35vw; left:12.5vw;height:25vw;" src="img/cuadro.png">
+		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:1vh; right: 1vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
+		<form style="position:absolute; top:7vh;left:19vw">
 			<p style="width:15em;">
 				<b>¡Hola, bienvenido(a) al espacio docente! Por favor ingrese sus datos para enviarle los resultados de sus alumnos</b><br><hr><br>
 				<label>Nombre de la maestra</label><input type="text" name ="NombreMaestra" placeholder ="Ingrese su nombre" > <br>
@@ -156,9 +156,9 @@ function nextInfoEs(){
 
 function nextInfoEn(){
 	document.getElementById("espdoc").innerHTML =
-		`<img style="position:absolute; top:220px;width:35vw;left:30vw;height:25vw;" src="img/cuadro.png">
-		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:12vh; right: 25vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
-		<form style="position:absolute; top:210px;left:37%">
+		`<img style="position:absolute; top:4vh;width:35vw;left:12.5vw;height:25vw;" src="img/cuadro.png">
+		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:1vh; right: 1vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
+		<form style="position:absolute; top:7vh;left:19vw">
 			<p style="width:15em;">
 				<b>Welcome teacher! Please enter your name and email in order to send you your students' grades</b><br><hr><br>
 				<label>Teacher's name</label><input type="text" name ="NombreMaestra" placeholder ="Enter your name" > <br>
@@ -189,25 +189,25 @@ function nextPreg(generateFigure=true){
 			loadFigure(getRandomInt(0,4));
 		}
 
-		str = `<img style="position:absolute; top:204px;width:48vw;left:26vw;height:7vh;" src="img/cuadro.png">`;
+		str = `<img style="position:absolute; top:4vh;width:48vw;left:11vw;height:7vh;" src="img/cuadro.png">`;
 		str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 
-		str += `<form style="position:absolute; top:187px;left:28%"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
+		str += `<form style="position:absolute; top:7vh;left:19vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
 
 		// Question
 		str += `<b style="font-size:2vmin">` + currentQ.question + `</b><br>`;
 		str += `</p></form>`
 
 		// Answer
-		str += `<input style="position:absolute;bottom:8vh;left: 40%" type="text" name="p` + pregunta.toString() + `" value="Name" checked>`;
+		str += `<input style="position:absolute;bottom:4vh;left: 40%" type="text" name="p` + pregunta.toString() + `" value="Name" checked>`;
 	} else {
-		str = `<img style="position:absolute; top:220px;width:35vw;left:30vw;height:25vw;" src="img/cuadro.png">`;
-		str += `<img onclick="submitA(` + pregunta.toString()+`);nextPreg()" style="position:absolute; height:10vh;bottom:12vh; right: 25vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`
+		str = `<img style="position:absolute; top:4vh;width:35vw;left:12.5vw;height:25vw;" src="img/cuadro.png">`;
+		str += `<img onclick="submitA(` + pregunta.toString()+`);nextPreg()" style="position:absolute; height:10vh;bottom:2vh; right: 2vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`
 		
 		if (pregunta == 4){
-			str += `<form style="position:absolute; top:210px;left:31%"><p style="width:22em;font-family: 'FontTexto'">`;
+			str += `<form style="position:absolute; top:7vh;left:13vw"><p style="width:22em;font-family: 'FontTexto'">`;
 		} else {
-			str += `<form style="position:absolute; top:210px;left:37%"><p style="width:15em;font-family: 'FontTexto'">`;
+			str += `<form style="position:absolute; top:7vh;left:15vw"><p style="width:15em;font-family: 'FontTexto'">`;
 		}
 
 		// Question
@@ -290,12 +290,12 @@ function getDescription(){
 
 	if ((object.rotulos!= null) && (object.rotulos[type] != null)){
 		document.getElementById("rotulos").innerHTML = 
-			`<p style="font-family:'FontTexto';color:` + color + `; text-align:left;font-size:1.75vh;"><b>` + object.rotulos[type] + `</b></p>`;
+			`<p style="font-family:'FontTexto';color:` + color + `; text-align:center;font-size:1.75vh; position:absolute; bottom:9vh"><b>` + object.rotulos[type] + `</b></p>`;
 	}
 	document.getElementById("desc").innerHTML = 
-		`<p style='position:absolute;top:208px;left:0;right:0;margin: auto;text-align: center;font-family: "FontTexto";font-size: 2.5vh;text-align: center;font-weight:600;width:35em;color:` + color +`;'>`+ object.description + `</p>`
+		`<p style='position:absolute;top:0px; left: 70px; margin:auto; text-align: center; font-family:"FontTexto"; font-size: 2.5vh;text-align: center;font-weight:600;width:35em;color:` + color +`;'>`+ object.description + `</p>`
 
-		+ `<p style='position:absolute;bottom:7.75vh;left:0;right:0;margin: auto;text-align: center; font-family: "FontSub";font-size: 3vh;font-weight:600;width:30em;color:` + color +`;'>` + object.kind + `</p>`;
+		+ `<p style='position:absolute; bottom:0px; left:70px; margin: auto; text-align:center; font-family:"FontSub";font-size:3vh;font-weight:600; width:30em; color:` + color +`;'>` + object.kind + `</p>`;
 }
 
 // Load the corresponding figure, divided into three sections 
@@ -349,7 +349,7 @@ function loadHands(){
 			desp = height * (i+1); 
 			str += `<img onclick="slideFigure(` + i.toString() + `,` + j.toString() + `); ` + ((rec == 0) ? `getDescription()" ` : `" `) ;
 			str += `onmouseover="this.style.height='2.5vh'" onmouseout="this.style.height='2vh'" style="position: absolute; height: 2vh;`
-			str += array[j] + `: 27%;top: calc(195px + ` + desp.toString() + `vh);" src="img/art/arrow_` + array[j] + ((figures == 0) ? `` : `_pint`) + `.png" >`;
+			str += array[j] + `: 27%;top: calc(40px + ` + desp.toString() + `vh);" src="img/art/arrow_` + array[j] + ((figures == 0) ? `` : `_pint`) + `.png" >`;
 			// TAMBIÉN MANEJAR EL 195, QUE DEBE SER IGUAL AQUÍ QUE EN BUILDFIGURE
 		}
 	}
@@ -383,7 +383,7 @@ function buildFigure(array = [true, true, true]){
 	for (i=0; i<3; i++){
 		if (array[i]){
 			desp = height * (i+1); 
-			str = `<img style="position: absolute; height:` + height.toString() + `vh; left: 0; right:0; margin: auto; top: calc(195px + ` + desp.toString() + `vh);"`
+			str = `<img style="position: absolute; height:` + height.toString() + `vh; left: 0; right:0; margin: auto; top: calc(10px + ` + desp.toString() + `vh);"`
 			str += `src=` + currentFigure[i][head_body_lower[i]] + `>`;
 			document.getElementById(sections[i]).innerHTML = str;
 			// TAMBIÉN MANEJAR EL 195, QUE DEBE SER IGUAL AQUÍ QUE EN LOADHANDS
