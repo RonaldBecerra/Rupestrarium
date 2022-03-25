@@ -189,10 +189,10 @@ function nextPreg(generateFigure=true){
 			loadFigure(getRandomInt(0,4));
 		}
 
-		str = `<img style="position:absolute; top:4vh;width:48vw;left:11vw;height:7vh;" src="img/cuadro.png">`;
+		str = `<img style="position:absolute; top:4vh;width:48vw;left:4vw;height:7vh;" src="img/cuadro.png">`;
 		str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 
-		str += `<form style="position:absolute; top:7vh;left:19vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
+		str += `<form style="position:absolute; top:4vh;left:14vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
 
 		// Question
 		str += `<b style="font-size:2vmin">` + currentQ.question + `</b><br>`;
