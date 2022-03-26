@@ -117,7 +117,7 @@ function loadDef(num=null){
 		type = num;
 		const fontSize = '1.75';
 
-		let str = `<p style="width: 95%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`;
+		let str = `<p style="width: 95%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`
 		str += definitions_texts[language][num];
 		str += `</b></p>`;
 
@@ -140,7 +140,7 @@ function nextInfo(){
 	}
 }
 
-/*function nextInfoEs(){
+function nextInfoEs(){
 	document.getElementById("espdoc").innerHTML =
 		`<img style="position:absolute; top:4vh; width:35vw; left:12.5vw;height:25vw;" src="img/cuadro.png">
 		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:1vh; right: 1vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
@@ -166,7 +166,7 @@ function nextInfoEn(){
 				<label>Email</label><input type ="email" name="CorreoMaestra" placeholder = "Enter your email"> 
 			</p>
 		</form>`
-}*/
+}
 
 // Recapitulate
 function loadRec(){
@@ -192,7 +192,7 @@ function nextPreg(generateFigure=true){
 		str = `<img style="position:absolute; top:4vh;width:48vw;left:4vw;height:7vh;" src="img/cuadro.png">`;
 		str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 
-		str += `<form style="position:absolute; top:4vh; left:14vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
+		str += `<form style="position:absolute; top:4vh;left:14vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
 
 		// Question
 		str += `<b style="font-size:2vmin">` + currentQ.question + `</b><br>`;
@@ -207,7 +207,7 @@ function nextPreg(generateFigure=true){
 		if (pregunta == 4){
 			str += `<form style="position:absolute; top:7vh;left:13vw"><p style="width:22em;font-family: 'FontTexto'">`;
 		} else {
-			str += `<form style="position:absolute; top:0vh;left:15vw"><p style="width:15em;font-family: 'FontTexto'">`;
+			str += `<form style="position:absolute; top:7vh;left:15vw"><p style="width:15em;font-family: 'FontTexto'">`;
 		}
 
 		// Question
@@ -293,16 +293,9 @@ function getDescription(){
 			`<p style="font-family:'FontTexto';color:` + color + `; text-align:center;font-size:1.75vh; position:absolute; bottom:9vh"><b>` + object.rotulos[type] + `</b></p>`;
 	}
 	document.getElementById("desc").innerHTML = 
-		`<p style='position:absolute; top:0px; left:70px; margin:auto; text-align: center; 
-					font-family:"FontTexto"; font-size: 2.5vh; font-weight:600; width:35em; color:` + color +`;'>`+ 
-					object.description + 
-		`</p>`
+		`<p style='position:absolute;top:0px; left: 70px; margin:auto; text-align: center; font-family:"FontTexto"; font-size: 2.5vh;text-align: center;font-weight:600;width:35em;color:` + color +`;'>`+ object.description + `</p>`
 
-		+ 
-
-		`<p style='position:absolute; bottom:0px; left:70px; margin:auto; text-align: center; font-family: "FontSub"; 
-		             font-size: 3vh; font-weight:600; width:30em; color:` + color +`;'>` + object.kind + 
-		`</p>`;
+		+ `<p style='position:absolute; bottom:0px; left:70px; margin: auto; text-align:center; font-family:"FontSub";font-size:3vh;font-weight:600; width:30em; color:` + color +`;'>` + object.kind + `</p>`;
 }
 
 // Load the corresponding figure, divided into three sections 
