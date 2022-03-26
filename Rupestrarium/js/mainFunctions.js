@@ -192,7 +192,7 @@ function nextPreg(generateFigure=true){
 		str = `<img style="position:absolute; top:4vh;width:48vw;left:4vw;height:7vh;" src="img/cuadro.png">`;
 		str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 
-		str += `<form style="position:absolute; top:4vh;left:14vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
+		str += `<form style="position:absolute; top:4vh; left:14vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
 
 		// Question
 		str += `<b style="font-size:2vmin">` + currentQ.question + `</b><br>`;
@@ -207,7 +207,7 @@ function nextPreg(generateFigure=true){
 		if (pregunta == 4){
 			str += `<form style="position:absolute; top:7vh;left:13vw"><p style="width:22em;font-family: 'FontTexto'">`;
 		} else {
-			str += `<form style="position:absolute; top:7vh;left:15vw"><p style="width:15em;font-family: 'FontTexto'">`;
+			str += `<form style="position:absolute; top:0vh;left:15vw"><p style="width:15em;font-family: 'FontTexto'">`;
 		}
 
 		// Question
@@ -293,13 +293,16 @@ function getDescription(){
 			`<p style="font-family:'FontTexto';color:` + color + `; text-align:center;font-size:1.75vh; position:absolute; bottom:9vh"><b>` + object.rotulos[type] + `</b></p>`;
 	}
 	document.getElementById("desc").innerHTML = 
-		`<p style='position:absolute; top:208px; left:0; right:0; margin:auto; text-align:center; 
+		`<p style='position:absolute; top:0px; left:70px; margin:auto; text-align: center; 
 					font-family:"FontTexto"; font-size: 2.5vh; font-weight:600; width:35em; color:` + color +`;'>`+ 
 					object.description + 
 		`</p>`
 
-		+ `<p style='position:absolute; bottom:7.75vh; left:0; right:0; margin:auto; text-align: center; font-family: "FontSub"; 
-		             font-size: 3vh; font-weight:600; width:30em; color:` + color +`;'>` + object.kind + `</p>`;
+		+ 
+
+		`<p style='position:absolute; bottom:0px; left:70px; margin:auto; text-align: center; font-family: "FontSub"; 
+		             font-size: 3vh; font-weight:600; width:30em; color:` + color +`;'>` + object.kind + 
+		`</p>`;
 }
 
 // Load the corresponding figure, divided into three sections 
