@@ -2,6 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	position: relative;
 }
 
 html {
@@ -11,9 +12,10 @@ html {
 .whole {
 	width: 100%;
 	height: 100%;
+	position: relative;
 }
 
-.centeredFlex, .centeredFlex div, .centeredFlex a{
+.centeredFlex, .centeredFlex a{
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -71,11 +73,22 @@ main .main-container {
 #title{
 	font-family: 'FontRupes'; 
 	font-weight: lighter; 
-	font-size: 1.7vw; 
+	font-size: 3.5vmin; 
 	text-align: center; 
 	color: white;
 }
 
+/*For the two red borders with vertical text*/
+.border{
+	width: 5%; 
+	height: 100%; 
+	display: flex;
+	justify-content: center;
+	align-items: flex-end; 
+	padding-bottom: 2vh;
+}
+
+/* For the images (not the slider figures) that appear on the center of the main-background */
 #img{
 	height: 100%;
 	width: 50%;
@@ -83,22 +96,22 @@ main .main-container {
 	align-items: center;
 }
 
-/*For the two red borders with vertical text*/
-main .border{
-	width: 5%; 
-	height: 100%; 
-	display: flex; 
-	justify-content: center; 
-	align-items: flex-end; 
-	padding-bottom: 1%;
+/* For the two spaces that are on the side of the "img" div */
+.img-side{
+	position: relative;
+	width: 25%;
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding-bottom: 2vh;
+	padding-right: 0.95vw;
 }
 
 .vertical-text-bottom-to-top{
 	transform: rotate(180deg); 
 	writing-mode: vertical-lr; 
-	font-family: sans-serif; 
-	font-size: 0.92vw; 
-	text-align: center; 
+	font-family: Tahoma, sans-serif; 
+	font-size: small; 
 	color: white;
 }
 
@@ -129,7 +142,7 @@ main .border{
 .text_mb{
 	color: white;
 	font-weight: lighter;
-	font-size: smaller;
+	font-size: 1.65vmax;
 }
 
 /*Subclass of menuButton*/
@@ -153,6 +166,15 @@ main .border{
 }
 
 /* ------------- END OF FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
+
+.whiteBackground_blackBorder{
+	border-radius: 15px;
+	border-style: solid;
+	border-color: black;
+	background: white;
+	padding: 2%;
+	border-width: 5px;
+}
 
 footer{
 	bottom: 0px;

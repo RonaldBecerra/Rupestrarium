@@ -1,18 +1,18 @@
 /*  
  *  These functions let change the app state
  *
-*/
+ */
 
 function getRandomInt(min, max){
 	return Math.floor(Math.random(min, max) * (max - min)) + min;
 }
 
 // Here we put everything that needs to be initialized when the page is loaded
-window.onload = function(){
+window.onload = async function(){
 	generateColumnMenus();
 	change_language('spanish');
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetInnerHTML(["main-background"]); // Put the background image of the central section
+	resetDiv("main-background"); // Put the background image of the central section
 	loadCentralImage(5); // Put the initial central image in its place (it is not the same as the background)
 }
 
@@ -25,7 +25,7 @@ function generateColumnMenus(){
 	div = document.getElementById("leftColumnMenu");
 	str = "";
 	while(i < 5){ // Number of buttons on the left side
-		str += `<button class="menuButton darkRed_mb" onclick="restoreButtonsColor(); this.style.background='black'; loadCentralImage(`+i.toString()+`)">`;
+		str += `<button class="menuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i.toString()+`);">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		i += 1;
 	}
@@ -36,14 +36,14 @@ function generateColumnMenus(){
 	div = document.getElementById("rightColumnMenu");
 	str = "";
 	while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
-		str += `<button class="menuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreButtonsColor(); this.style.background='black'; rec=0;`;
-		str += `loadDef(`+k.toString()+`); loadFigure(`+k.toString()+`); getDescription();">`;
+		str += `<button class="menuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
+		str += `loadDef(`+k.toString()+`)">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		k += 1;
 		i += 1;
 	}
 	// "Recapitulate" and "For teachers only" buttons
-	str += `<button class="menuButton red_mb" onclick="restoreButtonsColor(); this.style.background='black'; loadRec()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+	str += `<button class="menuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 	str += `<button class="menuButton red_mb"><b id="textButton`+(i+1).toString()+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
@@ -60,16 +60,26 @@ function change_language(newLanguage){
 		for (i=0; i < texts.length; i++){
 			document.getElementById('textButton' + i.toString()).innerHTML = texts[i];
 		}
+
+		// We translate the texts of the of the main labels (title and vertical texts)
+		let elem, div;
+		texts = mainLabels_texts[newLanguage];
+		for (i=0; i < texts.length; i++){
+			elem = texts[i];
+			div = document.getElementById(elem[0]);
+			if (div !== null){
+				div.innerHTML = elem[1];
+			}	
+		}
 		
-		if(figures > -1){
-			loadDef(type);
-			if (rec < 1){
-				getDescription();
-			}
+		// Case when there is a figure on the view and the user is not solving the quiz
+		// NOTE: A non-empty string works as a "true"
+		if(figures && !quiz){
+			getDescription();
 		}
 
 		// This makes the question and answers of the quiz load again with the new language
-		if(rec == 1){
+		if(quiz){
 			if (pregunta < quiz_questions[language].length - 1){
 				pregunta -= 1;
 			}
@@ -78,153 +88,197 @@ function change_language(newLanguage){
 	}
 }
 
-// Make empty the inner of a HTML object
-function resetInnerHTML(array){
-	for (i=0; i < array.length; i++){
-		let str = array[i];
-		let elem = document.getElementById(array[i]);
+// Load definitions of Petroglyphs and Rock Paintings or to restore the "Sur_de_marruecos.jpg" image
+function loadDef(num=null){
+	var div = document.getElementById("def");
+	var mainRightLabel = document.getElementById("main-right-label"); // Vertical text on the right of the total view
 
-		// Reset the default background image of the central section
-		if (str === "main-background"){
-			elem.style.backgroundImage = "url('img/fondo_petro.png')";
-		}
-		else {
-			elem.innerHTML = "";
-		}
+	// Case when we must put the "Sur_de_marruecos.jpg" image in its position with its text
+	if (num == null){
+		div.innerHTML = `<img class="whole" src="img/Sur_de_marruecos.jpg">`;
+		mainRightLabel.innerHTML = mainLabels_texts[language][2][1];
+	}
+
+	// Case when we must load the definition of a Petroglyph or Rock painting
+	else{
+		loadFigure(num);
+		let str = `<p style="width:95%; text-align:justify; font-family:'FontTexto'; font-size:0.85vmax"><b>`;
+		str += definitions_texts[language][num];
+		str += `</b></p>`;
+
+		div.innerHTML = str;
+		mainRightLabel.innerHTML = '';
 	}
 }
 
-// Since menu buttons turn black when selected, when we choose another we must first restore the color of the previous one.
-// We are currently not controlling which one was selected, so we have to iterate over them all
-function restoreButtonsColor(){
+// Restablish a div to its default state
+function resetDiv(id){
+	let div = document.getElementById(id);
+	// Reset the default background image of the central section
+	if (id === "main-background"){
+		div.style.backgroundImage = "url('img/fondo_petro.png')";
+	}
+	else{
+		div.innerHTML = "";
+	}
+}
+
+/* Loads an image that will be shown in the center.
+   Normally that image has text, so it cannot be automatically translated when the language is changed.
+   Another image should be loaded in that case (NOT IMPLEMENTED YET)
+ */
+function loadCentralImage(num){
+	poblateMainBackground('centralImage');
+	figures = null;
+
+	let im = imagesThatVaryWithLanguage[language];
+	const imagesSources = [im.presentacion, im.intro, im.instrucciones, im.creditos, im.contacto, "img/imagen_inicial.png"];
+
+	// For the initial image we must put a vertical text on its side
+	if (num == 5){
+		let div = document.getElementById("central-image-label");
+		div.style.display = "flex";
+		div.innerHTML = mainLabels_texts[language][3][1];
+	}
+	document.getElementById("img").src = imagesSources[num];
+}
+
+/* The "main-background" div can have different inner HTML objects depending to the case.
+   Here we build that internal part according to the case
+ */
+function poblateMainBackground(kind){
+	let div = document.getElementById("main-background");
+
+	switch (kind){
+		// When we put the image that appears on the beginning, or those that are invoked with the left buttons
+		case "centralImage":
+			div.innerHTML = 
+				`<div class="img-side">
+					<div id="central-image-label" class="vertical-text-bottom-to-top" 
+						style="display:none; text-align:right">
+					</div>
+				</div>
+
+				<img id="img" class="whole">
+
+				<div class="img-side"></div>`;
+			break;
+
+		// When we put the figure divided in three parts that the user can slide
+		case "sliderFigure":
+			div.innerHTML =
+				`<div class="whole" style="flex-direction:column">
+					<div id="desc" class="whole centeredFlex" style="height:17%"></div>
+
+					<div id="head" class="whole centeredFlex" style="height:20%; flex-direction:row"></div>
+					<div id="body" class="whole centeredFlex" style="height:20%; flex-direction:row"></div>
+					<div id="feet" class="whole centeredFlex" style="height:20%; flex-direction:row"></div>
+
+					<div id="rotulos" class="whole" 
+						style="display: flex; flex-direction:row; justify-content: flex-start; 
+								align-items: flex-start; height:11%; padding-top:10px">
+					</div>
+
+					<div id="kind" class="whole centeredFlex" style="height:12%"></div>
+				</div>`;
+			break;
+
+		// When we put the figure divided in three parts that the user can slide.
+		// Note that the form label is which must have the blackborder if we want that the border
+		// changes its size according to the text.
+		case "quizQuestion":
+			div.innerHTML =
+				`<div class="whole" style="flex-direction:column">
+					<div class="whole centeredFlex" style="height:77%">
+						<form class="whiteBackground_blackBorder" style="position:relative; width:70%">
+							<p id="question" style="position:relative; font-family:'FontTexto'; text-align:justify"></p>
+						</form>
+					</div>
+
+					<div class="whole" style="height:23%; display:flex; flex-direction:row">
+						<div style="width: 70%"></div>
+						<div id="handToRight" class="centeredFlex" style="height:100%; width:30%"></div>
+					</div>
+				</div>`;
+			break;
+
+		default:
+			break;	
+	}
+}
+
+// In this function we also restore variables that indicate the state of the view to their default values
+function restoreDefaultValues(){
+	figures = quiz = espdoc = false;
+	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
+	resetDiv("main-background"); // Restore the default background of the central section
+
+	// Since menu buttons turn black when selected, when we choose another we must first restore the color of the previous one.
+	// We are currently not controlling which one was selected, so we have to iterate over them all.
 	var elems = document.getElementsByTagName('button');
 	for (var i = 0; i < elems.length; i++) {
 		elems[i].style.removeProperty('background'); // This property is which could have the black color
 	}
 }
 
-// Load definitions of Petroglyphs and Rock Paintings or to restore the "Sur_de_marruecos.jpg" image
-function loadDef(num=null){
-	var div = document.getElementById("def");
-
-	// Case when we must put the "Sur_de_marruecos.jpg" image in its position
-	if (num == null){
-		div.innerHTML = `<img class="whole" src="img/Sur_de_marruecos.jpg">`;
-	}
-
-	// Case when we must load the definition of a Petroglyph or Rock painting
-	else{
-		type = num;
-		const fontSize = '1.75';
-
-		let str = `<p style="width: 95%; text-align: justify; font-family: 'FontTexto'; font-size:`+fontSize+`vmin"><b>`
-		str += definitions_texts[language][num];
-		str += `</b></p>`;
-
-		div.innerHTML = str;
-	}
-}
-
-function loadInfoDocente(){
-	espdoc = 1;
-	figures = -1;
-	resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "main-background", "rec"]);
-	nextInfo();
-}
-
-function nextInfo(){
-	if(language == 'spanish'){
-		nextInfoEs();
-	}else{
-		nextInfoEn();
-	}
-}
-
-function nextInfoEs(){
-	document.getElementById("espdoc").innerHTML =
-		`<img style="position:absolute; top:4vh; width:35vw; left:12.5vw;height:25vw;" src="img/cuadro.png">
-		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:1vh; right: 1vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
-		<form style="position:absolute; top:7vh;left:19vw">
-			<p style="width:15em;">
-				<b>¡Hola, bienvenido(a) al espacio docente! Por favor ingrese sus datos para enviarle los resultados de sus alumnos</b><br><hr><br>
-				<label>Nombre de la maestra</label><input type="text" name ="NombreMaestra" placeholder ="Ingrese su nombre" > <br>
-				<label>Nombre del alumno</label><input type="text" name ="NombreAlumno" placeholder ="Ingrese nombre del estudiante" > <br>
-				<label>Correo electrónico</label><input type ="email" name="CorreoMaestra" placeholder = "Ingrese su correo"> 
-			</p>
-		</form>`
-}
-
-function nextInfoEn(){
-	document.getElementById("espdoc").innerHTML =
-		`<img style="position:absolute; top:4vh;width:35vw;left:12.5vw;height:25vw;" src="img/cuadro.png">
-		<img onclick="submitA(0);nextPreg()" style="position:absolute; height:10vh;bottom:1vh; right: 1vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png"> 
-		<form style="position:absolute; top:7vh;left:19vw">
-			<p style="width:15em;">
-				<b>Welcome teacher! Please enter your name and email in order to send you your students' grades</b><br><hr><br>
-				<label>Teacher's name</label><input type="text" name ="NombreMaestra" placeholder ="Enter your name" > <br>
-				<label>Student's Name</label><input type="text" name ="NombreAlumno" placeholder ="Enter your student's name" > <br>
-				<label>Email</label><input type ="email" name="CorreoMaestra" placeholder = "Enter your email"> 
-			</p>
-		</form>`
-}
-
 // Recapitulate
-function loadRec(){
+function loadQuiz(){
 	pregunta = 0;
-	figures = -1;
-	rec = 1;
-	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetInnerHTML(["hands", "head", "body", "bot", "img", "desc", "rotulos", "espdoc", "main-background"]);
+	quiz = true;
+	poblateMainBackground("quizQuestion");
 	nextPreg();
 }
 
+// Gets the question of the quiz to display and increases the number of current question in 1
 function nextPreg(generateFigure=true){
-	let str;
 	let questions = quiz_questions[language];
 	let currentQ = questions[pregunta];
+	
+	if (pregunta < questions.length - 1){
 
-	if (pregunta == questions.length - 1){
-		if (generateFigure){
-			// The 4 is the number of currently available figures, that is the max index plus one
-			loadFigure(getRandomInt(0,4));
-		}
-
-		str = `<img style="position:absolute; top:4vh;width:48vw;left:4vw;height:7vh;" src="img/cuadro.png">`;
-		str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
-
-		str += `<form style="position:absolute; top:4vh;left:14vw"><p style="width:30em; height:7vh;line-height:17px;font-family: 'FontTexto'">`;
-
-		// Question
-		str += `<b style="font-size:2vmin">` + currentQ.question + `</b><br>`;
-		str += `</p></form>`
-
-		// Answer
-		str += `<input style="position:absolute;bottom:4vh;left: 40%" type="text" name="p` + pregunta.toString() + `" value="Name" checked>`;
-	} else {
-		str = `<img style="position:absolute; top:4vh;width:35vw;left:12.5vw;height:25vw;" src="img/cuadro.png">`;
-		str += `<img onclick="submitA(` + pregunta.toString()+`);nextPreg()" style="position:absolute; height:10vh;bottom:2vh; right: 2vw;" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`
-		
-		if (pregunta == 4){
-			str += `<form style="position:absolute; top:7vh;left:13vw"><p style="width:22em;font-family: 'FontTexto'">`;
-		} else {
-			str += `<form style="position:absolute; top:7vh;left:15vw"><p style="width:15em;font-family: 'FontTexto'">`;
-		}
-
-		// Question
-		str += `<b>` + currentQ.question + `</b><br>`
-
-		// Possible answers
 		let possibleAnswers = currentQ.options;
+		let str = '';
 		for (i=0; i < possibleAnswers.length; i++){
 			str += `<input type="radio" name="p`+ pregunta.toString() + `" value="` + i.toString() + `"` + ((i==0) ? `checked>` : `>`) + possibleAnswers[i] + `<br>`;
 		}
 
-		// FINAL PART
-		str += `</p></form>`;
+		// Here we put the question followed by its possible answers
+		document.getElementById("question").innerHTML = `<b>` + currentQ.question + `</b><br><br>` + str;
+
+		// Here we put the image of the hand to advance to the next question
+		document.getElementById("handToRight").innerHTML =
+			`<img onclick="submitA(` + pregunta.toString()+`); nextPreg()" style="position:relative; height:12vmin" 
+				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
 
 		pregunta += 1;
 	}
-	document.getElementById("rec").innerHTML = str;
+	else{ // The last question needs a different treatment
+		lastQuestion(currentQ, generateFigure); 
+	}
+}
+
+// Last question of the quiz, that has the format of a slider figure
+function lastQuestion(currentQ, generateFigure){
+	if (generateFigure){
+		// The 4 is the number of currently available figures, that is the max index plus one
+		loadFigure(getRandomInt(0,4));
+	}
+	
+	document.getElementById("desc").innerHTML = 
+		`<form class="whole centeredFlex whiteBackground_blackBorder" style="border-width:5px; width:88%; height:85%">
+			<p style="text-align:center; font-family:'FontTexto'; font-size:1.2vmax; font-weight:600;">` + currentQ.question + `</p>
+		</form>`;
+
+	let respuestas = [" ", "Hola", "Chao"];
+
+	let str = `<ul id="menu">`;
+	for (i=0; i < respuestas.length; i++){
+		str += `<li>` + respuestas[i] + `</li>`;
+	}
+	str += `</ul>`;
+	document.getElementById("kind").innerHTML = str;
+
+	// str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 }
 
 // Submit an answer
@@ -257,68 +311,57 @@ function submitForm(){
 	// Last question
 	currentQ = questions[i]
 	str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  "
-		+ "Cabeza: " + parts[head_body_lower[0]] 
-		+ "%0D%0A  Cuerpo: " + parts[head_body_lower[1]] 
-		+ "%0D%0A  Inferior: " + parts[head_body_lower[2]] 
+		+ "Cabeza: " + parts[head_body_feet[0]] 
+		+ "%0D%0A  Cuerpo: " + parts[head_body_feet[1]] 
+		+ "%0D%0A  Inferior: " + parts[head_body_feet[2]] 
 		+ "%0D%0A    Respuesta:  " +currentQ.options[userAnswers[i]];
 
 	window.location.href = str;
 }
 
-/* Loads an image that will be shown in the center.
-   Normally that image has text, so it cannot be automatically translated when the language is changed.
-   Another image should be loaded in that case (NOT IMPLEMENTED YET)
-*/
-function loadCentralImage(num){
-	figures = -1;
-	rec = 0;
-	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetInnerHTML(["hands", "head", "body", "bot", "rec", "desc", "rotulos", "espdoc", "main-background"]);
-	
-	let im = imagesThatVaryWithLanguage[language];
-	const imagesSources = [im.presentacion_nuevo, im.intro_nuevo, im.instruc_nuevo, im.creditos_nuevo, im.contacto_nuevo, "img/imagen_inicial.png"];
-
-	document.getElementById("img").innerHTML = 
-		'<img class="whole" style="position: relative" src='+imagesSources[num]+'>';
-}
-
 // Get description of the current image according to which combination the user has stablished
 function getDescription(){
-	resetInnerHTML(["rotulos"]);
-	let color = ((figures == 0) ? 'white' : 'black');
-	let object = images_combinations_descriptions[language][head_body_lower[0]][head_body_lower[1]][head_body_lower[2]];
+	resetDiv("rotulos");
 
-	if ((object.rotulos!= null) && (object.rotulos[type] != null)){
-		document.getElementById("rotulos").innerHTML = 
-			`<p style="font-family:'FontTexto';color:` + color + `; text-align:center;font-size:1.75vh; position:absolute; bottom:9vh"><b>` + object.rotulos[type] + `</b></p>`;
-	}
+	let color = ((figures == 'petroglyph') ? 'white' : 'black');
+	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
+
 	document.getElementById("desc").innerHTML = 
-		`<p style='position:absolute;top:0px; left: 70px; margin:auto; text-align: center; font-family:"FontTexto"; font-size: 2.5vh;text-align: center;font-weight:600;width:35em;color:` + color +`;'>`+ object.description + `</p>`
+		`<p style='position: relative; top:0px; text-align: center; font-family:"FontTexto"; 
+				font-size:1.3vw; font-weight:600; width: 90%; color:` + color +`;'>`+ object.description + `</p>`;
 
-		+ `<p style='position:absolute; bottom:0px; left:70px; margin: auto; text-align:center; font-family:"FontSub";font-size:3vh;font-weight:600; width:30em; color:` + color +`;'>` + object.kind + `</p>`;
+	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
+		document.getElementById("rotulos").innerHTML = `<div style="width: 72%"></div>` +
+			`<p style="position:relative; font-family:'FontTexto';color:` + color + `; text-align:justify; font-size:1.75vmin;">
+			<b>` + object.rotulos[figureType] + `</b></p>`;
+	}
+
+	document.getElementById("kind").innerHTML = 
+		`<p style='position:relative; text-align:center; font-family:"FontSub"; font-size:3vmin; 
+			font-weight:600; color:` + color +`;'>` + object.kind + `</p>`;
 }
 
 // Load the corresponding figure, divided into three sections 
 function loadFigure(num){
-	type = num;
+	figureType = num;
+	poblateMainBackground("sliderFigure");
+
 	switch (num){
 		case 0:
-			figures = 0;
+			figures = 'petroglyph';
 			currentFigure = petroglyph1;
-			resetInnerHTML(["main-background"]);
 			break;
 		case 1:
-			figures = 0;
+			figures = 'petroglyph';
 			currentFigure = petroglyph2;
-			resetInnerHTML(["main-background"]);
 			break;
 		case 2:
-			figures = 1;
+			figures = 'rockPainting';
 			currentFigure = rockPainting1;
 			document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
 			break;
 		case 3:
-			figures = 1;
+			figures = 'rockPainting';
 			currentFigure = rockPainting2;
 			document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
 			break;
@@ -326,47 +369,39 @@ function loadFigure(num){
 			break;
 	}
 
-	if (rec == 0){
-		// We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
-		head_body_lower = [0, 0, 0];				
+	if (quiz){
+		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
 	} else {
-		head_body_lower = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];		
+		//head_body_feet = [0, 0, 0]; // We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
+		getDescription();		
 	}
-
-	resetInnerHTML(["img", "rec", "espdoc", "desc"]);
-	loadHands();
 	buildFigure();
 }
 
 // Hands (arrows) that let the user slide the sections of the figures
-function loadHands(){
-	let str = ``;
-	let array = [`left`, `right`];
-	let desp, height;
-	height = 12; // ESTA MEDIDA ES ABSOLUTA, NO PROPORCIONAL A LA PANTALLA (MANEJAR ESTO)
-	for (i=0; i<3; i++){
-		for (j=0; j<2; j++){
-			desp = height * (i+1); 
-			str += `<img onclick="slideFigure(` + i.toString() + `,` + j.toString() + `); ` + ((rec == 0) ? `getDescription()" ` : `" `) ;
-			str += `onmouseover="this.style.height='2.5vh'" onmouseout="this.style.height='2vh'" style="position: absolute; height: 2vh;`
-			str += array[j] + `: 27%;top: calc(40px + ` + desp.toString() + `vh);" src="img/art/arrow_` + array[j] + ((figures == 0) ? `` : `_pint`) + `.png" >`;
-			// TAMBIÉN MANEJAR EL 195, QUE DEBE SER IGUAL AQUÍ QUE EN BUILDFIGURE
-		}
-	}
-	document.getElementById("hands").innerHTML = str;
+function loadArrow(figurePosition, direction){
+	let str = 
+		`<div class="centeredFlex"; style="position:relative; width:20%; height:100%">
+			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
+				`onmouseover="this.style.height='35%'" onmouseout="this.style.height='25%'"
+				style="position:relative; height:25%;"
+				src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
+			>
+		</div>`;
+	return str;
 }
 
 // Slide one of the three sections of the figre to the left or to the right
-function slideFigure(figurePosition, leftRight){
-	if (leftRight == 0){ // Slide to the left
-		head_body_lower[figurePosition] -= 1;
-		if (head_body_lower[figurePosition] < 0){
-			head_body_lower[figurePosition] = 2;
+function slideFigure(figurePosition, direction){
+	if (direction == "left"){ // Slide to the left
+		head_body_feet[figurePosition] -= 1;
+		if (head_body_feet[figurePosition] < 0){
+			head_body_feet[figurePosition] = 2;
 		}
 	} else { // Slide to the right
-		head_body_lower[figurePosition] += 1;
-		if (head_body_lower[figurePosition] > 2){
-			head_body_lower[figurePosition] = 0;
+		head_body_feet[figurePosition] += 1;
+		if (head_body_feet[figurePosition] > 2){
+			head_body_feet[figurePosition] = 0;
 		}				
 	}
 	let array = [false, false, false];
@@ -376,17 +411,13 @@ function slideFigure(figurePosition, leftRight){
 
 // Build the three sections of the figure
 function buildFigure(array = [true, true, true]){
-	let sections = ["head", "body", "bot"];
-	let desp, str, height;
-	height = 12; // ESTA MEDIDA ES ABSOLUTA, NO PROPORCIONAL A LA PANTALLA (MANEJAR ESTO)
+	let sections = ["head", "body", "feet"];
+	let str;
 
 	for (i=0; i<3; i++){
 		if (array[i]){
-			desp = height * (i+1); 
-			str = `<img style="position: absolute; height:` + height.toString() + `vh; left: 0; right:0; margin: auto; top: calc(10px + ` + desp.toString() + `vh);"`
-			str += `src=` + currentFigure[i][head_body_lower[i]] + `>`;
+			str =  loadArrow(i, "left") + `<img class="whole" style="width:60%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
 			document.getElementById(sections[i]).innerHTML = str;
-			// TAMBIÉN MANEJAR EL 195, QUE DEBE SER IGUAL AQUÍ QUE EN LOADHANDS
 		}
 	}
 }

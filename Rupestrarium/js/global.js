@@ -4,22 +4,37 @@
 */
 
 var language = null;
-var currentFigure = null;
 var userAnswers = ["a", "a", "a", "a", "a", "a", "a", "a"];
 
-var figures, rec, espdoc, type;
-rec = espdoc = type = 0;
+var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
+var quiz = false; // Indicates if the user is currently solving the quiz
+var espdoc = false; // Indicates if the user is currently in the "For teachers only" space
+var figureType = 0; // Kind of slider figure that the user could be currently seeing (0: petroglyph1, 1: petroglyph2, 2: rockPainting1; 3: rockPainting2)
+var currentFigure = null; // Unlike "figureType", it has the array with the uris of the images that represent the figure.
 
-// figures is -1 when there is no image in the view; it is 0 when it is a petroglyph, and 1 when it is a rock painting
-figures = -1;
-
-// Indicates in which of the three parts below each of the three sections of the figure currently is
-var head_body_lower = [0, 0, 0];
+var head_body_feet = [0, 0, 0]; // Indicates in which of the three parts below each of the three sections of the figure currently is
 var parts = ['Antropomorfa','Geométrica','Zoomorfa'];
 
 var pregunta = 0;
 
 const possible_languages = ["spanish", "english"];
+
+// This includes the title and the vertical texts. In this case we also put the id of the corresponding HTML object,
+// so the elements are of the form [id, text].
+const mainLabels_texts = {
+	spanish: [
+		["title", "Figuras Rupestres"], // 0
+		["main-left-label", "Cueva de las manos - Argentina"], // 1
+		["main-right-label", "Sur de Marruecos - África"], // 2
+		["central-image-label", '<span style="font-style:italic">Alia, Diosa de la Fertilidad y del Amor</span>. Arabia Saudita'], // 3
+	],
+	english: [
+		["title", "Cave Figures"], // 0
+		["main-left-label", "Cave of the hands - Argentina"], // 1
+		["main-right-label", "South of Morocco - Africa"], // 2
+		["central-image-label", '<span style="font-style:italic">Alia, Goddess of Fertility and Love</span>. Saudi Arabia'], // 3
+	],
+}
 
 const buttons_texts = {
 	spanish: [
@@ -47,7 +62,7 @@ const buttons_texts = {
 		"Rock Paintings 2", // 8
 		"Recapitulate", // 9
 		"For Teachers only", // 10
-	]
+	],
 };
 
 // Petroglyphs and Rock Paintings
@@ -133,7 +148,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 6
-			question: "La mezcla de figuras Antropomorfas + Zoomorfas genera representaciones _________________",
+			question: "La mezcla de figuras Antropomorfas con Zoomorfas genera representaciones _________________",
 			options: [
 				"Geoantropomorfas", // 0
 				"Antropozoomorfas", // 1
@@ -142,7 +157,8 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "Realiza diversas figuras mezclando partes aleatoriamente,<br>e identifícalas escribiendo el nombre de la figura realizada",
+			//question: "Realiza diversas figuras mezclando partes aleatoriamente,<br>e identifícalas escribiendo el nombre de la figura realizada",
+			question: "Realiza una figura no canónica de tu preferencia (que no tenga las tres partes del mismo tipo) e identifícala seleccionando su nombre",
 			options: [],
 		},
 	],
@@ -213,7 +229,8 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "Make several shapes combining parts at random, and identify them writing the name of the shape",
+			// question: "Make several shapes combining parts at random, and identify them writing the name of the shape",
+			question: "Make a non-canonical figure of your choice (that doesn't have the three<br>parts of the same type) and identify it by selecting its name",
 			options: [],
 		},		
 	],
@@ -245,7 +262,7 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["spanish"];
 
 	descriptions[0][0][0] = {
-		description: "Figuras que representan al ser humano, de cuerpo entero,<br> la cabeza, con huellas de manos y pies,<br>como abstracción de la imagen",
+		description: "Figuras que representan al ser humano, de cuerpo entero, la cabeza, con huellas de manos y pies, como abstracción de la imagen",
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Flopi di Nadro</span><br>Valcamónica<br>Italia, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Alia, Diosa de la<br> fertilidad y del amor</span><br>Arabia Saudita<br>África`, // 1
@@ -256,7 +273,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][1][1] = {
-		description: `Representaciones con elementos gráficos como puntos,<br>líneas, círculos, o imágenes abstractas, compuestas<br>con los mismos elementos`,
+		description: `Representaciones con elementos gráficos como puntos, líneas, círculos, o imágenes abstractas, compuestas con los mismos elementos`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>España, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">El Bolsillo</span><br>Río Guasanare,<br> estado Zulia<br>Venezuela, Sudamérica`, // 1
@@ -267,7 +284,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][2][2] = {
-		description: `Figuras de animales o con sus rasgos, recreando la naturaleza<br>con un fin específico`,
+		description: `Figuras de animales o con sus rasgos, recreando<br>la naturaleza con un fin específico`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Toro Muerto</span><br>Arequipa<br>Perú, Sudamérica`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Las Girafas</span><br>Tadrat Acacus<br>Argelia, África`, // 1
@@ -308,17 +325,17 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][0][2] = {
-		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos y Zoomorfos generan representaciones<br>Geoantropozoomorfa`,
+		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos y Zoomorfos, generan representaciones Geoantropozoomorfas`,
 		kind: `GEOANTROPOZOOMORFA`,
 	};
 
 	descriptions[1][2][0] = {
-		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos<br>y Antropomorfos, generan representaciones<br>Geozooantropomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos<br>y Antropomorfos, generan representaciones Geozooantropomorfas`,
 		kind: `GEOZOOANTROPOMORFA`,
 	};
 
 	descriptions[2][2][0] = descriptions[2][0][2] = descriptions[0][2][2] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos<br>generan representaciones Zooantropomorfas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos,<br>generan representaciones Zooantropomorfas`,
 		kind: `ZOOANTROPOMORFA`,
 	};
 
@@ -355,7 +372,7 @@ function initializeImagesDescriptions(){
 		description: `Representation with graphic elements like dots, lines, circles, or images more abstract, formed with the same elements`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>Spain, Europe`, // 0
-			`Petroglyph<br> <span style="font-style:italic">El Bolsillo</span><br>Guasanare river in the state of Zulia<br>Venezuela, South America`, // 1
+			`Petroglyph<br> <span style="font-style:italic">El Bolsillo</span><br>Guasanare river<br>Zulia State<br>Venezuela, South America`, // 1
 			`Rock Art Painting<br> <span style="font-style:italic">Santo Rosario de Agualinda</span><br>State of Amazonas<br>Venezuela, South America`, // 2
 			`Rock Art Painting<br> <span style="font-style:italic">La Pintada</span><br>State of Sonora<br>Mexico, North America`, // 3
 		],
@@ -439,19 +456,19 @@ initializeImagesDescriptions();
 const imagesThatVaryWithLanguage = {
 	spanish: {
 		end: "img/text/fin.png",
-		presentacion_nuevo: "img/text/presentacion_nuevo.png",
-		intro_nuevo: "img/text/intro_nuevo.png",
-		instruc_nuevo: "img/text/instruc_nuevo.png",
-		creditos_nuevo: "img/text/creditos_nuevo.png",
-		contacto_nuevo: "img/text/contacto_nuevo.png",
+		presentacion: "img/text/presentacion.png",
+		intro: "img/text/intro.png",
+		instrucciones: "img/text/instrucciones.png",
+		creditos: "img/text/creditos.png",
+		contacto: "img/text/contacto.png",
 	},
 	english: {
 		end: "img/text/end.png",
-		presentacion_nuevo: "img/text/presentacion_nuevo.png", // CAMBIAR
-		intro_nuevo: "img/text/intro_nuevo.png", // CAMBIAR
-		instruc_nuevo: "img/text/instruc_nuevo.png", // CAMBIAR
-		creditos_nuevo: "img/text/creditos_nuevo.png", // CAMBIAR
-		contacto_nuevo: "img/text/contacto_nuevo.png", // CAMBIAR
+		presentacion: "img/text/presentacion.png", // CAMBIAR
+		intro: "img/text/intro.png", // CAMBIAR
+		instrucciones: "img/text/instrucciones.png", // CAMBIAR
+		creditos: "img/text/creditos.png", // CAMBIAR
+		contacto: "img/text/contacto.png", // CAMBIAR
 	},
 }
 

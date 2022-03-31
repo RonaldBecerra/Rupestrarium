@@ -14,7 +14,7 @@
 		<!-- Logo container, with stone texture background  -->
 		<div class="stone-texture">
 			<div class="div1">
-				<img src="img/logo-FUNDABITAT.png" style="width: 28%; height: auto; margin: 0 auto">
+				<img src="img/logo-FUNDABITAT.png" style="width:28%; height:auto; margin:0 auto">
 			</div>
 			<div class="div2">
 				<img src="img/titulo RUPESTRARIUM.png" style="width: 80%;">
@@ -27,42 +27,31 @@
 
 	<!-- Middle section with red color-->
 	<main>
-		<div class="centeredFlex" style="height: 8%">
-			<div id="title">Figuras Rupestres</div>
+		<div class="centeredFlex" style="height:8%">
+			<!-- Text: Figuras rupestres -->
+			<div id="title"></div>
 		</div>
 
 		<!-- Central section that has contents displayed horizontally-->
-		<div class="main-container" style="height: 92%">
+		<div class="main-container" style="height:92%">
 
 			<div class="border">
-				<div id="main-left-label" class="vertical-text-bottom-to-top">Cueva de las manos - Argentina</div>
+				<!-- Text: "Cueva de las manos - Argentina" -->
+				<div id="main-left-label" class="vertical-text-bottom-to-top"></div>
 			</div>
 
 			<!-- Here is the place of the buttons "Presentation", "Introduction", "Instructions", "Credits" and "Contact", plus the Cave of the hands image-->
 			<div id="leftColumnMenu" class="columnMenu"></div>
 
-			<!-- This is the section that is on the center of the view, which is the place of the images and quiz questions -->
-			<div id="main-background" class="whole centeredFlex" style="position: relative">
-				
-				<!-- These are views that will be poblated later according to the user's navigation -->
-				<div id="img"></div>
-				<div id="desc"></div>
-				<div id="hands" style="top: 0px;"></div>
-				<div id="head"></div>
-				<div id="body"></div>
-				<div id="bot"></div>
-				<div id="rotulos" style="position: absolute; bottom: 0vh; right:0vw; width:200px;"></div>
-
-				<!-- Esto antes estaba fuera, incluso del main container -->
-				<div id="rec" ></div>
-				<div id="espdoc"></div>
-			</div>
+			<!-- This is the section that is on the center of the view, which is the place of the images, slider figures and quiz questions -->
+			<div id="main-background" class="whole centeredFlex"></div>
 
 			<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the description of an art or the South of Morocco image-->
 			<div id="rightColumnMenu" class="columnMenu"></div>
 
 			<div class="border">
-				<div id="main-right-label" class="vertical-text-bottom-to-top">Sur de Marruecos - África</div>
+				<!-- Text: "Sur de Marruecos - África" -->
+				<div id="main-right-label" class="vertical-text-bottom-to-top"></div>
 			</div>
 
 		</div>
@@ -71,24 +60,26 @@
 
 	<footer>
 		<div class="centeredFlex" style="flex-direction: row;">
-			<div>
-				<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height: 60%;">
+			<div class="centeredFlex">
+				<div class="whole centeredFlex" style="width:5%">
+					<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:relative; height:60%;">
+				</div>
 			</div>
 
-			<div style="padding-left: 1%;">
-				<img src="img/footer/uk.png" onclick="change_language('english');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height: 60%;">
-			</div>
+			<div class="centeredFlex" style="padding-left: 1%;">
+				<img src="img/footer/uk.png" onclick="change_language('english');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height:60%;">
+			</div >
 
-			<img src="img/footer/footer_nuevo_ed.png" style="width: 26%; height: 100%;">
+			<img src="img/footer/footer_es.png" style="width:26%; height:100%;">
 
 			<a target="_blank" href="https://www.facebook.com/anarvenezuela/">
-				<img src="img/footer/icono-facebook.png" onmouseover="this.style.height='80%'" onmouseout="this.style.height='70%'" style="height: 70%;">
+				<img src="img/footer/icono-facebook.png" onmouseover="this.style.height='80%'" onmouseout="this.style.height='70%'" style="height:70%;">
 			</a>
-			<a style="padding-left: 1%;" target="_blank" href="mailto:anarvenezuela@gmail.com">
-				<img src="img/footer/icono-e-mail.png" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height: 60%;">
+			<a class="centeredFlex" style="padding-left:1%;" target="_blank" href="mailto:anarvenezuela@gmail.com">
+				<img src="img/footer/icono-e-mail.png" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="height:60%;">
 			</a>
-			<a style="padding-left: 1%;" target="_blank">
-				<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='93%'" onmouseout="this.style.height='83%'" style="height: 83%;">
+			<a class="centeredFlex"style="padding-left:1%;" target="_blank">
+				<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='93%'" onmouseout="this.style.height='83%'" style="height:83%;">
 			</a>
 
 		</div>
