@@ -80,10 +80,8 @@ function change_language(newLanguage){
 
 		// This makes the question and answers of the quiz load again with the new language
 		if(quiz){
-			if (pregunta < quiz_questions[language].length - 1){
-				pregunta -= 1;
-			}
-			nextPreg(false);
+			numQuestion -= 1;
+			nextQuestion(false);
 		}
 	}
 }
@@ -179,7 +177,7 @@ function poblateMainBackground(kind){
 								align-items: flex-start; height:11%; padding-top:10px">
 					</div>
 
-					<div id="kind" class="whole centeredFlex" style="height:12%"></div>
+					<div id="kind" class="whole centeredFlex" style="z-index:1; height:12%"></div>
 				</div>`;
 			break;
 
@@ -190,7 +188,7 @@ function poblateMainBackground(kind){
 			div.innerHTML =
 				`<div class="whole" style="flex-direction:column">
 					<div class="whole centeredFlex" style="height:77%">
-						<form class="whiteBackground_blackBorder" style="position:relative; width:70%">
+						<form class="whiteBackground_blackBorder" style="width:70%">
 							<p id="question" style="position:relative; font-family:'FontTexto'; text-align:justify"></p>
 						</form>
 					</div>
@@ -223,23 +221,22 @@ function restoreDefaultValues(){
 
 // Recapitulate
 function loadQuiz(){
-	pregunta = 0;
+	numQuestion = 7;
 	quiz = true;
 	poblateMainBackground("quizQuestion");
-	nextPreg();
+	nextQuestion();
 }
 
 // Gets the question of the quiz to display and increases the number of current question in 1
-function nextPreg(generateFigure=true){
+function nextQuestion(notReloading=true){
 	let questions = quiz_questions[language];
-	let currentQ = questions[pregunta];
+	let currentQ = questions[numQuestion];
 	
-	if (pregunta < questions.length - 1){
-
+	if (numQuestion < questions.length - 1){
 		let possibleAnswers = currentQ.options;
 		let str = '';
 		for (i=0; i < possibleAnswers.length; i++){
-			str += `<input type="radio" name="p`+ pregunta.toString() + `" value="` + i.toString() + `"` + ((i==0) ? `checked>` : `>`) + possibleAnswers[i] + `<br>`;
+			str += `<input type="radio" name="p`+ numQuestion.toString() + `" value="` + i.toString() + `"` + ((i==0) ? `checked>` : `>`) + possibleAnswers[i] + `<br>`;
 		}
 
 		// Here we put the question followed by its possible answers
@@ -247,38 +244,14 @@ function nextPreg(generateFigure=true){
 
 		// Here we put the image of the hand to advance to the next question
 		document.getElementById("handToRight").innerHTML =
-			`<img onclick="submitA(` + pregunta.toString()+`); nextPreg()" style="position:relative; height:12vmin" 
+			`<img onclick="submitA(` + numQuestion.toString()+`); nextQuestion()" style="position:relative; height:12vmin" 
 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
 
-		pregunta += 1;
+		numQuestion += 1;
 	}
 	else{ // The last question needs a different treatment
-		lastQuestion(currentQ, generateFigure); 
+		lastQuestion(currentQ, notReloading); 
 	}
-}
-
-// Last question of the quiz, that has the format of a slider figure
-function lastQuestion(currentQ, generateFigure){
-	if (generateFigure){
-		// The 4 is the number of currently available figures, that is the max index plus one
-		loadFigure(getRandomInt(0,4));
-	}
-	
-	document.getElementById("desc").innerHTML = 
-		`<form class="whole centeredFlex whiteBackground_blackBorder" style="border-width:5px; width:88%; height:85%">
-			<p style="text-align:center; font-family:'FontTexto'; font-size:1.2vmax; font-weight:600;">` + currentQ.question + `</p>
-		</form>`;
-
-	let respuestas = [" ", "Hola", "Chao"];
-
-	let str = `<ul id="menu">`;
-	for (i=0; i < respuestas.length; i++){
-		str += `<li>` + respuestas[i] + `</li>`;
-	}
-	str += `</ul>`;
-	document.getElementById("kind").innerHTML = str;
-
-	// str += `<img onclick="submitA(` + pregunta.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 }
 
 // Submit an answer
@@ -286,6 +259,80 @@ function submitA(num){
 	// Note that we must not add the "checked" to the last answer (position 7 currently, that is actually the 8th)
 	const str = 'input[name=p' + num.toString() + ((num == 7) ? ']' : ']:checked');
 	userAnswers[num] = document.querySelector(str).value;
+}
+
+// Last question of the quiz, that has the format of a slider figure
+function lastQuestion(currentQ, notReloading){
+	if (notReloading){
+		// The 4 is the number of currently available figures, that is the max index plus one
+		loadFigure(getRandomInt(0,4));
+		lastQ_optionsOrder = _.shuffle(lastQ_optionsOrder);
+		lastQ_selectedOption = 0;
+
+		// We must put the hand pointing to the right in an absolute div, because the 23% bottom height is distributed between
+		// the "rotulos" div and the "kind" div, and we want to put the hand in the middle of them vertically
+/*		document.getElementById("main-background").innerHTML += 
+			`<div id="handToRight" class="centeredFlex" 
+				style="position:absolute; z-index:0; height:23%; width:30%; bottom:0px; padding-left:70%; display:flex; flex-direction:column; justify-content:center">
+				<img onclick="finishQuiz()" style="height:12vmin" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">
+			<div>`;*/
+
+		document.getElementById("rotulos").innerHTML = 
+			`<div style="width:72%"></div>
+			<div style="width:28%; display:flex; flex-direction:row; justify-content:flex-start; align-items:center">
+				<form id="finishButton" class"centeredFlex centered_FontSub" style="font-size:2.5vmin; height:80%; width:50%">`
+					+ currentQ.finishButton + `</form>
+			</div>`;			
+	}
+	document.getElementById("desc").innerHTML = 
+		`<form class="whole centeredFlex whiteBackground_blackBorder" style="width:88%; height:85%">
+			<p class="centeredBold_FontTexto" style="font-size:1.2vmax">` + currentQ.question + `</p>
+		</form>`;
+
+	let answer, num, str = 
+		`<select id="figure-chosen-name" name="figure-chosen-name" class="centeredBold_FontTexto"
+			style="width:37%" onChange="lastQ_selectedOption = this.value">`;
+
+	for (i=0; i < currentQ.options.length; i++){
+		let num = lastQ_optionsOrder[i];
+		answer = currentQ.options[num];
+		str += `<option class="centeredBold_FontTexto" value="`+ num + `">` + answer + `</option>`;
+	}
+	str += `</select>`;
+	
+	document.getElementById("kind").innerHTML = str;
+	document.getElementById("figure-chosen-name").value = (notReloading ? lastQ_optionsOrder[0] : lastQ_selectedOption);
+
+	numQuestion += 1;
+
+	// str += `<img onclick="submitA(` + numQuestion.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
+}
+
+function finishQuiz(){
+	let lastQ = quiz_questions[language][numQuestion-1];
+	var incorrectAnswers = [];
+	var i = 0;
+
+	// Determine the correction of the first questions
+	while (i < correctOptions.length){
+		if (correctOptions[i] != userAnswers[i]){
+			incorrectAnswers.push(i+1);
+		}
+		i++;
+	}
+
+	// Abreviations
+	let hbf = head_body_feet;
+	let icd = images_combinations_descriptions;
+
+	// Determine the correction of the last question
+	if ( 
+		((hbf[0] == hbf[1]) && (hbf[0] == hbf[2])) ||
+		(lastQ.options[document.getElementById("figure-chosen-name").value] !== icd[language][hbf[0]][hbf[1]][hbf[2]].kind)
+		)
+	{
+		incorrectAnswers.push(i+1);
+	}
 }
 
 // Submit the complete form to the teacher
@@ -327,18 +374,16 @@ function getDescription(){
 	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
 
 	document.getElementById("desc").innerHTML = 
-		`<p style='position: relative; top:0px; text-align: center; font-family:"FontTexto"; 
-				font-size:1.3vw; font-weight:600; width: 90%; color:` + color +`;'>`+ object.description + `</p>`;
+		`<p class="centeredBold_FontTexto" style='font-size:1.3vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
 
 	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
 		document.getElementById("rotulos").innerHTML = `<div style="width: 72%"></div>` +
-			`<p style="position:relative; font-family:'FontTexto';color:` + color + `; text-align:justify; font-size:1.75vmin;">
+			`<p style="font-family:'FontTexto'; color:` + color + `; text-align:left; font-size:1.75vmin;">
 			<b>` + object.rotulos[figureType] + `</b></p>`;
 	}
 
 	document.getElementById("kind").innerHTML = 
-		`<p style='position:relative; text-align:center; font-family:"FontSub"; font-size:3vmin; 
-			font-weight:600; color:` + color +`;'>` + object.kind + `</p>`;
+		`<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
 }
 
 // Load the corresponding figure, divided into three sections 
@@ -372,7 +417,7 @@ function loadFigure(num){
 	if (quiz){
 		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
 	} else {
-		//head_body_feet = [0, 0, 0]; // We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
+		head_body_feet = [0, 0, 0]; // We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
 		getDescription();		
 	}
 	buildFigure();

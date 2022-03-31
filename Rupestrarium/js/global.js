@@ -4,7 +4,7 @@
 */
 
 var language = null;
-var userAnswers = ["a", "a", "a", "a", "a", "a", "a", "a"];
+var userAnswers = ["a", "a", "a", "a", "a", "a", "a"];
 
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
@@ -15,7 +15,12 @@ var currentFigure = null; // Unlike "figureType", it has the array with the uris
 var head_body_feet = [0, 0, 0]; // Indicates in which of the three parts below each of the three sections of the figure currently is
 var parts = ['Antropomorfa','Geométrica','Zoomorfa'];
 
-var pregunta = 0;
+var numQuestion = 0;
+
+// This will be shuflled later and will indicate the order of the options in the dropdown menu,
+// because we don't want them to always appear in the same order
+var lastQ_optionsOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+var lastQ_selectedOption = 0;
 
 const possible_languages = ["spanish", "english"];
 
@@ -157,9 +162,25 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			//question: "Realiza diversas figuras mezclando partes aleatoriamente,<br>e identifícalas escribiendo el nombre de la figura realizada",
 			question: "Realiza una figura no canónica de tu preferencia (que no tenga las tres partes del mismo tipo) e identifícala seleccionando su nombre",
-			options: [],
+			finishButton: "FINALIZAR",
+			options: [
+				`ANTROPOMORFA`, // 0
+				`GEOMÉTRICA`, // 1
+				`ZOOMORFA`, // 2
+				`ANTROPOGEOMÉTRICA`, // 3
+				`ANTROPOZOOMORFA`, // 4
+				`ANTROPOGEOZOOMORFA`, // 5
+				`ANTROPOZOOGEOMÉTRICA`, // 6
+				`GEOANTROPOMORFA`, // 7
+				`GEOZOOMORFA`, // 8
+				`GEOANTROPOZOOMORFA`, // 9
+				`GEOZOOANTROPOMORFA`, // 10
+				`ZOOANTROPOMORFA`, // 11
+				`ZOOGEOMÉTRICA`, // 12
+				`ZOOANTROPOGEOMÉTRICA`, // 13
+				`ZOOGEOANTROPOMORFA`, // 14
+			],
 		},
 	],
 	english: [
@@ -229,12 +250,30 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			// question: "Make several shapes combining parts at random, and identify them writing the name of the shape",
-			question: "Make a non-canonical figure of your choice (that doesn't have the three<br>parts of the same type) and identify it by selecting its name",
-			options: [],
+			question: "Make a non-canonical figure of your choice (that doesn't have the three parts of the same type) and identify it by selecting its name",
+			finishButton: "FINISH",
+			options: [
+				`ANTHROPOMORPHIC`, // 0
+				`GEOMETRIC`, // 1
+				`ZOOMORPHIC`, // 2
+				`ANTHROPOGEOMETRIC`, // 3
+				`ANTHROPOZOOMORPHIC`, // 4
+				`ANTHROPOGEOZOOMORPHIC`, // 5
+				`ANTHROPOZOOGEOMETRIC`, // 6
+				`GEOANTHROPOMORPHIC`, // 7
+				`GEOZOOMORPHIC`, // 8
+				`GEOANTHROPOZOOMORPHIC`, // 9
+				`GEOZOOANTHROPOMORPHIC`, // 10
+				`ZOOANTHROPOMORPHIC`, // 11
+				`ZOOGEOMETRIC`, // 12
+				`ZOOANTHROPOGEOMETRIC`, // 13
+				`ZOOGEOANTHROPOMORPHIC`, // 14
+			],
 		},		
 	],
 };
+
+const correctOptions = [2,2,1,2,3,1,1]
 
 // Description of the combination of images that the user can stablish
 var images_combinations_descriptions = {};
@@ -269,7 +308,7 @@ function initializeImagesDescriptions(){
 			`Pintura Rupestre<br> <span style="font-style:italic">Parque Nacional Kakadu</span><br>Australia<br>Oceanía`, // 2
 			`Pintura Rupestre<br> <span style="font-style:italic">Parque Nacional Kakadu</span><br>Australia<br>Oceanía` // 3
 		],
-		kind: "ANTROPOMORFA",
+		kind: `ANTROPOMORFA`,
 	};
 
 	descriptions[1][1][1] = {
@@ -455,7 +494,6 @@ initializeImagesDescriptions();
 // -----------------------------  IMAGES --------------------------------
 const imagesThatVaryWithLanguage = {
 	spanish: {
-		end: "img/text/fin.png",
 		presentacion: "img/text/presentacion.png",
 		intro: "img/text/intro.png",
 		instrucciones: "img/text/instrucciones.png",
@@ -463,7 +501,6 @@ const imagesThatVaryWithLanguage = {
 		contacto: "img/text/contacto.png",
 	},
 	english: {
-		end: "img/text/end.png",
 		presentacion: "img/text/presentacion.png", // CAMBIAR
 		intro: "img/text/intro.png", // CAMBIAR
 		instrucciones: "img/text/instrucciones.png", // CAMBIAR

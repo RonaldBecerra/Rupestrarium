@@ -176,6 +176,24 @@ main .main-container {
 	border-width: 5px;
 }
 
+#finishButton{
+	border-radius: 15px;
+	background: #ed1c24;
+}
+
+/* For the text that appears on the description of a slider figure */
+.centeredBold_FontTexto{
+	text-align: center; 
+	font-family: 'FontTexto';
+	font-weight: 600;
+}
+
+/* For the text that indicates the kind (anthropomorphic, etc.) of the slider figure */
+.centered_FontSub{
+	text-align: center; 
+	font-family: 'FontSub';
+}
+
 footer{
 	bottom: 0px;
 	width: 100%;
