@@ -5,22 +5,29 @@
 
 var language = null;
 var userAnswers = ["a", "a", "a", "a", "a", "a", "a"];
+var incorrectAnswers = []
 
+// ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
 var espdoc = false; // Indicates if the user is currently in the "For teachers only" space
+// ------ END
+
+// ------ BEGIN: Variables related to the slider figures
 var figureType = 0; // Kind of slider figure that the user could be currently seeing (0: petroglyph1, 1: petroglyph2, 2: rockPainting1; 3: rockPainting2)
 var currentFigure = null; // Unlike "figureType", it has the array with the uris of the images that represent the figure.
-
 var head_body_feet = [0, 0, 0]; // Indicates in which of the three parts below each of the three sections of the figure currently is
 var parts = ['Antropomorfa','Geométrica','Zoomorfa'];
+// ------ END
 
+// ------ BEGIN: Variables related to the quiz
 var numQuestion = 0;
-
+var currentAttempt = 0;
 // This will be shuflled later and will indicate the order of the options in the dropdown menu,
 // because we don't want them to always appear in the same order
 var lastQ_optionsOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
 var lastQ_selectedOption = 0;
+// ------ END
 
 const possible_languages = ["spanish", "english"];
 
@@ -273,7 +280,48 @@ const quiz_questions = {
 	],
 };
 
-const correctOptions = [2,2,1,2,3,1,1]
+const correctOptions = [2,2,1,2,3,1,1];
+
+const sendEmail_texts = {
+	spanish: [
+		"Enviar resultados", // 0
+		"Correo electrónico del estudiante:", // 1
+		"Contraseña:", // 2
+		"Mostrar contraseña", // 3
+		"Correo electrónico del profesor:", // 4
+		"Enviar", // 5
+	],
+	english: [
+		"Submit results", // 0
+		"Student's email:", // 1
+		"Password:", // 2
+		"Show password", // 3
+		"Teacher's email:", // 4
+		"Send", // 5
+	]
+}
+
+const quizResults_texts = {
+	spanish: [
+		"Resultados", // 0
+		"Arregla las respuestas", // 1
+		"¡Muy bien!", // 2
+		"Ganaste", // 3
+		"puntos", // 4
+		"Debes corregir las respuestas de las preguntas", // 5
+		"¡Felicitaciones", // 6
+
+	],
+	english: [
+		"Results", // 0
+		"Fix the answers", // 1
+		"Very good!", // 2
+		"You won", // 3
+		"points", // 4
+		"You must correct the answers of the questions", // 5
+		"Congratulations", // 6
+	],
+}
 
 // Description of the combination of images that the user can stablish
 var images_combinations_descriptions = {};

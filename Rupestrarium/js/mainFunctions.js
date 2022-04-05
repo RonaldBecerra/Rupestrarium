@@ -126,7 +126,7 @@ function resetDiv(id){
    Another image should be loaded in that case (NOT IMPLEMENTED YET)
  */
 function loadCentralImage(num){
-	poblateMainBackground('centralImage');
+	poblateMainBackground('centralImage_view');
 	figures = null;
 
 	let im = imagesThatVaryWithLanguage[language];
@@ -149,7 +149,7 @@ function poblateMainBackground(kind){
 
 	switch (kind){
 		// When we put the image that appears on the beginning, or those that are invoked with the left buttons
-		case "centralImage":
+		case "centralImage_view":
 			div.innerHTML = 
 				`<div class="img-side">
 					<div id="central-image-label" class="vertical-text-bottom-to-top" 
@@ -163,7 +163,7 @@ function poblateMainBackground(kind){
 			break;
 
 		// When we put the figure divided in three parts that the user can slide
-		case "sliderFigure":
+		case "sliderFigure_view":
 			div.innerHTML =
 				`<div class="whole" style="flex-direction:column">
 					<div id="desc" class="whole centeredFlex" style="height:17%"></div>
@@ -181,10 +181,10 @@ function poblateMainBackground(kind){
 				</div>`;
 			break;
 
-		// When we put the figure divided in three parts that the user can slide.
+		// When the user is answering one of the questions of the quiz, except the last one, that has a slider figure
 		// Note that the form label is which must have the blackborder if we want that the border
 		// changes its size according to the text.
-		case "quizQuestion":
+		case "quizQuestion_view":
 			div.innerHTML =
 				`<div class="whole" style="flex-direction:column">
 					<div class="whole centeredFlex" style="height:77%">
@@ -198,6 +198,25 @@ function poblateMainBackground(kind){
 						<div id="handToRight" class="centeredFlex" style="height:100%; width:30%"></div>
 					</div>
 				</div>`;
+			break;
+
+		// Form in which the user enters their email and the teacher's
+		case "sendEmail_view":
+			div.innerHTML =
+				`<div class="whole" style="flex-direction:column">
+					<div id="desc" class="whole centeredFlex" style="height:16%"></div>
+
+					<div id="useremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+					<div id="userpassword" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+					<div id="teacheremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+
+					<div id="sendButton" class="whole" style="height:15%; flex-direction:row"></div>
+				</div>`;
+			break;
+
+		// It gives the results of the quiz, and if it was the first attempt, it lets the user to try one more time
+		case "quizResults_view":
+			div.innerHTML = null;
 			break;
 
 		default:
@@ -221,9 +240,9 @@ function restoreDefaultValues(){
 
 // Recapitulate
 function loadQuiz(){
-	numQuestion = 7;
+	numQuestion = 0;
 	quiz = true;
-	poblateMainBackground("quizQuestion");
+	poblateMainBackground("quizQuestion_view");
 	nextQuestion();
 }
 
@@ -267,31 +286,29 @@ function lastQuestion(currentQ, notReloading){
 		// The 4 is the number of currently available figures, that is the max index plus one
 		loadFigure(getRandomInt(0,4));
 		lastQ_optionsOrder = _.shuffle(lastQ_optionsOrder);
-		lastQ_selectedOption = 0;
-
-		// We must put the hand pointing to the right in an absolute div, because the 23% bottom height is distributed between
-		// the "rotulos" div and the "kind" div, and we want to put the hand in the middle of them vertically
-/*		document.getElementById("main-background").innerHTML += 
-			`<div id="handToRight" class="centeredFlex" 
-				style="position:absolute; z-index:0; height:23%; width:30%; bottom:0px; padding-left:70%; display:flex; flex-direction:column; justify-content:center">
-				<img onclick="finishQuiz()" style="height:12vmin" onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">
-			<div>`;*/
-
-		document.getElementById("rotulos").innerHTML = 
-			`<div style="width:72%"></div>
-			<div style="width:28%; display:flex; flex-direction:row; justify-content:flex-start; align-items:center">
-				<form id="finishButton" class"centeredFlex centered_FontSub" style="font-size:2.5vmin; height:80%; width:50%">`
-					+ currentQ.finishButton + `</form>
-			</div>`;			
+		lastQ_selectedOption = 0;	
 	}
 	document.getElementById("desc").innerHTML = 
 		`<form class="whole centeredFlex whiteBackground_blackBorder" style="width:88%; height:85%">
 			<p class="centeredBold_FontTexto" style="font-size:1.2vmax">` + currentQ.question + `</p>
 		</form>`;
 
+	document.getElementById("rotulos").innerHTML = 
+		`<div style="width:90%; display:flex; flex-direction:row; justify-content:flex-end; align-items:center">
+			<div class="centeredFlex" onClick="finishQuiz()">
+				<form id="finishButton" class"centeredFlex" 
+					onmouseover="this.style.color='white'; this.style['border-style']='solid'; this.style['border-color']='black'" 
+					onmouseout="this.style.color='black'"
+				>
+					<p style="font-size:3vmin; font-family:'Arial'">`+ currentQ.finishButton + `</p>
+				</form>
+			</div>
+		</div>
+		<div style="width:10%"></div>`;	
+
 	let answer, num, str = 
 		`<select id="figure-chosen-name" name="figure-chosen-name" class="centeredBold_FontTexto"
-			style="width:37%" onChange="lastQ_selectedOption = this.value">`;
+			style="width:37%; font-size:2.4vmin" onChange="lastQ_selectedOption = this.value">`;
 
 	for (i=0; i < currentQ.options.length; i++){
 		let num = lastQ_optionsOrder[i];
@@ -304,14 +321,12 @@ function lastQuestion(currentQ, notReloading){
 	document.getElementById("figure-chosen-name").value = (notReloading ? lastQ_optionsOrder[0] : lastQ_selectedOption);
 
 	numQuestion += 1;
-
-	// str += `<img onclick="submitA(` + numQuestion.toString() +`);submitForm()" style="position:absolute; height:6vh;bottom:11vh; right: 24vw;" src="` + imagesThatVaryWithLanguage[language].end + `">`;
 }
 
-function finishQuiz(){
+function testQuiz(){
 	let lastQ = quiz_questions[language][numQuestion-1];
-	var incorrectAnswers = [];
 	var i = 0;
+	incorrectAnswers = [];
 
 	// Determine the correction of the first questions
 	while (i < correctOptions.length){
@@ -320,10 +335,7 @@ function finishQuiz(){
 		}
 		i++;
 	}
-
-	// Abreviations
-	let hbf = head_body_feet;
-	let icd = images_combinations_descriptions;
+	let [hbf, icd] = [head_body_feet, images_combinations_descriptions]; // Abreviations
 
 	// Determine the correction of the last question
 	if ( 
@@ -333,6 +345,31 @@ function finishQuiz(){
 	{
 		incorrectAnswers.push(i+1);
 	}
+}
+
+function finishQuiz(){
+		// case "sendEmail_view":
+		// 	div.innerHTML =
+		// 		`<div class="whole" style="flex-direction:column">
+		// 			<div id="desc" class="whole centeredFlex" style="height:16%"></div>
+
+		// 			<div id="useremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+		// 			<div id="userpassword" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+		// 			<div id="teacheremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+
+		// 			<div id="sendButton" class="whole" style="height:15%; flex-direction:row"></div>
+		// 		</div>`;
+		// 	break;
+	resetDiv("main-background");
+	poblateMainBackground("sendEmail_view");
+
+	document.getElementById("desc").innerHTML = // Text: "Submit results"
+		`<div class="centered_FontRupes" style="font-size:4vmin; color:white">` + sendEmail_texts[language][0] + `</div>`;
+
+	document.getElementById("userpassword").innerHTML = 
+		`<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:80%; height:100%">
+
+		</div>`;
 }
 
 // Submit the complete form to the teacher
@@ -389,7 +426,7 @@ function getDescription(){
 // Load the corresponding figure, divided into three sections 
 function loadFigure(num){
 	figureType = num;
-	poblateMainBackground("sliderFigure");
+	poblateMainBackground("sliderFigure_view");
 
 	switch (num){
 		case 0:
