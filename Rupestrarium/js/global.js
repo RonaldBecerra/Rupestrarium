@@ -310,6 +310,9 @@ const quizResults_texts = {
 		"puntos", // 4
 		"Debes corregir las respuestas de las preguntas", // 5
 		"¡Felicitaciones", // 6
+		"Ganaste los", // 7
+		"Intentar de nuevo", // 8
+		"Regresar al menú principal", // 9
 
 	],
 	english: [
@@ -320,6 +323,9 @@ const quizResults_texts = {
 		"points", // 4
 		"You must correct the answers of the questions", // 5
 		"Congratulations", // 6
+		"You won the", // 7
+		"Try again", // 8
+		"Back to main menu", // 9
 	],
 }
 

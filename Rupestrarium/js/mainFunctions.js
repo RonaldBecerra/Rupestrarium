@@ -216,7 +216,16 @@ function poblateMainBackground(kind){
 
 		// It gives the results of the quiz, and if it was the first attempt, it lets the user to try one more time
 		case "quizResults_view":
-			div.innerHTML = null;
+			div.innerHTML =
+				`<div class="whole" style="flex-direction:column">
+					<div id="desc" class="whole centeredFlex" style="height:16%"></div>
+
+					<div id="useremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+					<div id="userpassword" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+					<div id="teacheremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
+
+					<div id="sendButton" class="whole" style="height:15%; flex-direction:row"></div>
+				</div>`;
 			break;
 
 		default:
@@ -347,7 +356,7 @@ function testQuiz(){
 	}
 }
 
-function finishQuiz(){
+function finishQuizPrev(){
 		// case "sendEmail_view":
 		// 	div.innerHTML =
 		// 		`<div class="whole" style="flex-direction:column">
@@ -370,6 +379,10 @@ function finishQuiz(){
 		`<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:80%; height:100%">
 
 		</div>`;
+}
+
+function showQuizResults(){
+
 }
 
 // Submit the complete form to the teacher
