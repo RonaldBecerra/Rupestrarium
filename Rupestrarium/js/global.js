@@ -590,3 +590,5 @@ const rockPainting2 = [
 	[Root+"cuerpo_antro2.png", Root+"cuerpo_geo2.png", Root+"cuerpo_zoo2.png"],
 	[Root+"inferior_antro2.png", Root+"inferior_geo2.png", Root+"inferior_zoo2.png"],
 ];
+
+const possible_figures = [petroglyph1, petroglyph2, rockPainting1, rockPainting2]

@@ -109,18 +109,6 @@ function loadDef(num=null){
 	}
 }
 
-// Restablish a div to its default state
-function resetDiv(id){
-	let div = document.getElementById(id);
-	// Reset the default background image of the central section
-	if (id === "main-background"){
-		div.style.backgroundImage = "url('img/fondo_petro.png')";
-	}
-	else{
-		div.innerHTML = "";
-	}
-}
-
 /* Loads an image that will be shown in the center.
    Normally that image has text, so it cannot be automatically translated when the language is changed.
    Another image should be loaded in that case (NOT IMPLEMENTED YET)
@@ -141,10 +129,36 @@ function loadCentralImage(num){
 	document.getElementById("img").src = imagesSources[num];
 }
 
+// In this function we also restore variables that indicate the state of the view to their default values
+function restoreDefaultValues(){
+	figures = quiz = espdoc = false;
+	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
+	resetDiv("main-background"); // Restore the default background of the central section
+
+	// Since menu buttons turn black when selected, when we choose another we must first restore the color of the previous one.
+	// We are currently not controlling which one was selected, so we have to iterate over them all.
+	var elems = document.getElementsByTagName('button');
+	for (var i = 0; i < elems.length; i++) {
+		elems[i].style.removeProperty('background'); // This property is which could have the black color
+	}
+}
+
+// Restablish a div to its default state
+function resetDiv(id){
+	let div = document.getElementById(id);
+	// Reset the default background image of the central section
+	if (id === "main-background"){
+		div.style.backgroundImage = "url('img/fondo_petro.png')";
+	}
+	else{
+		div.innerHTML = "";
+	}
+}
+
 /* The "main-background" div can have different inner HTML objects depending to the case.
    Here we build that internal part according to the case
  */
-function poblateMainBackground(kind){
+function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 	let div = document.getElementById("main-background");
 
 	switch (kind){
@@ -162,23 +176,15 @@ function poblateMainBackground(kind){
 				<div class="img-side"></div>`;
 			break;
 
-		// When we put the figure divided in three parts that the user can slide
-		case "sliderFigure_view":
-			div.innerHTML =
-				`<div class="whole" style="flex-direction:column">
-					<div id="desc" class="whole centeredFlex" style="height:17%"></div>
-
-					<div id="head" class="whole centeredFlex" style="height:20%; flex-direction:row"></div>
-					<div id="body" class="whole centeredFlex" style="height:20%; flex-direction:row"></div>
-					<div id="feet" class="whole centeredFlex" style="height:20%; flex-direction:row"></div>
-
-					<div id="rotulos" class="whole" 
-						style="display: flex; flex-direction:row; justify-content: flex-start; 
-								align-items: flex-start; height:11%; padding-top:10px">
-					</div>
-
-					<div id="kind" class="whole centeredFlex" style="z-index:1; height:12%"></div>
-				</div>`;
+		// When we want to segment it in some horizontal pieces
+		case "horizontalSections_view":
+			let tuple, str = `<div class="whole" style="flex-direction:column">`;
+			for (i=0; i < namesHeights.length; i++){
+				tuple = namesHeights[i];
+				str += `<div id="` + tuple[0] + `" class="whole centeredFlex" 
+							style="height:` + tuple[1] + `%; flex-direction:` + innerDirection + `"></div>`;
+			}
+			div.innerHTML = str + `</div>`;
 			break;
 
 		// When the user is answering one of the questions of the quiz, except the last one, that has a slider figure
@@ -200,54 +206,115 @@ function poblateMainBackground(kind){
 				</div>`;
 			break;
 
-		// Form in which the user enters their email and the teacher's
-		case "sendEmail_view":
-			div.innerHTML =
-				`<div class="whole" style="flex-direction:column">
-					<div id="desc" class="whole centeredFlex" style="height:16%"></div>
-
-					<div id="useremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-					<div id="userpassword" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-					<div id="teacheremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-
-					<div id="sendButton" class="whole" style="height:15%; flex-direction:row"></div>
-				</div>`;
-			break;
-
-		// It gives the results of the quiz, and if it was the first attempt, it lets the user to try one more time
-		case "quizResults_view":
-			div.innerHTML =
-				`<div class="whole" style="flex-direction:column">
-					<div id="desc" class="whole centeredFlex" style="height:16%"></div>
-
-					<div id="useremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-					<div id="userpassword" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-					<div id="teacheremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-
-					<div id="sendButton" class="whole" style="height:15%; flex-direction:row"></div>
-				</div>`;
-			break;
-
 		default:
 			break;	
 	}
 }
 
-// In this function we also restore variables that indicate the state of the view to their default values
-function restoreDefaultValues(){
-	figures = quiz = espdoc = false;
-	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetDiv("main-background"); // Restore the default background of the central section
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////       R E L A T E D     T O     T H E     S L I D E R     F I G U R E S       /////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Since menu buttons turn black when selected, when we choose another we must first restore the color of the previous one.
-	// We are currently not controlling which one was selected, so we have to iterate over them all.
-	var elems = document.getElementsByTagName('button');
-	for (var i = 0; i < elems.length; i++) {
-		elems[i].style.removeProperty('background'); // This property is which could have the black color
+// Load the corresponding figure, divided into three sections 
+function loadFigure(num){
+	figureType = num;
+	currentFigure = possible_figures[num];
+
+	poblateMainBackground("horizontalSections_view", 
+		[['desc','17'],['head','20'],['body','20'],['feet','20'],['rotulos','11'],['kind','12']]
+	);
+
+	if (num < 2){
+		figures = 'petroglyph';
+	}
+	else{
+		figures = 'rockPainting';
+		document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
+	}
+
+	if (quiz){
+		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
+	} else {
+		head_body_feet = [0, 0, 0]; // We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
+		getDescription();		
+	}
+	buildFigure();
+}
+
+// Get description of the current image according to which combination the user has stablished
+function getDescription(){
+	resetDiv("rotulos"); 
+
+	let color = ((figures == 'petroglyph') ? 'white' : 'black');
+	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
+
+	document.getElementById("desc").innerHTML = 
+		`<p class="centeredBold_FontTexto" style='font-size:1.3vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
+
+	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
+		style=""
+
+		// The labels, information of the specific figure, that may not be present if it is a mix
+		let div = document.getElementById("rotulos");
+		div.style.cssText += ";justify-content:flex-start; align-items:flex-start; padding-top:10px";
+
+		div.innerHTML = 
+			`<div style="width: 72%"></div>` +
+			`<p style="font-family:'FontTexto'; color:` + color + `; text-align:left; font-size:1.75vmin;">
+			<b>` + object.rotulos[figureType] + `</b></p>`;
+	}
+
+	document.getElementById("kind").innerHTML = 
+		`<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
+}
+
+// Build the three sections of the figure
+function buildFigure(array = [true, true, true]){
+	let sections = ["head", "body", "feet"];
+	let str;
+
+	for (i=0; i<3; i++){
+		if (array[i]){
+			str =  loadArrow(i, "left") + `<img class="whole" style="width:60%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
+			document.getElementById(sections[i]).innerHTML = str;
+		}
 	}
 }
 
-// Recapitulate
+// Arrows that let the user slide the sections of the figures
+function loadArrow(figurePosition, direction){
+	let str = 
+		`<div class="centeredFlex"; style="position:relative; width:20%; height:100%">
+			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
+				`onmouseover="this.style.height='35%'" onmouseout="this.style.height='25%'"
+				style="position:relative; height:25%;"
+				src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
+			>
+		</div>`;
+	return str;
+}
+
+// Slide one of the three sections of the figre to the left or to the right
+function slideFigure(figurePosition, direction){
+	if (direction == "left"){ // Slide to the left
+		head_body_feet[figurePosition] -= 1;
+		if (head_body_feet[figurePosition] < 0){
+			head_body_feet[figurePosition] = 2;
+		}
+	} else { // Slide to the right
+		head_body_feet[figurePosition] += 1;
+		if (head_body_feet[figurePosition] > 2){
+			head_body_feet[figurePosition] = 0;
+		}				
+	}
+	let array = [false, false, false];
+	array[figurePosition] = true;
+	buildFigure(array)
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////       R E L A T E D     T O     T H E     Q U I Z       ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function loadQuiz(){
 	numQuestion = 0;
 	quiz = true;
@@ -305,10 +372,7 @@ function lastQuestion(currentQ, notReloading){
 	document.getElementById("rotulos").innerHTML = 
 		`<div style="width:90%; display:flex; flex-direction:row; justify-content:flex-end; align-items:center">
 			<div class="centeredFlex" onClick="finishQuiz()">
-				<form id="finishButton" class"centeredFlex" 
-					onmouseover="this.style.color='white'; this.style['border-style']='solid'; this.style['border-color']='black'" 
-					onmouseout="this.style.color='black'"
-				>
+				<form id="finishButton" class"centeredFlex" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">
 					<p style="font-size:3vmin; font-family:'Arial'">`+ currentQ.finishButton + `</p>
 				</form>
 			</div>
@@ -356,21 +420,12 @@ function testQuiz(){
 	}
 }
 
-function finishQuizPrev(){
-		// case "sendEmail_view":
-		// 	div.innerHTML =
-		// 		`<div class="whole" style="flex-direction:column">
-		// 			<div id="desc" class="whole centeredFlex" style="height:16%"></div>
-
-		// 			<div id="useremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-		// 			<div id="userpassword" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-		// 			<div id="teacheremail" class="whole centeredFlex" style="height:23%; flex-direction:column"></div>
-
-		// 			<div id="sendButton" class="whole" style="height:15%; flex-direction:row"></div>
-		// 		</div>`;
-		// 	break;
+function finishQuiz(){
 	resetDiv("main-background");
-	poblateMainBackground("sendEmail_view");
+	poblateMainBackground("horizontalSections_view",
+		[['desc','16'],['useremail','23'],['userpassword','23'],['teacheremail','23'],['sendButton','15']],
+		"column"
+	);
 
 	document.getElementById("desc").innerHTML = // Text: "Submit results"
 		`<div class="centered_FontRupes" style="font-size:4vmin; color:white">` + sendEmail_texts[language][0] + `</div>`;
@@ -414,105 +469,4 @@ function submitForm(){
 		+ "%0D%0A    Respuesta:  " +currentQ.options[userAnswers[i]];
 
 	window.location.href = str;
-}
-
-// Get description of the current image according to which combination the user has stablished
-function getDescription(){
-	resetDiv("rotulos");
-
-	let color = ((figures == 'petroglyph') ? 'white' : 'black');
-	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
-
-	document.getElementById("desc").innerHTML = 
-		`<p class="centeredBold_FontTexto" style='font-size:1.3vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
-
-	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
-		document.getElementById("rotulos").innerHTML = `<div style="width: 72%"></div>` +
-			`<p style="font-family:'FontTexto'; color:` + color + `; text-align:left; font-size:1.75vmin;">
-			<b>` + object.rotulos[figureType] + `</b></p>`;
-	}
-
-	document.getElementById("kind").innerHTML = 
-		`<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
-}
-
-// Load the corresponding figure, divided into three sections 
-function loadFigure(num){
-	figureType = num;
-	poblateMainBackground("sliderFigure_view");
-
-	switch (num){
-		case 0:
-			figures = 'petroglyph';
-			currentFigure = petroglyph1;
-			break;
-		case 1:
-			figures = 'petroglyph';
-			currentFigure = petroglyph2;
-			break;
-		case 2:
-			figures = 'rockPainting';
-			currentFigure = rockPainting1;
-			document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
-			break;
-		case 3:
-			figures = 'rockPainting';
-			currentFigure = rockPainting2;
-			document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
-			break;
-		default:
-			break;
-	}
-
-	if (quiz){
-		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
-	} else {
-		head_body_feet = [0, 0, 0]; // We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
-		getDescription();		
-	}
-	buildFigure();
-}
-
-// Hands (arrows) that let the user slide the sections of the figures
-function loadArrow(figurePosition, direction){
-	let str = 
-		`<div class="centeredFlex"; style="position:relative; width:20%; height:100%">
-			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
-				`onmouseover="this.style.height='35%'" onmouseout="this.style.height='25%'"
-				style="position:relative; height:25%;"
-				src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
-			>
-		</div>`;
-	return str;
-}
-
-// Slide one of the three sections of the figre to the left or to the right
-function slideFigure(figurePosition, direction){
-	if (direction == "left"){ // Slide to the left
-		head_body_feet[figurePosition] -= 1;
-		if (head_body_feet[figurePosition] < 0){
-			head_body_feet[figurePosition] = 2;
-		}
-	} else { // Slide to the right
-		head_body_feet[figurePosition] += 1;
-		if (head_body_feet[figurePosition] > 2){
-			head_body_feet[figurePosition] = 0;
-		}				
-	}
-	let array = [false, false, false];
-	array[figurePosition] = true;
-	buildFigure(array)
-}
-
-// Build the three sections of the figure
-function buildFigure(array = [true, true, true]){
-	let sections = ["head", "body", "feet"];
-	let str;
-
-	for (i=0; i<3; i++){
-		if (array[i]){
-			str =  loadArrow(i, "left") + `<img class="whole" style="width:60%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
-			document.getElementById(sections[i]).innerHTML = str;
-		}
-	}
 }
