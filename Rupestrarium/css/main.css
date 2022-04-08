@@ -184,6 +184,33 @@ main .main-container {
 	padding: 5%;
 }
 
+#sendEmailButton{
+	border-radius: 8px;
+	border-style: solid;
+	border-color: black;
+	background: #4285F4; /*Blue color used by Google*/
+	padding: 12%;
+}
+
+.modal {
+	display: flex; 
+	position: absolute; 
+	z-index: 1; 
+	width: 80%; 
+	height: 80%;
+	background-color: white;
+}
+
+/* For the text input boxes that are used to enter the send email fields*/
+.emailInput{
+	height: 35%; 
+	width: 100%; 
+	font-size: 2.8vmin; 
+	padding-left:5px; 
+	padding-right: 5px;
+}
+
+
 /* For the text that appears on the description of a slider figure */
 .centeredBold_FontTexto{
 	text-align: center; 

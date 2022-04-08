@@ -10,6 +10,8 @@ var incorrectAnswers = []
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
+var quizFinished = false;
+var sendingEmail = false; // Indicates if the user is in the form view to send an email
 var espdoc = false; // Indicates if the user is currently in the "For teachers only" space
 // ------ END
 
@@ -82,21 +84,21 @@ const definitions_texts = {
 	spanish: [
 		`Los <span style="color:red;font-style:italic">Petroglifos</span> son grabados de figuras en bajo relieve, en la superficie de algunas rocas. Realizados con diferentes técnicas de percusión directa o indirecta, abrasión y/o rayado. Su presencia implica, como implicaba en épocas pasadas, territorialidad. Las señales eran reconocidas por los miembros de una misma comunidad étnica, e identificadas como signos territoriales por miembros de otras comunidades, que las temían y respetaban.`, // 0
 
-		`Los significados de las imágenes de los <span style="color:red;font-style:italic">Petroglifos</span>, conocidos por nosotros solo en unos casos, definían su función, que es muy variable. En algunos grupos amazónicos venezolanos, la función sagrada de los <span style="color:red;font-style:italic">Petroglifos</span>, está relacionada a la transmisión de preceptos religiosos vitales, para la supervivencia de la comunidad; su función como objetos sagrados, conocida entre los ArawaKos, posiblemente es ampliable a otros grupos. En sitios de los estados Barinas, Carabobo y Amazonas entre otros, parecen representar complejos de tipo ceremonial.`, // 1
+		`Los significados de las imágenes de los <span style="color:red;font-style:italic">Petroglifos</span>, conocidos por nosotros solo en unos casos, definían su función, que es muy variable. En algunos grupos amazónicos venezolanos, la función sagrada de los <span style="color:red;font-style:italic">Petroglifos</span> está relacionada a la transmisión de preceptos religiosos vitales para la supervivencia de la comunidad; su función como objetos sagrados, conocida entre los ArawaKos, posiblemente es ampliable a otros grupos. En sitios de los estados Barinas, Carabobo y Amazonas, entre otros, parecen representar complejos de tipo ceremonial.`, // 1
 
 		`Las <span style="color:blue;font-style:italic">Pinturas Rupestres o Pictografías</span> son dibujos realizados sobre las rocas, mediante la aplicación de pigmentos. Se utilizaron en unos casos sustancias minerales, como almagre y óxidos de hierro, en otros sustancias vegetales -chica, (Arrabidea Chica) y caraña (Bursera Simaruba), de orígen animal: sangre, grasas, huevos, también carbón y arcillas. Aparecen realizadas en cuevas y abrigos, protegidas del clima y de la visibilidad fácil, en muchos casos han sido encontradas acompañadas de fardos mortuorios, posiblemente cumpliendo la función de símbolos protectores de los muertos.`, // 2
 
-		`Son la Manifestación Rupestre de manufactura prehispánica más extendida, llegando incluso a utilizarse hasta el presente, en las pinturas que acompañan los restos mortuorios de etnias indígenas contemporáneas, y en rituales de tradición espiritista y santera, que aparecen en grandes murales al aire libre. La mayor parte de las Pictografías en el mundo, son de color rojo, perotambién se han encontrado pintadas en negro, naranja, amarillo y blanco, entre otros.En Venezuela, fueron indicadores territoriales de los sitios de enterramientos de un grupo.`, // 3
+		`Son la Manifestación Rupestre de manufactura prehispánica más extendida, llegando incluso a utilizarse hasta el presente, en las pinturas que acompañan los restos mortuorios de etnias indígenas contemporáneas, y en rituales de tradición espiritista y santera, que aparecen en grandes murales al aire libre. La mayor parte de las Pictografías en el mundo son de color rojo, pero también se han encontrado pintadas en negro, naranja, amarillo y blanco, entre otros. En Venezuela, en su mayoría fueron indicadores territoriales de los sitios de enterramientos de un grupo.`, // 3
 	],
 
 	english: [
-		`The <span style="color:red;font-style:italic"> Petroglyphs</span> are engravings of figures in bas-relief,on the surface of some rocks. Performed with different techniques of direct percussion or indirect, abrasion and / or scratching. The presence of these signs engraved on stone implies territoriality. The signs are recognized by members of one ethnic community, and identified as territorial markers by members of other communities, who fear and respect them.`, // 0
+		`The <span style="color:red;font-style:italic"> Petroglyphs</span> are engravings of figures in bas-relief, on the surface of some rocks. Performed with different techniques of direct percussion or indirect, abrasion and/or scratching. The presence of these signs engraved on stone implies territoriality. The signs are recognized by members of one ethnic community, and identified as territorial markers by members of other communities, who fear and respect them.`, // 0
 
-		`The meanings of the images in the<span style="color:red;font-style:italic"> Petroglyphs</span>, however, did vary. These are known to us in only a few cases and, in turn, defined their function. In some Venezuelan groups, the sacred function of the <span style="color:red;font-style:italic"> Petroglyphs</span>, is related to the transmission of rules, vital for the survival of the community. Its function as sacred objects, known among the ArawaK, is possibly expandable to other groups. In areas of the states Barinas, Carabobo and Amazonas among others, they seem to represent ceremonial centres.`, // 1
+		`The meanings of the images in the<span style="color:red;font-style:italic"> Petroglyphs</span>, however, did vary. These are known to us in only a few cases and, in turn, defined their function. In some Venezuelan groups, the sacred function of the <span style="color:red;font-style:italic"> Petroglyphs</span> is related to the transmission of rules, vital for the survival of the community. Its function as sacred objects, known among the ArawaK, is possibly expandable to other groups. In areas of the states Barinas, Carabobo and Amazonas, among others, they seem to represent ceremonial centres.`, // 1
 
-		`The <span style="color:blue;font-style:italic">Rock Paintings or Pictographs</span> are drawings made on rocks by means of the application of pigments. They were used in mineral substances such as oxides of iron, substances of animal origin, such as blood and fats, also coal and clays. they appear in caves and coats, protected from climate and visibility,since in many cases these were found accompanied by funeral bundles and they possibly functioned as protective symbols for the dead.`, // 2
+		`The <span style="color:blue;font-style:italic">Rock Paintings or Pictographs</span> are drawings made on rocks by means of the application of pigments. They were used in mineral substances such as oxides of iron, substances of animal origin, such as blood and fats, also coal and clays. they appear in caves and coats, protected from climate and visibility, since in many cases these were found accompanied by funeral bundles and they possibly functioned as protective symbols for the dead.`, // 2
 
-		`Although <span style="color:blue;font-style:italic">Rock Paintings</span> are prehispanic in origin, they seem to cover a greater time span than Petroglyphs and have even been used in quite recent times in paintings that accompany the mortuary remains of contemporary indigenous groups, and spiritualistic rituals and Santeria tradition, which appear in large outdoor murals. Most of the Pictographs in the world are red, but also found painted in black, orange, yellow and white, among others. In Venezuela, the majority of Rock Paintings were territorial markers at aTribe’s sacred burial sites.`, // 3
+		`Although <span style="color:blue;font-style:italic">Rock Paintings</span> are prehispanic in origin, they seem to cover a greater time span than Petroglyphs and have even been used in quite recent times in paintings that accompany the mortuary remains of contemporary indigenous groups, and spiritualistic rituals and Santeria tradition, which appear in large outdoor murals. Most of the Pictographs in the world are red, but also found painted in black, orange, yellow and white, among others. In Venezuela, the majority of Rock Paintings were territorial markers at a tribe’s sacred burial sites.`, // 3
 	],
 };
 
@@ -287,45 +289,48 @@ const sendEmail_texts = {
 		"Enviar resultados", // 0
 		"Correo electrónico del estudiante:", // 1
 		"Contraseña:", // 2
-		"Mostrar contraseña", // 3
+		"&nbsp;&nbsp;Mostrar contraseña", // 3
 		"Correo electrónico del profesor:", // 4
-		"Enviar", // 5
+		"ENVIAR", // 5
 	],
 	english: [
 		"Submit results", // 0
 		"Student's email:", // 1
 		"Password:", // 2
-		"Show password", // 3
+		"&nbsp;&nbsp;Show password", // 3
 		"Teacher's email:", // 4
-		"Send", // 5
+		"SEND", // 5
 	]
 }
 
 const quizResults_texts = {
 	spanish: [
 		"Resultados", // 0
-		"Arregla las respuestas", // 1
+		"Arregla las respuestas ", // 1
 		"¡Muy bien!", // 2
-		"Ganaste", // 3
-		"puntos", // 4
-		"Debes corregir las respuestas de las preguntas", // 5
-		"¡Felicitaciones", // 6
-		"Ganaste los", // 7
+		"Ganaste ", // 3
+		" puntos", // 4
+		"Debes corregir las respuestas de las preguntas ", // 5
+		"¡Felicitaciones!", // 6
+		"Ganaste los ", // 7
 		"Intentar de nuevo", // 8
 		"Regresar al menú principal", // 9
-
+		"Debes corregir la respuesta de la pregunta ", // 10
+		"Enviar los resultados por correo", // 11
 	],
 	english: [
 		"Results", // 0
-		"Fix the answers", // 1
+		"Fix the answers ", // 1
 		"Very good!", // 2
-		"You won", // 3
-		"points", // 4
-		"You must correct the answers of the questions", // 5
+		"You won ", // 3
+		" points", // 4
+		"You must correct the answers of the questions ", // 5
 		"Congratulations", // 6
-		"You won the", // 7
+		"You won the ", // 7
 		"Try again", // 8
 		"Back to main menu", // 9
+		"You must correct the answer of the question ", // 10
+		"Send the results by email", // 11
 	],
 }
 

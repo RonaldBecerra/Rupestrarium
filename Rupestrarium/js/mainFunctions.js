@@ -75,13 +75,22 @@ function change_language(newLanguage){
 		// Case when there is a figure on the view and the user is not solving the quiz
 		// NOTE: A non-empty string works as a "true"
 		if(figures && !quiz){
+			loadDef(figureType);
 			getDescription();
 		}
 
 		// This makes the question and answers of the quiz load again with the new language
 		if(quiz){
-			numQuestion -= 1;
-			nextQuestion(false);
+			if (quizFinished){
+				currentAttempt -= 1;
+				finishQuiz();
+			}
+			else if (sendingEmail){
+				change_language_sendingEmail();
+			}
+			else{
+				nextQuestion(false);
+			}
 		}
 	}
 }
@@ -115,7 +124,6 @@ function loadDef(num=null){
  */
 function loadCentralImage(num){
 	poblateMainBackground('centralImage_view');
-	figures = null;
 
 	let im = imagesThatVaryWithLanguage[language];
 	const imagesSources = [im.presentacion, im.intro, im.instrucciones, im.creditos, im.contacto, "img/imagen_inicial.png"];
@@ -131,7 +139,7 @@ function loadCentralImage(num){
 
 // In this function we also restore variables that indicate the state of the view to their default values
 function restoreDefaultValues(){
-	figures = quiz = espdoc = false;
+	figures = quiz = quizFinished = sendingEmail = espdoc = false;
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Restore the default background of the central section
 
@@ -157,6 +165,10 @@ function resetDiv(id){
 
 /* The "main-background" div can have different inner HTML objects depending to the case.
    Here we build that internal part according to the case
+
+   @param kind -> indicates how we want to poblate it.
+   @param namesHeights -> array of arrays, each having the id (name) of a div we will include, and its %height written as a string
+   @param innerDirection -> flex-direction of the inner divs we will include
  */
 function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 	let div = document.getElementById("main-background");
@@ -178,7 +190,7 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 
 		// When we want to segment it in some horizontal pieces
 		case "horizontalSections_view":
-			let tuple, str = `<div class="whole" style="flex-direction:column">`;
+			let tuple, str = `<div id="main-background-container" class="whole" style="flex-direction:column">`;
 			for (i=0; i < namesHeights.length; i++){
 				tuple = namesHeights[i];
 				str += `<div id="` + tuple[0] + `" class="whole centeredFlex" 
@@ -212,7 +224,7 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////       R E L A T E D     T O     T H E     S L I D E R     F I G U R E S       /////////////////////////////////
+/////////////////////////////       R E L A T E D     T O     T H E     S L I D E R     F I G U R E S       /////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Load the corresponding figure, divided into three sections 
@@ -275,7 +287,7 @@ function buildFigure(array = [true, true, true]){
 
 	for (i=0; i<3; i++){
 		if (array[i]){
-			str =  loadArrow(i, "left") + `<img class="whole" style="width:60%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
+			str =  loadArrow(i, "left") + `<img class="whole" style="width:54%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
 			document.getElementById(sections[i]).innerHTML = str;
 		}
 	}
@@ -284,7 +296,7 @@ function buildFigure(array = [true, true, true]){
 // Arrows that let the user slide the sections of the figures
 function loadArrow(figurePosition, direction){
 	let str = 
-		`<div class="centeredFlex"; style="position:relative; width:20%; height:100%">
+		`<div class="centeredFlex"; style="position:relative; width:23%; height:100%">
 			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
 				`onmouseover="this.style.height='35%'" onmouseout="this.style.height='25%'"
 				style="position:relative; height:25%;"
@@ -316,10 +328,19 @@ function slideFigure(figurePosition, direction){
 /////////////////////////////////////       R E L A T E D     T O     T H E     Q U I Z       ///////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function loadQuiz(){
-	numQuestion = 0;
+	resetDiv('main-background');
 	quiz = true;
-	poblateMainBackground("quizQuestion_view");
-	nextQuestion();
+
+	if (quizFinished){
+		finishQuiz();
+	}
+	else if (sendingEmail){
+		sendEmail();
+	}
+	else {
+		poblateMainBackground("quizQuestion_view");
+		nextQuestion();
+	}
 }
 
 // Gets the question of the quiz to display and increases the number of current question in 1
@@ -339,10 +360,8 @@ function nextQuestion(notReloading=true){
 
 		// Here we put the image of the hand to advance to the next question
 		document.getElementById("handToRight").innerHTML =
-			`<img onclick="submitA(` + numQuestion.toString()+`); nextQuestion()" style="position:relative; height:12vmin" 
+			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="position:relative; height:12vmin" 
 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
-
-		numQuestion += 1;
 	}
 	else{ // The last question needs a different treatment
 		lastQuestion(currentQ, notReloading); 
@@ -392,12 +411,11 @@ function lastQuestion(currentQ, notReloading){
 	
 	document.getElementById("kind").innerHTML = str;
 	document.getElementById("figure-chosen-name").value = (notReloading ? lastQ_optionsOrder[0] : lastQ_selectedOption);
-
-	numQuestion += 1;
 }
 
 function testQuiz(){
-	let lastQ = quiz_questions[language][numQuestion-1];
+	console.log("Entré en testQuiz");
+	let lastQ = quiz_questions[language][numQuestion];
 	var i = 0;
 	incorrectAnswers = [];
 
@@ -420,24 +438,213 @@ function testQuiz(){
 	}
 }
 
-function finishQuiz(){
-	resetDiv("main-background");
+function sendEmail(useremail_val="", userpassword_val="", passwordShown=false, teacheremail_val=""){
+	resetDiv('main-background');
+	quizFinished = false;
+	sendingEmail = true;
 	poblateMainBackground("horizontalSections_view",
-		[['desc','16'],['useremail','23'],['userpassword','23'],['teacheremail','23'],['sendButton','15']],
+		[['desc','14'],['useremail','23'],['userpassword','23'],['teacheremail','23'],['sendButton','17']],
 		"column"
 	);
 
+	document.getElementById("main-background-container").style.cssText += "color:white; font-size:2.7vmin;";
+
 	document.getElementById("desc").innerHTML = // Text: "Submit results"
-		`<div class="centered_FontRupes" style="font-size:4vmin; color:white">` + sendEmail_texts[language][0] + `</div>`;
+		`<div class="centered_FontRupes" style="font-size:4vmin; padding-top:2%">` + sendEmail_texts[language][0] + `</div>`;
 
-	document.getElementById("userpassword").innerHTML = 
-		`<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:80%; height:100%">
+	let divInit = `<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:70%; height:100%;">`;
 
+	document.getElementById("useremail").innerHTML = divInit +
+			`<label for="useremail_input">` + sendEmail_texts[language][1] + `</label>
+			<input class="emailInput" type="text" id="useremail_input" name="useremail_input" value="` + useremail_val + `">` 
+		+ `</div>`;
+		
+
+	document.getElementById("userpassword").innerHTML = divInit +
+			`<label for="password_input">` + sendEmail_texts[language][2] + `</label>
+			<input class="emailInput" type="password" id="password_input" name="password_input" value="` + userpassword_val + `">
+			<div style="height:7.5%"></div>
+			<div class="centeredFlex" style="flex-direction:row; height:10%; justify-content:flex-start; font-size:2.3vmin">
+				<input type="checkbox" id="showHide_password" onClick="show_or_hide_password()"/>`
+				+ sendEmail_texts[language][3] +
+			`</div>` 
+		+ `</div>`;
+
+	document.getElementById("teacheremail").innerHTML = divInit + 
+			`<label for="teacheremail_input">` + sendEmail_texts[language][4] + `</label>
+			<input class="emailInput" type="text" id="teacheremail_input" name="teacheremail_input" value="` + teacheremail_val + `">` 
+		+ `</div>`;
+
+	let buttonDiv = document.getElementById("sendButton");
+	buttonDiv.style["flex-direction"] = "row";
+
+	buttonDiv.innerHTML =
+		`<div class="centeredFlex" style="padding-bottom:2%" onClick="loadCentralImage(5); currentAttempt+=1; numQuestion=0; sendingEmail=false">
+			<form id="sendEmailButton" class"centeredFlex" style="color:black" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">
+				<p style="font-size:3vmin; font-family:'Arial'">`+ sendEmail_texts[language][5] + `</p>
+			</form>
 		</div>`;
 }
 
-function showQuizResults(){
+// To make visible or not the password that the user is entering
+function show_or_hide_password(){
+	if ($('#showHide_password').is(':checked')) {
+		$('#password_input').attr('type', 'text');
+	} 
+	else {
+		$('#password_input').attr('type', 'password');
+	}
+}
 
+/* Changing the language while sending an email require to the input values
+ * so in this case we need a different treatment
+ */
+function change_language_sendingEmail(){
+	let useremail_val = document.getElementById("useremail_input").value;
+	let userpassword_val = document.getElementById("password_input").value;
+	let passwordShown = null;
+	let teacheremail_val = document.getElementById("teacheremail_input").value;
+
+	finishQuiz(useremail_val, userpassword_val, passwordShown, teacheremail_val);
+}
+
+//function showQuizResults(){
+function finishQuiz(){
+	quizFinished = true;
+	testQuiz();
+
+	let len = incorrectAnswers.length;
+	let totalPossibilities = quiz_questions[language].length
+	let texts = quizResults_texts[language];
+	let str = `<span style="font-size:5vmin; font-weight:bold">` + texts[0] + `</span><br><br>`;
+
+	let stringIncorrects = "";
+	for (i=0; i < len; i++){
+		stringIncorrects += incorrectAnswers[i].toString() + ", ";
+	}
+	stringIncorrects = stringIncorrects.slice(0, -2);
+	let printCase = true;
+
+	if (len > 0){
+		if (len > 4){
+			str += texts[1] + `<br>` + stringIncorrects + `<br><br>`;
+		}
+		else if (len > 1){
+			let corrects = totalPossibilities - len;
+			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
+			str += texts[5] + stringIncorrects + `<br><br>`;
+		}
+		else{
+			let corrects = totalPossibilities - len;
+			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
+			str += texts[10] + `<br>` + stringIncorrects + `<br><br>`;
+		}
+	}
+	else {
+		str += texts[6] + `<br>` + texts[7] + totalPossibilities.toString() + texts[4];
+	}
+
+/*	if (currentAttempt == 0){
+		document.getElementById("main-background").innerHTML = 
+			`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column">
+				<p class="centered_FontRupes" style="font-size:3.5vmin">` + str + `</p>
+
+				<div style="padding-top:10%; font-size:3.7vmin; font-weight:bold">
+					<p class="centered_FontRupes" style="padding-top:7%">` + texts[8] + `</p>
+					<p class="centered_FontRupes" style="padding-top:7%">` + texts[11] + `</p>
+					<p class="centered_FontRupes" style="padding-top:7%">` + texts[9] + `</p>
+				</div>
+			</div>`;
+	}*/
+
+	if (currentAttempt == 0){
+		document.getElementById("main-background").innerHTML = 
+			`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
+				<p class="centered_FontRupes">` + str + 
+
+				`<div class="centeredFlex centered_FontRupes" onClick="tryAgain(); currentAttempt+=1; quizFinished=false">
+					<form class"centeredFlex" style="padding-top:2%"
+						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
+						style="color:#F26D0B; font-size:3vmin"
+					>
+						<p style="color:#F26D0B; font-size:3vmin"
+						>`+ texts[8] + `</p>
+					</form>
+				</div>
+
+				<div class="centeredFlex centered_FontRupes" onClick="sendEmail(); quizFinished=false">
+					<form class"centeredFlex" style="padding-top:2%"
+						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
+						style="color:#F26D0B; font-size:3vmin"
+					>
+						<p style="color:#F26D0B; font-size:3vmin"
+						>`+ texts[11] + `</p>
+					</form>
+				</div>
+
+				<div class="centeredFlex centered_FontRupes" onClick="loadCentralImage(5); currentAttempt += 1; numQuestion=0; restoreDefaultValues(); quizFinished=false">
+					<form class"centeredFlex" style="padding-top:2%"
+						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
+						style="color:#F26D0B; font-size:3vmin"
+					>
+						<p style="color:#F26D0B; font-size:3vmin"
+						>`+ texts[9] + `</p>
+					</form>
+				</div>
+
+			</div>`;
+
+	}
+
+	else if (currentAttempt == 1){
+		document.getElementById("main-background").innerHTML = 
+			`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
+				<p class="centered_FontRupes">` + str + 
+
+				`<div class="centeredFlex centered_FontRupes" onClick="aux_tryAgain(); currentAttempt+=1">
+					<form class"centeredFlex" style="padding-top:2%"
+						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+						onmouseout="this.style.color='#F26D0B'; this.style['font-weight']='lighter'; this.style['font-size']='3vmin'"
+						style="color:#F26D0B; font-size:3vmin"
+					>
+						<p style="color:#F26D0B; font-size:3vmin"
+						>`+ texts[8] + `</p>
+					</form>
+				</div>
+
+				<div class="centeredFlex centered_FontRupes" onClick="sendEmail()">
+					<form class"centeredFlex" style="padding-top:2%"
+						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
+						style="color:#F26D0B; font-size:3vmin"
+					>
+						<p style="color:#F26D0B; font-size:3vmin"
+						>`+ texts[11] + `</p>
+					</form>
+				</div>
+
+				<div class="centeredFlex centered_FontRupes" onClick="loadCentralImage(5); currentAttempt += 1">
+					<form class"centeredFlex" style="padding-top:2%"
+						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
+						style="color:#F26D0B; font-size:3vmin"
+					>
+						<p style="color:#F26D0B; font-size:3vmin"
+						>`+ texts[9] + `</p>
+					</form>
+				</div>
+
+			</div>`;
+	}
+
+}
+
+function tryAgain(){
+	numQuestion = 0;
+	loadQuiz();
 }
 
 // Submit the complete form to the teacher
