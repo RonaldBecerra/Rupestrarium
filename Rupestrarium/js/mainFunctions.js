@@ -37,14 +37,13 @@ function generateColumnMenus(){
 	str = "";
 	while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
 		str += `<button class="menuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
-		str += `loadDef(`+k.toString()+`)">`;
+		str += `loadDef(`+k.toString()+`);">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		k += 1;
 		i += 1;
 	}
-	// "Recapitulate" and "For teachers only" buttons
+	// "Recapitulate" button
 	str += `<button class="menuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
-	str += `<button class="menuButton red_mb"><b id="textButton`+(i+1).toString()+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
 	str += `<div id="def" class="centeredFlex" style="flex-direction: row; width: 100%; height: 80%"></div>`;
@@ -81,12 +80,11 @@ function change_language(newLanguage){
 
 		// This makes the question and answers of the quiz load again with the new language
 		if(quiz){
-			if (quizFinished){
-				currentAttempt -= 1;
-				finishQuiz();
-			}
-			else if (sendingEmail){
+			if (sendingEmail){
 				change_language_sendingEmail();
+			}
+			else if (quizFinished){
+				finishQuiz();
 			}
 			else{
 				nextQuestion(false);
@@ -109,7 +107,7 @@ function loadDef(num=null){
 	// Case when we must load the definition of a Petroglyph or Rock painting
 	else{
 		loadFigure(num);
-		let str = `<p style="width:95%; text-align:justify; font-family:'FontTexto'; font-size:0.85vmax"><b>`;
+		let str = `<p style="width:95%; font-family:'FontTexto'; font-size:0.9vmax"><b>`;
 		str += definitions_texts[language][num];
 		str += `</b></p>`;
 
@@ -138,8 +136,9 @@ function loadCentralImage(num){
 }
 
 // In this function we also restore variables that indicate the state of the view to their default values
-function restoreDefaultValues(){
-	figures = quiz = quizFinished = sendingEmail = espdoc = false;
+function restoreDefaultValues(restore_quiz_values=false){
+	figures = quiz = false;
+	head_body_feet = [0, 0, 0];
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Restore the default background of the central section
 
@@ -148,6 +147,10 @@ function restoreDefaultValues(){
 	var elems = document.getElementsByTagName('button');
 	for (var i = 0; i < elems.length; i++) {
 		elems[i].style.removeProperty('background'); // This property is which could have the black color
+	}
+
+	if (restore_quiz_values){
+		restoreQuizValues();
 	}
 }
 
@@ -205,16 +208,13 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 		case "quizQuestion_view":
 			div.innerHTML =
 				`<div class="whole" style="flex-direction:column">
-					<div class="whole centeredFlex" style="height:77%">
+					<div class="whole centeredFlex" style="height:74%">
 						<form class="whiteBackground_blackBorder" style="width:70%">
-							<p id="question" style="position:relative; font-family:'FontTexto'; text-align:justify"></p>
+							<p id="question" style="position:relative; font-family:'FontTexto'"></p>
 						</form>
 					</div>
 
-					<div class="whole" style="height:23%; display:flex; flex-direction:row">
-						<div style="width: 70%"></div>
-						<div id="handToRight" class="centeredFlex" style="height:100%; width:30%"></div>
-					</div>
+					<div id="handToRight" class="whole centeredFlex" style="height:26%; display:flex; flex-direction:row; padding-left:70%"></div>
 				</div>`;
 			break;
 
@@ -233,7 +233,7 @@ function loadFigure(num){
 	currentFigure = possible_figures[num];
 
 	poblateMainBackground("horizontalSections_view", 
-		[['desc','17'],['head','20'],['body','20'],['feet','20'],['rotulos','11'],['kind','12']]
+		[['desc','17'],['head','24'],['body','24'],['feet','24'],['kind_rotulos','11']]
 	);
 
 	if (num < 2){
@@ -247,7 +247,6 @@ function loadFigure(num){
 	if (quiz){
 		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
 	} else {
-		head_body_feet = [0, 0, 0]; // We reset the sliding moves that the user could have done (ASK IF IT IS NECESSARY)
 		getDescription();		
 	}
 	buildFigure();
@@ -255,29 +254,24 @@ function loadFigure(num){
 
 // Get description of the current image according to which combination the user has stablished
 function getDescription(){
-	resetDiv("rotulos"); 
+	resetDiv("kind_rotulos"); 
 
 	let color = ((figures == 'petroglyph') ? 'white' : 'black');
 	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
 
 	document.getElementById("desc").innerHTML = 
-		`<p class="centeredBold_FontTexto" style='font-size:1.3vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
+		`<p class="centered_FontTexto" style='font-size:1.5vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
+
+	let div = document.getElementById("kind_rotulos");
+	div.innerHTML = `<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
 
 	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
-		style=""
-
-		// The labels, information of the specific figure, that may not be present if it is a mix
-		let div = document.getElementById("rotulos");
-		div.style.cssText += ";justify-content:flex-start; align-items:flex-start; padding-top:10px";
-
-		div.innerHTML = 
-			`<div style="width: 72%"></div>` +
-			`<p style="font-family:'FontTexto'; color:` + color + `; text-align:left; font-size:1.75vmin;">
-			<b>` + object.rotulos[figureType] + `</b></p>`;
+		div.innerHTML += 
+			`<p style="position:absolute; width:100%; padding-left:75%; padding-bottom:5%; font-family:sans-serif; 
+						color:` + color + `; text-align:left; font-size:1.9vmin; font-family:'Century Gothic'">` 
+				+ object.rotulos[figureType] 
+				+ `</p></div>`;
 	}
-
-	document.getElementById("kind").innerHTML = 
-		`<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
 }
 
 // Build the three sections of the figure
@@ -298,8 +292,8 @@ function loadArrow(figurePosition, direction){
 	let str = 
 		`<div class="centeredFlex"; style="position:relative; width:23%; height:100%">
 			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
-				`onmouseover="this.style.height='35%'" onmouseout="this.style.height='25%'"
-				style="position:relative; height:25%;"
+				`onmouseover="this.style.height='18%'" onmouseout="this.style.height='13%'"
+				style="position:relative; height:13%;"
 				src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
 			>
 		</div>`;
@@ -331,15 +325,25 @@ function loadQuiz(){
 	resetDiv('main-background');
 	quiz = true;
 
+	console.log("currentAttempt = ", currentAttempt);
+
 	if (quizFinished){
+		console.log("Entré en quizFinished");
 		finishQuiz();
 	}
 	else if (sendingEmail){
+		console.log("Entré en sendingEmail");
 		sendEmail();
 	}
-	else {
+	else if (currentAttempt < 3){
+		console.log("Entré en currentAttempt < 3");
+		currentAttempt += 1;
 		poblateMainBackground("quizQuestion_view");
 		nextQuestion();
+	}
+	else{
+		console.log("Entré en else");
+		finishQuiz();
 	}
 }
 
@@ -352,15 +356,18 @@ function nextQuestion(notReloading=true){
 		let possibleAnswers = currentQ.options;
 		let str = '';
 		for (i=0; i < possibleAnswers.length; i++){
-			str += `<input type="radio" name="p`+ numQuestion.toString() + `" value="` + i.toString() + `"` + ((i==0) ? `checked>` : `>`) + possibleAnswers[i] + `<br>`;
+			str += `<input type="radio" style="height:3vmin" name="p`+ numQuestion.toString() + `" value="` 
+					+ i.toString() + `"` + ((i==0) ? `checked>` : `>`) + " " + possibleAnswers[i] + `<br>`;
 		}
 
 		// Here we put the question followed by its possible answers
-		document.getElementById("question").innerHTML = `<b>` + currentQ.question + `</b><br><br>` + str;
+		document.getElementById("question").innerHTML = 
+			`<b>` + currentQ.question + `</b><br><br>
+			<span style="font-size:3vmin">` + str + `</span>`;
 
 		// Here we put the image of the hand to advance to the next question
 		document.getElementById("handToRight").innerHTML =
-			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="position:relative; height:12vmin" 
+			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="position:relative; height:6vmin" 
 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
 	}
 	else{ // The last question needs a different treatment
@@ -381,40 +388,42 @@ function lastQuestion(currentQ, notReloading){
 		// The 4 is the number of currently available figures, that is the max index plus one
 		loadFigure(getRandomInt(0,4));
 		lastQ_optionsOrder = _.shuffle(lastQ_optionsOrder);
-		lastQ_selectedOption = 0;	
+		lastQ_selectedOption = lastQ_optionsOrder[0];	
 	}
 	document.getElementById("desc").innerHTML = 
 		`<form class="whole centeredFlex whiteBackground_blackBorder" style="width:88%; height:85%">
 			<p class="centeredBold_FontTexto" style="font-size:1.2vmax">` + currentQ.question + `</p>
 		</form>`;
 
-	document.getElementById("rotulos").innerHTML = 
-		`<div style="width:90%; display:flex; flex-direction:row; justify-content:flex-end; align-items:center">
+	let div = document.getElementById("kind_rotulos");
+	div.style["flex-direction"] = "row-reverse";
+
+	div.innerHTML = 
+		`<div class="centeredFlex" style="width:31%; padding-bottom:5%">
 			<div class="centeredFlex" onClick="finishQuiz()">
 				<form id="finishButton" class"centeredFlex" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">
-					<p style="font-size:3vmin; font-family:'Arial'">`+ currentQ.finishButton + `</p>
+					<p style="font-size:2vmin; font-family:'Arial'">`+ currentQ.finishButton + `</p>
 				</form>
 			</div>
-		</div>
-		<div style="width:10%"></div>`;	
+		</div>`;
 
-	let answer, num, str = 
+	let answer, num;
+	let str = 
 		`<select id="figure-chosen-name" name="figure-chosen-name" class="centeredBold_FontTexto"
-			style="width:37%; font-size:2.4vmin" onChange="lastQ_selectedOption = this.value">`;
+			style="width:38%; font-size:2.4vmin" onChange="lastQ_selectedOption = this.value;">`;
 
 	for (i=0; i < currentQ.options.length; i++){
-		let num = lastQ_optionsOrder[i];
+		num = lastQ_optionsOrder[i];
 		answer = currentQ.options[num];
 		str += `<option class="centeredBold_FontTexto" value="`+ num + `">` + answer + `</option>`;
 	}
-	str += `</select>`;
+	str += `</select><div style="width:31%"></div>`;
 	
-	document.getElementById("kind").innerHTML = str;
-	document.getElementById("figure-chosen-name").value = (notReloading ? lastQ_optionsOrder[0] : lastQ_selectedOption);
+	div.innerHTML += str;
+	document.getElementById("figure-chosen-name").value = lastQ_selectedOption;
 }
 
 function testQuiz(){
-	console.log("Entré en testQuiz");
 	let lastQ = quiz_questions[language][numQuestion];
 	var i = 0;
 	incorrectAnswers = [];
@@ -431,7 +440,7 @@ function testQuiz(){
 	// Determine the correction of the last question
 	if ( 
 		((hbf[0] == hbf[1]) && (hbf[0] == hbf[2])) ||
-		(lastQ.options[document.getElementById("figure-chosen-name").value] !== icd[language][hbf[0]][hbf[1]][hbf[2]].kind)
+		(lastQ.options[lastQ_selectedOption] !== icd[language][hbf[0]][hbf[1]][hbf[2]].kind)
 		)
 	{
 		incorrectAnswers.push(i+1);
@@ -449,8 +458,8 @@ function sendEmail(useremail_val="", userpassword_val="", passwordShown=false, t
 
 	document.getElementById("main-background-container").style.cssText += "color:white; font-size:2.7vmin;";
 
-	document.getElementById("desc").innerHTML = // Text: "Submit results"
-		`<div class="centered_FontRupes" style="font-size:4vmin; padding-top:2%">` + sendEmail_texts[language][0] + `</div>`;
+	document.getElementById("desc").innerHTML =
+		`<div class="centered_FontRupes" style="font-size:3.5vmin; padding-top:2%">` + sendEmail_texts[language][0] + `</div>`;
 
 	let divInit = `<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:70%; height:100%;">`;
 
@@ -505,7 +514,7 @@ function change_language_sendingEmail(){
 	let passwordShown = null;
 	let teacheremail_val = document.getElementById("teacheremail_input").value;
 
-	finishQuiz(useremail_val, userpassword_val, passwordShown, teacheremail_val);
+	sendEmail(useremail_val, userpassword_val, passwordShown, teacheremail_val);
 }
 
 //function showQuizResults(){
@@ -544,106 +553,47 @@ function finishQuiz(){
 		str += texts[6] + `<br>` + texts[7] + totalPossibilities.toString() + texts[4];
 	}
 
-/*	if (currentAttempt == 0){
-		document.getElementById("main-background").innerHTML = 
-			`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column">
-				<p class="centered_FontRupes" style="font-size:3.5vmin">` + str + `</p>
+	let formString = 
+		`<form class"centeredFlex" style="padding-top:2%"
+			onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
+			onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
+			style="color:#F26D0B; font-size:3vmin"
+		>
+			<p style="color:#F26D0B; font-size:3vmin">`;
 
-				<div style="padding-top:10%; font-size:3.7vmin; font-weight:bold">
-					<p class="centered_FontRupes" style="padding-top:7%">` + texts[8] + `</p>
-					<p class="centered_FontRupes" style="padding-top:7%">` + texts[11] + `</p>
-					<p class="centered_FontRupes" style="padding-top:7%">` + texts[9] + `</p>
-				</div>
-			</div>`;
-	}*/
+	console.log("currentAttempt = ", currentAttempt);
 
-	if (currentAttempt == 0){
-		document.getElementById("main-background").innerHTML = 
-			`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
-				<p class="centered_FontRupes">` + str + 
+	document.getElementById("main-background").innerHTML = 
+		`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
+			<p class="centered_FontRupes">` + str + 
 
-				`<div class="centeredFlex centered_FontRupes" onClick="tryAgain(); currentAttempt+=1; quizFinished=false">
-					<form class"centeredFlex" style="padding-top:2%"
-						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
-						style="color:#F26D0B; font-size:3vmin"
-					>
-						<p style="color:#F26D0B; font-size:3vmin"
-						>`+ texts[8] + `</p>
+			((currentAttempt == 1) ? 
+				(`<div class="centeredFlex centered_FontRupes" onClick="tryAgain()">`
+					+ formString + texts[8] + `</p>
 					</form>
-				</div>
+				</div>`) : ``) + 
 
-				<div class="centeredFlex centered_FontRupes" onClick="sendEmail(); quizFinished=false">
-					<form class"centeredFlex" style="padding-top:2%"
-						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
-						style="color:#F26D0B; font-size:3vmin"
-					>
-						<p style="color:#F26D0B; font-size:3vmin"
-						>`+ texts[11] + `</p>
+			((currentAttempt < 3) ?
+				(`<div class="centeredFlex centered_FontRupes" onClick="sendEmail()">`
+					+ formString + texts[11] + `</p>
 					</form>
-				</div>
+				</div>`) : ``) +
 
-				<div class="centeredFlex centered_FontRupes" onClick="loadCentralImage(5); currentAttempt += 1; numQuestion=0; restoreDefaultValues(); quizFinished=false">
-					<form class"centeredFlex" style="padding-top:2%"
-						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
-						style="color:#F26D0B; font-size:3vmin"
-					>
-						<p style="color:#F26D0B; font-size:3vmin"
-						>`+ texts[9] + `</p>
-					</form>
-				</div>
+			`<div class="centeredFlex centered_FontRupes" onClick="loadCentralImage(5); restoreDefaultValues(true);">`
+				+ formString + texts[9] + `</p>
+				</form>
+			</div>
 
-			</div>`;
+		</div>`;
+}
 
-	}
-
-	else if (currentAttempt == 1){
-		document.getElementById("main-background").innerHTML = 
-			`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
-				<p class="centered_FontRupes">` + str + 
-
-				`<div class="centeredFlex centered_FontRupes" onClick="aux_tryAgain(); currentAttempt+=1">
-					<form class"centeredFlex" style="padding-top:2%"
-						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-						onmouseout="this.style.color='#F26D0B'; this.style['font-weight']='lighter'; this.style['font-size']='3vmin'"
-						style="color:#F26D0B; font-size:3vmin"
-					>
-						<p style="color:#F26D0B; font-size:3vmin"
-						>`+ texts[8] + `</p>
-					</form>
-				</div>
-
-				<div class="centeredFlex centered_FontRupes" onClick="sendEmail()">
-					<form class"centeredFlex" style="padding-top:2%"
-						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
-						style="color:#F26D0B; font-size:3vmin"
-					>
-						<p style="color:#F26D0B; font-size:3vmin"
-						>`+ texts[11] + `</p>
-					</form>
-				</div>
-
-				<div class="centeredFlex centered_FontRupes" onClick="loadCentralImage(5); currentAttempt += 1">
-					<form class"centeredFlex" style="padding-top:2%"
-						onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-						onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
-						style="color:#F26D0B; font-size:3vmin"
-					>
-						<p style="color:#F26D0B; font-size:3vmin"
-						>`+ texts[9] + `</p>
-					</form>
-				</div>
-
-			</div>`;
-	}
-
+function restoreQuizValues(){
+	quizFinished = false;
+	numQuestion = 0;
 }
 
 function tryAgain(){
-	numQuestion = 0;
+	restoreQuizValues()
 	loadQuiz();
 }
 

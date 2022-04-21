@@ -62,7 +62,6 @@ const buttons_texts = {
 		"Pinturas Rupestres 1", // 7
 		"Pinturas Rupestres 2", // 8
 		"Recapitulemos", // 9
-		"Espacio Docente", // 10
 	],
 	english: [
 		"Presentation", // 0
@@ -75,7 +74,6 @@ const buttons_texts = {
 		"Rock Paintings 1", // 7
 		"Rock Paintings 2", // 8
 		"Recapitulate", // 9
-		"For Teachers only", // 10
 	],
 };
 
@@ -106,7 +104,7 @@ const definitions_texts = {
 const quiz_questions = {
 	spanish: [
 		{ // 0
-			question: "Las Manifestaciones Rupestres son importantes porque: _____________",
+			question: "1- Las Manifestaciones Rupestres son importantes porque: _____________",
 			options: [ 
 				"Son obras artísticas", // 0
 				"Es posible trasladarlas de un sitio a otro", // 1
@@ -115,7 +113,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 1
-			question: "El ____________ permite acercarnos a las diversas expresiones gráficas, con los distintos contenidos de nuestras primeras sociedades",
+			question: "2- El ____________ permite acercarnos a las diversas expresiones gráficas, con los distintos contenidos de nuestras primeras sociedades",
 			options: [ 
 				"Dolmen", // 0
 				"Agua", // 1
@@ -124,7 +122,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 2
-			question: "¿En cuáles de estas manifestaciones encontramos gráficos o dibujos, pintados o grabados?",
+			question: "3- ¿En cuáles de estas manifestaciones encontramos gráficos o dibujos, pintados o grabados?",
 			options: [
 				"Cerros Míticos Naturales", // 0
 				"Pinturas Rupestres, Pictografías o Micropetroglifos", // 1
@@ -133,7 +131,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 3
-			question: "Se llaman ____________ las representaciones del Ser humano -cuerpo entero, la cabeza, huellas de manos y pies...-",
+			question: "4- Se llaman ____________ las representaciones del Ser humano -cuerpo entero, la cabeza, huellas de manos y pies...-",
 			options: [
 				"Figuras Geométricas", // 0
 				"Figuras Zoomorfas", // 1
@@ -142,18 +140,16 @@ const quiz_questions = {
 			],
 		},
 		{ // 4
-			question: "Las representaciones de imágenes más abstractas las llamamos ____________ o ____________",
+			question: "5- Las representaciones de imágenes más abstractas las llamamos ____________ o ____________",
 			options: [
-				"Zoomorfas o Antropomorfas", // 0
-				"Antropomorfas o Geométricas/formas libres", // 1
-				"Zoomorfas o Geométricas/formas libres", // 2
-				"Geomorfas o Geométricas/formas libres", // 3
-				"Geomorfas o Zoomorfas", // 4
-				"Geomorfas o Antropomorfas", // 5
+				"Zoomorfas", // 0
+				"Antropomorfas", // 1
+				"Geométricas o formas libres", // 2
+				"Geomorfas", // 3
 			],
 		},
 		{ // 5
-			question: "Las figuras Zoomorfas son representaciones de:",
+			question: "6- Las figuras Zoomorfas son representaciones de:",
 			options: [
 				"Plantas", // 0
 				"Animales", // 1
@@ -162,7 +158,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 6
-			question: "La mezcla de figuras Antropomorfas con Zoomorfas genera representaciones _________________",
+			question: "7- La mezcla de figuras Antropomorfas con Zoomorfas genera representaciones _________________",
 			options: [
 				"Geoantropomorfas", // 0
 				"Antropozoomorfas", // 1
@@ -171,7 +167,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "Realiza una figura no canónica de tu preferencia (que no tenga las tres partes del mismo tipo) e identifícala seleccionando su nombre",
+			question: "8- Realiza la figura que prefieras (que no sea básica) e identifícala,<br>seleccionando su nombre en el recuadro de abajo",
 			finishButton: "FINALIZAR",
 			options: [
 				`ANTROPOMORFA`, // 0
@@ -194,7 +190,7 @@ const quiz_questions = {
 	],
 	english: [
 		{ // 0
-			question: "The Rock Art expressions are important because: _____________________",
+			question: "1- The Rock Art expressions are important because: _____________________",
 			options: [
 				"They are artistic works", // 0
 				"It is possible to transfer them from one site to another", // 1
@@ -203,7 +199,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 1
-			question: "The ____________________ allows us to reach the diverse graphic expressions, with the different contents of our first societies.",
+			question: "2- The ____________________ allows us to reach the diverse graphic expressions, with the different contents of our first societies.",
 			options: [
 				"Dolmen", // 0
 				"Water", // 1
@@ -212,7 +208,7 @@ const quiz_questions = {
 			],					
 		},
 		{ // 2
-			question: "In which of these Expressions do we find graphics or drawings, painted or engraved?",
+			question: "3- In which of these Expressions do we find graphics or drawings, painted or engraved?",
 			options: [
 				"Mythical Natural Hills", // 0
 				"Rock Art Paintings or Pictograms", // 1
@@ -221,7 +217,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 3
-			question: "_______________________ are human representations of the Human Being –whole body, head, hands and feet prints...-",
+			question: "4- _______________________ are human representations of the Human Being –whole body, head, hands and feet prints...-",
 			options: [
 				"Geometric figures", // 0
 				"Zoomorphic figures", // 1
@@ -230,18 +226,16 @@ const quiz_questions = {
 			],
 		},
 		{ // 4
-			question: "Representation of more abstract images are called ______________, or _______________",
+			question: "5- Representation of more abstract images are called ______________, or _______________",
 			options: [
-				"Zoomorphic or Anthropomorphic", // 0
-				"Anthropomorphic or Geometric/free figures", // 1
-				"Zoomorphic or Geometric/free figures", // 2
-				"Geomorphic or Geometric/free figures", // 3
-				"Geomorphic or Zoomorphic", // 4
-				"Geomorphic or Anthropomorphic", // 5
+				"Zoomorphic", // 0
+				"Anthropomorphic", // 1
+				"Geometric or free figures", // 2
+				"Geomorphic", // 3
 			],
 		},
 		{ // 5
-			question: "Zoomorphic shapes are representations of:",
+			question: "6- Zoomorphic shapes are representations of:",
 			options: [
 				"Plants", // 0
 				"Animals", // 1
@@ -250,7 +244,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 6
-			question: "Combination of anthropomorphic and Zoomorphic shapes generates ___________________ representations",
+			question: "7- Combination of anthropomorphic and Zoomorphic shapes generates ___________________ representations",
 			options: [
 				"Geoanthropomorphic", // 0
 				"Anthropozoomorphic", // 1
@@ -259,7 +253,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "Make a non-canonical figure of your choice (that doesn't have the three parts of the same type) and identify it by selecting its name",
+			question: "8- Make the figure you prefer (that is not basic) and identify it,<br>by selecting its name in the box below",
 			finishButton: "FINISH",
 			options: [
 				`ANTHROPOMORPHIC`, // 0
@@ -282,7 +276,7 @@ const quiz_questions = {
 	],
 };
 
-const correctOptions = [2,2,1,2,3,1,1];
+const correctOptions = [2,2,1,2,2,1,1];
 
 const sendEmail_texts = {
 	spanish: [
@@ -360,7 +354,7 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["spanish"];
 
 	descriptions[0][0][0] = {
-		description: "Figuras que representan al ser humano, de cuerpo entero, la cabeza, con huellas de manos y pies, como abstracción de la imagen",
+		description: "Figuras que representan al ser humano, de cuerpo entero, la cabeza,<br>con huellas de manos y pies, como abstracción de la imagen",
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Flopi di Nadro</span><br>Valcamónica<br>Italia, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Alia, Diosa de la<br> fertilidad y del amor</span><br>Arabia Saudita<br>África`, // 1
@@ -371,7 +365,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][1][1] = {
-		description: `Representaciones con elementos gráficos como puntos, líneas, círculos, o imágenes abstractas, compuestas con los mismos elementos`,
+		description: `Representaciones con elementos gráficos como puntos, líneas, círculos<br>o imágenes abstractas, compuestas con los mismos elementos`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>España, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">El Bolsillo</span><br>Río Guasanare,<br> estado Zulia<br>Venezuela, Sudamérica`, // 1
@@ -382,7 +376,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][2][2] = {
-		description: `Figuras de animales o con sus rasgos, recreando<br>la naturaleza con un fin específico`,
+		description: `Figuras de animales o con sus rasgos,<br>recreando la naturaleza con un fin específico`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Toro Muerto</span><br>Arequipa<br>Perú, Sudamérica`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Las Girafas</span><br>Tadrat Acacus<br>Argelia, África`, // 1
@@ -393,42 +387,42 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[0][0][1] = descriptions[0][1][0] = descriptions[1][0][0] = {
-		description: `Figuras Antropomorfas mezcladas con componentes Geométricos generan representaciones Antropogeométricas`,
+		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos,<br>generan representaciones Antropogeométricas`,
 		kind: `ANTROPOGEOMÉTRICA`,
 	};
 
 	descriptions[0][0][2] = descriptions[0][2][0] = descriptions[2][0][0] = {
-		description: `Figuras Antropomorfas, mezcladas con componentes Zoomorfos generan representaciones Antropozoomorfas`,
+		description: `Figuras Antropomorfas, mezcladas con componentes Zoomorfos,<br>generan representaciones Antropozoomorfas`,
 		kind: `ANTROPOZOOMORFA`,
 	};
 
 	descriptions[0][1][2] = {
-		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos y Zoomorfos generan representaciones Antropogeozoomorfas`,
+		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos y Zoomorfos,<br>generan representaciones Antropogeozoomorfas`,
 		kind: `ANTROPOGEOZOOMORFA`,
 	};
 
 	descriptions[0][2][1] = {
-		description: `Figuras Antropomorfas, mezcladas con componentes Zoomorfos y Geométricos generan representaciones Antropozoogeométricas`,
+		description: `Figuras Antropomorfas, mezcladas con componentes Zoomorfos y Geométricos,<br>generan representaciones Antropozoogeométricas`,
 		kind: `ANTROPOZOOGEOMÉTRICA`,
 	};
 
 	descriptions[1][1][0] = descriptions[1][0][1] = descriptions[0][1][1] = {
-		description: `Figuras Geométricas mezcladas con componentes Antropomorfos generan representaciones Geoantropomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos,<br>generan representaciones Geoantropomorfas`,
 		kind: `GEOANTROPOMORFA`,
 	};
 
 	descriptions[1][1][2] = descriptions[1][2][1] = descriptions[2][1][1] = {
-		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos generan representaciones Geozoomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos,<br>generan representaciones Geozoomorfas`,
 		kind: `GEOZOOMORFA`,
 	};
 
 	descriptions[1][0][2] = {
-		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos y Zoomorfos, generan representaciones Geoantropozoomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos y Zoomorfos,<br>generan representaciones Geoantropozoomorfas`,
 		kind: `GEOANTROPOZOOMORFA`,
 	};
 
 	descriptions[1][2][0] = {
-		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos<br>y Antropomorfos, generan representaciones Geozooantropomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos y Antropomorfos,<br>generan representaciones Geozooantropomorfas`,
 		kind: `GEOZOOANTROPOMORFA`,
 	};
 
@@ -438,17 +432,17 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][2][1] = descriptions[2][1][2] = descriptions[1][2][2] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Geométricas generan representaciones Zoogeométricas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes Geométricos,<br>generan representaciones Zoogeométricas`,
 		kind: `ZOOGEOMÉTRICA`,
 	};
 
 	descriptions[2][0][1] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos y Geométricos generan representaciones Zooantropogeométricas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos y Geométricos,<br>generan representaciones Zooantropogeométricas`,
 		kind: `ZOOANTROPOGEOMÉTRICA`,
 	};
 
 	descriptions[2][1][0] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Geométricos y Antropomorfos generan representaciones Zoogeoantropomorfas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes Geométricos y Antropomorfos,<br>generan representaciones Zoogeoantropomorfas`,
 		kind: `ZOOGEOANTROPOMORFA`,
 	};
 
@@ -456,7 +450,7 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["english"];
 
 	descriptions[0][0][0] = {
-		description: `Figures that represent the human being, whole body, head, hands and feet prints, image abstraction`,
+		description: `Figures that represent the human being, whole body, head,<br>with hand and foot prints, as an image abstraction`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Fopli di Nadro</span><br>Valcamonica<br>Italy, Europe`, // 0
 			`Petroglyph<br> <span style="font-style:italic">Alia, Goddess of<br> Fertility and of Love</span><br>Saudi Arabia<br>Africa`, // 1
@@ -467,7 +461,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][1][1] = {
-		description: `Representation with graphic elements like dots, lines, circles, or images more abstract, formed with the same elements`,
+		description: `Representation with graphic elements like dots, lines, circles<br>or more abstract images, formed with the same elements`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>Spain, Europe`, // 0
 			`Petroglyph<br> <span style="font-style:italic">El Bolsillo</span><br>Guasanare river<br>Zulia State<br>Venezuela, South America`, // 1
@@ -478,7 +472,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][2][2] = {
-		description: `Animal figures with their own features recreating nature with a specific purpose`,
+		description: `Animal figures with their own features,<br>recreating nature with a specific purpose`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Toro Muerto</span><br>Arequipa<br>Peru, South America`, // 0
 			`Petroglyph<br> <span style="font-style:italic">The Giraffes</span><br>Tadrat Acacus<br>Algeria, Africa`, // 1
@@ -489,62 +483,62 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[0][0][1] = descriptions[0][1][0] = descriptions[1][0][0] = {
-		description: `Anthropomorphic figures combined with Geometric parts or components generate Anthropogeometric representations`,
+		description: `Anthropomorphic figures, mixed with Geometric components,<br>generate Anthropogeometric representations`,
 		kind: `ANTHROPOGEOMETRIC`,
 	};
 
 	descriptions[0][0][2] = descriptions[0][2][0] = descriptions[2][0][0] = {
-		description: `Anthropomorphic figures combined with Zoomorphic parts generate Anthropozoomorphic representations`,
+		description: `Anthropomorphic figures, mixed with Zoomorphic components,<br>generate Anthropozoomorphic representations`,
 		kind: `ANTHROPOZOOMORPHIC`,
 	};
 
 	descriptions[0][1][2] = {
-		description: `Anthropomorphic figures combined with Geometric and Zoomorphic components generate Anthropogeozoomorphic representations`,
+		description: `Anthropomorphic figures, mixed with Geometric and Zoomorphic components,<br>generate Anthropogeozoomorphic representations`,
 		kind: `ANTHROPOGEOZOOMORPHIC`,
 	};
 
 	descriptions[0][2][1] = {
-		description: `Anthropomorphic figures combined with Zoomorphic and Geometric components generate Anthropozoogeometric representations`,
+		description: `Anthropomorphic figures, mixed with Zoomorphic and Geometric components,<br>generate Anthropozoogeometric representations`,
 		kind: `ANTHROPOZOOGEOMETRIC`,
 	};
 
 	descriptions[1][1][0] = descriptions[1][0][1] = descriptions[0][1][1] = {
-		description: `Geometric figures combined with Anthropomorphic components generate Geoanthropomorphic representations`,
+		description: `Geometric figures, mixed with Anthropomorphic components,<br>generate Geoanthropomorphic representations`,
 		kind: `GEOANTHROPOMORPHIC`,
 	};
 
 	descriptions[1][1][2] = descriptions[1][2][1] = descriptions[2][1][1] = {
-		description: `Geometric figures combined with Zoomorphic components generate Geozoomorphic representations`,
+		description: `Geometric figures, mixed with Zoomorphic components,<br>generate Geozoomorphic representations`,
 		kind: `GEOZOOMORPHIC`,
 	};
 
 	descriptions[1][0][2] = {
-		description: `Geometric figures combined with Anthropomorphic and Zoomorphic components generate Geozooanthropomorphic representations`,
+		description: `Geometric figures, mixed with Anthropomorphic and Zoomorphic components,<br>generate Geozooanthropomorphic representations`,
 		kind: `GEOANTHROPOZOOMORPHIC`,
 	};
 
 	descriptions[1][2][0] = {
-		description: `Geometric figures combined with Zoomorphic and Anthropomorphic components generate Geozooanthropomorphic representations`,
+		description: `Geometric figures, mixed with Zoomorphic and Anthropomorphic components,<br>generate Geozooanthropomorphic representations`,
 		kind: `GEOZOOANTHROPOMORPHIC`,
 	};
 
 	descriptions[2][2][0] = descriptions[2][0][2] = descriptions[0][2][2] = {
-		description: `Zoomorphic figures combined with Anthropomorphic components generate Zooanthropomorphic representations`,
+		description: `Zoomorphic figures, mixed with Anthropomorphic components,<br>generate Zooanthropomorphic representations`,
 		kind: `ZOOANTHROPOMORPHIC`,
 	};
 
 	descriptions[2][2][1] = descriptions[2][1][2] = descriptions[1][2][2] = {
-		description: `Zoomorphic figures combined with Geometric components generate Zoogeometric representations`,
+		description: `Zoomorphic figures, mixed with Geometric components,<br>generate Zoogeometric representations`,
 		kind: `ZOOGEOMETRIC`,
 	};
 
 	descriptions[2][0][1] = {
-		description: `Zoomorphic figures combined with Anthropomorphic and Geometric components generate Zooanthropogeometric representations`,
+		description: `Zoomorphic figures, mixed with Anthropomorphic and Geometric components,<br>generate Zooanthropogeometric representations`,
 		kind: `ZOOANTHROPOGEOMETRIC`,
 	};
 
 	descriptions[2][1][0] = {
-		description: `Zoomorphic figures combined with Geometric and Anthropomorphic components generate Zoogeoanthropomorphic representations`,
+		description: `Zoomorphic figures, mixed with Geometric and Anthropomorphic components,<br>generate Zoogeoanthropomorphic representations`,
 		kind: `ZOOGEOANTHROPOMORPHIC`,
 	};
 }
