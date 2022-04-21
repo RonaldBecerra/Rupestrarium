@@ -113,7 +113,7 @@ function testQuiz(){
 		}
 		i++;
 	}
-	let [hbf, icd] = [head_body_feet, images_combinations_descriptions]; // Abreviations
+	let [hbf, icd] = [head_body_feet_forQuiz, images_combinations_descriptions]; // Abreviations
 
 	// Determine the correction of the last question
 	if ( 
