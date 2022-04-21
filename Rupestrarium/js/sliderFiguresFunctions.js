@@ -1,0 +1,95 @@
+/*  
+ *  These functions let change the app state
+ *
+ */
+
+// Load the corresponding figure, divided into three sections 
+function loadFigure(num){
+	figureType = num;
+	currentFigure = possible_figures[num];
+
+	poblateMainBackground("horizontalSections_view", 
+		[['desc','17'],['head','24'],['body','24'],['feet','24'],['kind_rotulos','11']]
+	);
+
+	if (num < 2){
+		figures = 'petroglyph';
+	}
+	else{
+		figures = 'rockPainting';
+		document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
+	}
+
+	if (quiz){
+		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
+	} else {
+		getDescription();		
+	}
+	buildFigure();
+}
+
+// Get description of the current image according to which combination the user has stablished
+function getDescription(){
+	resetDiv("kind_rotulos"); 
+
+	let color = ((figures == 'petroglyph') ? 'white' : 'black');
+	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
+
+	document.getElementById("desc").innerHTML = 
+		`<p class="centered_FontTexto" style='font-size:1.5vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
+
+	let div = document.getElementById("kind_rotulos");
+	div.innerHTML = `<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
+
+	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
+		div.innerHTML += 
+			`<p style="position:absolute; width:100%; padding-left:75%; padding-bottom:5%; font-family:sans-serif; 
+						color:` + color + `; text-align:left; font-size:1.9vmin; font-family:'Century Gothic'">` 
+				+ object.rotulos[figureType] 
+				+ `</p></div>`;
+	}
+}
+
+// Build the three sections of the figure
+function buildFigure(array = [true, true, true]){
+	let sections = ["head", "body", "feet"];
+	let str;
+
+	for (i=0; i<3; i++){
+		if (array[i]){
+			str =  loadArrow(i, "left") + `<img class="whole" style="width:54%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
+			document.getElementById(sections[i]).innerHTML = str;
+		}
+	}
+}
+
+// Arrows that let the user slide the sections of the figures
+function loadArrow(figurePosition, direction){
+	let str = 
+		`<div class="centeredFlex"; style="position:relative; width:23%; height:100%">
+			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
+				`onmouseover="this.style.height='18%'" onmouseout="this.style.height='13%'"
+				style="position:relative; height:13%;"
+				src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
+			>
+		</div>`;
+	return str;
+}
+
+// Slide one of the three sections of the figre to the left or to the right
+function slideFigure(figurePosition, direction){
+	if (direction == "left"){ // Slide to the left
+		head_body_feet[figurePosition] -= 1;
+		if (head_body_feet[figurePosition] < 0){
+			head_body_feet[figurePosition] = 2;
+		}
+	} else { // Slide to the right
+		head_body_feet[figurePosition] += 1;
+		if (head_body_feet[figurePosition] > 2){
+			head_body_feet[figurePosition] = 0;
+		}				
+	}
+	let array = [false, false, false];
+	array[figurePosition] = true;
+	buildFigure(array)
+}

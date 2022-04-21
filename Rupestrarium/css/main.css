@@ -182,6 +182,7 @@ main .main-container {
 	border-color: black;
 	background: #ed1c24; /*Similar to red*/
 	padding: 7%;
+	cursor: default;
 }
 
 #sendEmailButton{
@@ -190,6 +191,7 @@ main .main-container {
 	border-color: black;
 	background: #4285F4; /*Blue color used by Google*/
 	padding: 12%;
+	cursor: default;
 }
 
 .modal {
@@ -251,12 +253,11 @@ footer{
 
 p {
 	font-family: "bauhaus";
-	font-size: 1.5vw;
 }
 
 input[type=radio] {
-	width: 1.5em;
-	height: 1.5em;
+	width:1.5em;
+	height:3vmin
 }
 
 @font-face {
