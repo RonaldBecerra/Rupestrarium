@@ -7,30 +7,23 @@ function loadQuiz(){
 	resetDiv('main-background');
 	quiz = true;
 
-	console.log("currentAttempt = ", currentAttempt);
-
 	if (quizFinished){
-		console.log("Entré en quizFinished");
 		finishQuiz();
 	}
 	else if (sendingEmail){
-		console.log("Entré en sendingEmail");
-		sendEmail();
+		sendEmailView();
 	}
 	else if (currentAttempt < 3){
-		console.log("Entré en currentAttempt < 3");
-		currentAttempt += 1;
 		poblateMainBackground("quizQuestion_view");
-		nextQuestion();
+		nextQuestion(false);
 	}
 	else{
-		console.log("Entré en else");
 		finishQuiz();
 	}
 }
 
 // Gets the question of the quiz to display and increases the number of current question in 1
-function nextQuestion(notReloading=true){
+function nextQuestion(figureNotCreated=true){
 	let questions = quiz_questions[language];
 	let currentQ = questions[numQuestion];
 	
@@ -53,7 +46,7 @@ function nextQuestion(notReloading=true){
 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
 	}
 	else{ // The last question needs a different treatment
-		lastQuestion(currentQ, notReloading); 
+		lastQuestion(currentQ, figureNotCreated); 
 	}
 }
 
@@ -65,12 +58,15 @@ function submitA(num){
 }
 
 // Last question of the quiz, that has the format of a slider figure
-function lastQuestion(currentQ, notReloading){
-	if (notReloading){
-		// The 4 is the number of currently available figures, that is the max index plus one
-		loadFigure(getRandomInt(0,4));
+function lastQuestion(currentQ, figureNotCreated){
+	if (figureNotCreated){
+		figureNum = getRandomInt(0,4); // The 4 is the number of currently available figures, that is the max index plus one
+		loadFigure(figureNum, true);
 		lastQ_optionsOrder = _.shuffle(lastQ_optionsOrder);
 		lastQ_selectedOption = lastQ_optionsOrder[0];	
+	}
+	else {
+		loadFigure(figureNum);
 	}
 	document.getElementById("desc").innerHTML = 
 		`<form class="whole centeredFlex whiteBackground_blackBorder" style="width:88%; height:85%">
@@ -129,83 +125,13 @@ function testQuiz(){
 	}
 }
 
-function sendEmail(useremail_val="", userpassword_val="", passwordShown=false, teacheremail_val=""){
-	resetDiv('main-background');
-	quizFinished = false;
-	sendingEmail = true;
-	poblateMainBackground("horizontalSections_view",
-		[['desc','14'],['useremail','23'],['userpassword','23'],['teacheremail','23'],['sendButton','17']],
-		"column"
-	);
-
-	document.getElementById("main-background-container").style.cssText += "color:white; font-size:2.7vmin;";
-
-	document.getElementById("desc").innerHTML =
-		`<div class="centered_FontRupes" style="font-size:3.5vmin; padding-top:2%">` + sendEmail_texts[language][0] + `</div>`;
-
-	let divInit = `<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:70%; height:100%;">`;
-
-	document.getElementById("useremail").innerHTML = divInit +
-			`<label for="useremail_input">` + sendEmail_texts[language][1] + `</label>
-			<input class="emailInput" type="text" id="useremail_input" name="useremail_input" value="` + useremail_val + `">` 
-		+ `</div>`;
-		
-
-	document.getElementById("userpassword").innerHTML = divInit +
-			`<label for="password_input">` + sendEmail_texts[language][2] + `</label>
-			<input class="emailInput" type="password" id="password_input" name="password_input" value="` + userpassword_val + `">
-			<div style="height:7.5%"></div>
-			<div class="centeredFlex" style="flex-direction:row; height:10%; justify-content:flex-start; font-size:2.3vmin">
-				<input type="checkbox" id="showHide_password" onClick="show_or_hide_password()"/>`
-				+ sendEmail_texts[language][3] +
-			`</div>` 
-		+ `</div>`;
-
-	document.getElementById("teacheremail").innerHTML = divInit + 
-			`<label for="teacheremail_input">` + sendEmail_texts[language][4] + `</label>
-			<input class="emailInput" type="text" id="teacheremail_input" name="teacheremail_input" value="` + teacheremail_val + `">` 
-		+ `</div>`;
-
-	let buttonDiv = document.getElementById("sendButton");
-	buttonDiv.style["flex-direction"] = "row";
-
-	buttonDiv.innerHTML =
-		`<div class="centeredFlex" style="padding-bottom:2%" onClick="loadCentralImage(5); currentAttempt+=1; numQuestion=0; sendingEmail=false">
-			<form id="sendEmailButton" class"centeredFlex" style="color:black" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">
-				<p style="font-size:3vmin; font-family:'Arial'">`+ sendEmail_texts[language][5] + `</p>
-			</form>
-		</div>`;
-}
-
-// To make visible or not the password that the user is entering
-function show_or_hide_password(){
-	if ($('#showHide_password').is(':checked')) {
-		$('#password_input').attr('type', 'text');
-	} 
-	else {
-		$('#password_input').attr('type', 'password');
-	}
-}
-
-/* Changing the language while sending an email require to the input values
- * so in this case we need a different treatment
- */
-function change_language_sendingEmail(){
-	let useremail_val = document.getElementById("useremail_input").value;
-	let userpassword_val = document.getElementById("password_input").value;
-	let passwordShown = null;
-	let teacheremail_val = document.getElementById("teacheremail_input").value;
-
-	sendEmail(useremail_val, userpassword_val, passwordShown, teacheremail_val);
-}
-
 //function showQuizResults(){
 function finishQuiz(){
 	quizFinished = true;
 	testQuiz();
 
 	let len = incorrectAnswers.length;
-	let totalPossibilities = quiz_questions[language].length
+	let totalPossibilities = quiz_questions[language].length;
 	let texts = quizResults_texts[language];
 	let str = `<span style="font-size:5vmin; font-weight:bold">` + texts[0] + `</span><br><br>`;
 
@@ -214,21 +140,18 @@ function finishQuiz(){
 		stringIncorrects += incorrectAnswers[i].toString() + ", ";
 	}
 	stringIncorrects = stringIncorrects.slice(0, -2);
-	let printCase = true;
+	console.log("stringIncorrects = ", stringIncorrects);
 
 	if (len > 0){
 		if (len > 4){
 			str += texts[1] + `<br>` + stringIncorrects + `<br><br>`;
 		}
-		else if (len > 1){
-			let corrects = totalPossibilities - len;
-			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
-			str += texts[5] + stringIncorrects + `<br><br>`;
-		}
 		else{
 			let corrects = totalPossibilities - len;
+			console.log("corrects = ", corrects);
 			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
-			str += texts[10] + `<br>` + stringIncorrects + `<br><br>`;
+			str += (len > 1) ? texts[5] : (texts[10] + `<br>`);
+			str += stringIncorrects + `<br><br>`;	
 		}
 	}
 	else {
@@ -243,69 +166,32 @@ function finishQuiz(){
 		>
 			<p style="color:#F26D0B; font-size:3vmin">`;
 
-	console.log("currentAttempt = ", currentAttempt);
+	let auxiliarDiv = (text, onClick) => (
+		`<div class="centeredFlex centered_FontRupes" style="cursor:default" onClick=` + onClick + `>`
+			+ formString + text + `</p>
+			</form>
+		</div>`
+	)
 
 	document.getElementById("main-background").innerHTML = 
 		`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
 			<p class="centered_FontRupes">` + str + 
-
-			((currentAttempt == 1) ? 
-				(`<div class="centeredFlex centered_FontRupes" onClick="tryAgain()">`
-					+ formString + texts[8] + `</p>
-					</form>
-				</div>`) : ``) + 
-
-			((currentAttempt < 3) ?
-				(`<div class="centeredFlex centered_FontRupes" onClick="sendEmail()">`
-					+ formString + texts[11] + `</p>
-					</form>
-				</div>`) : ``) +
-
-			`<div class="centeredFlex centered_FontRupes" onClick="loadCentralImage(5); restoreDefaultValues(true);">`
-				+ formString + texts[9] + `</p>
-				</form>
-			</div>
-
-		</div>`;
+			// Try again
+			((currentAttempt == 1) ? auxiliarDiv(texts[8], "tryAgain()") : ``) + 
+			// Send results by email
+			((currentAttempt < 3) ? auxiliarDiv(texts[11], "sendEmailView()") : ``) +
+			// Return to main menu
+			auxiliarDiv(texts[9], "loadCentralImage(5); restoreDefaultValues(true);") + 
+		`</div>`;
 }
 
 function restoreQuizValues(){
 	quizFinished = false;
 	numQuestion = 0;
+	currentAttempt += 1;
 }
 
 function tryAgain(){
 	restoreQuizValues()
 	loadQuiz();
-}
-
-// Submit the complete form to the teacher
-function submitForm(){
-	// *** FALTA SEPARAR LOS DOS IDIOMAS EN ESTA LíNEA
-	let str = "mailto:INGRESE_SU_CORREO_AQUI@gmail.com?Subject=Respuestas Rupestrarium&body=";
-	let questions = quiz_questions[language];
-	let currentQ = questions[0];
-
-	// First question
-	str += "1-" + currentQ.question + "%0D%0A  " + currentQ.options[userAnswers[0]];
-
-	// Middle questions
-	let i = 1;
-	let ind = 2;
-	while (i < questions.length - 1){
-		currentQ = questions[i];
-		str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  " + currentQ.options[userAnswers[i]];
-		i += 1;
-		ind += 1;
-	}
-
-	// Last question
-	currentQ = questions[i]
-	str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  "
-		+ "Cabeza: " + parts[head_body_feet[0]] 
-		+ "%0D%0A  Cuerpo: " + parts[head_body_feet[1]] 
-		+ "%0D%0A  Inferior: " + parts[head_body_feet[2]] 
-		+ "%0D%0A    Respuesta:  " +currentQ.options[userAnswers[i]];
-
-	window.location.href = str;
 }

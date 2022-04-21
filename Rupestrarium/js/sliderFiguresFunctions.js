@@ -4,7 +4,7 @@
  */
 
 // Load the corresponding figure, divided into three sections 
-function loadFigure(num){
+function loadFigure(num, randomizeParts=false){
 	figureType = num;
 	currentFigure = possible_figures[num];
 
@@ -20,8 +20,8 @@ function loadFigure(num){
 		document.getElementById("main-background").style.backgroundImage = "url('img/art/fondo_pintura.png')";
 	}
 
-	if (quiz){
-		head_body_feet = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
+	if (quiz && randomizeParts){
+		head_body_feet_forQuiz = [getRandomInt(0,3), getRandomInt(0,3), getRandomInt(0,3)];				
 	} else {
 		getDescription();		
 	}
@@ -52,12 +52,13 @@ function getDescription(){
 
 // Build the three sections of the figure
 function buildFigure(array = [true, true, true]){
+	let hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
 	let sections = ["head", "body", "feet"];
 	let str;
 
 	for (i=0; i<3; i++){
 		if (array[i]){
-			str =  loadArrow(i, "left") + `<img class="whole" style="width:54%" src=` + currentFigure[i][head_body_feet[i]] + `>` + loadArrow(i, "right")
+			str =  loadArrow(i, "left") + `<img class="whole" style="width:54%" src=` + currentFigure[i][hbf[i]] + `>` + loadArrow(i, "right")
 			document.getElementById(sections[i]).innerHTML = str;
 		}
 	}
@@ -78,15 +79,17 @@ function loadArrow(figurePosition, direction){
 
 // Slide one of the three sections of the figre to the left or to the right
 function slideFigure(figurePosition, direction){
+	let hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
+
 	if (direction == "left"){ // Slide to the left
-		head_body_feet[figurePosition] -= 1;
-		if (head_body_feet[figurePosition] < 0){
-			head_body_feet[figurePosition] = 2;
+		hbf[figurePosition] -= 1;
+		if (hbf[figurePosition] < 0){
+			hbf[figurePosition] = 2;
 		}
 	} else { // Slide to the right
-		head_body_feet[figurePosition] += 1;
-		if (head_body_feet[figurePosition] > 2){
-			head_body_feet[figurePosition] = 0;
+		hbf[figurePosition] += 1;
+		if (hbf[figurePosition] > 2){
+			hbf[figurePosition] = 0;
 		}				
 	}
 	let array = [false, false, false];

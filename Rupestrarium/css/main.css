@@ -167,6 +167,10 @@ main .main-container {
 
 /* ------------- END OF FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
 
+.normalCursor{
+	cursor: default;
+}
+
 .whiteBackground_blackBorder{
 	border-radius: 15px;
 	border-style: solid;

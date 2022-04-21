@@ -1,0 +1,25 @@
+{
+  "name": "pruebaemail",
+  "version": "1.0.0",
+  "description": "para el rupestrarium",
+  "main": "App.js",
+  "scripts": {
+    "start": "node App.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "hi"
+  ],
+  "author": "ronald",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.7.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  }
+}
