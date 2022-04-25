@@ -4,10 +4,7 @@
 */
 
 const smtpServerURL = "http://localhost:2526/mailServer";
-
 var language = null;
-var userAnswers = ["a", "a", "a", "a", "a", "a", "a"];
-var incorrectAnswers = []
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
@@ -21,12 +18,13 @@ var espdoc = false; // Indicates if the user is currently in the "For teachers o
 var figureType = 0; // Kind of slider figure that the user could be currently seeing (0: petroglyph1, 1: petroglyph2, 2: rockPainting1; 3: rockPainting2)
 var currentFigure = null; // Unlike "figureType", it has the array with the uris of the images that represent the figure.
 var head_body_feet = [0, 0, 0]; // Indicates in which of the three parts below each of the three sections of the figure currently is
-var parts = ['Antropomorfa','Geométrica','Zoomorfa'];
 // ------ END
 
 // ------ BEGIN: Variables related to the quiz
 var numQuestion = 0;
 var currentAttempt = 1;
+var userAnswers = ["a", "a", "a", "a", "a", "a", "a"];
+var incorrectAnswers = [];
 var head_body_feet_forQuiz = [0, 0, 0]; // Equivalent to "head_body_feet", but used for the quiz figure
 var figureNum = 0;
 // This will be shuflled later and will indicate the order of the options in the dropdown menu,
@@ -41,13 +39,13 @@ const possible_languages = ["spanish", "english"];
 // so the elements are of the form [id, text].
 const mainLabels_texts = {
 	spanish: [
-		["title", "Figuras Rupestres"], // 0
+		["subtitle", "Figuras Rupestres"], // 0
 		["main-left-label", "Cueva de las manos - Argentina"], // 1
 		["main-right-label", "Sur de Marruecos - África"], // 2
 		["central-image-label", '<span style="font-style:italic">Alia, Diosa de la Fertilidad y del Amor</span>. Arabia Saudita'], // 3
 	],
 	english: [
-		["title", "Cave Figures"], // 0
+		["subtitle", "Cave Figures"], // 0
 		["main-left-label", "Cave of the hands - Argentina"], // 1
 		["main-right-label", "South of Morocco - Africa"], // 2
 		["central-image-label", '<span style="font-style:italic">Alia, Goddess of Fertility and Love</span>. Saudi Arabia'], // 3
@@ -309,6 +307,46 @@ const sendEmail_texts = {
 	]
 }
 
+const figureParts = {
+	spanish: [
+		"Antropomorfa", // 0
+		"Geométrica", // 1
+		"Zoomorfa", // 2
+	],
+	english: [
+		"Anthropomorphic", // 0
+		"Geometric", // 1
+		"Zoomorphic", // 2
+	]
+}
+
+const mailBody_texts = {
+	spanish: [
+		"Resultados del quiz de Rupestrarium", // 0
+		"Número de opciones correctas: ", // 1
+		"Respuesta: ", // 2
+		"INCORRECTA", // 3
+		"    - Cabeza: ", // 4
+		"    - Cuerpo: ", // 5
+		"    - Inferior: ", // 6
+		"El correo se envió exitosamente", // 7
+		"No se pudo enviar el correo", // 8
+		"Intento: ", // 9
+	],
+	english: [
+		"Rupestrarium quiz results", // 0
+		"Number of correct options: ", // 1
+		"Answer: ", // 2
+		"INCORRECT", // 3
+		"    - Head: ", // 4
+		"    - Body: ", // 5
+		"    - Lower: ", // 6
+		"The email was sent successfully", // 7
+		"The email could not be sent", // 8
+		"Attempt: ", // 9
+	]
+}
+
 const quizResults_texts = {
 	spanish: [
 		"Resultados", // 0
@@ -322,7 +360,6 @@ const quizResults_texts = {
 		"Intentar de nuevo", // 8
 		"Regresar al menú principal", // 9
 		"Debes corregir la respuesta de la pregunta ", // 10
-		"Enviar los resultados por correo", // 11
 	],
 	english: [
 		"Results", // 0
@@ -336,7 +373,6 @@ const quizResults_texts = {
 		"Try again", // 8
 		"Back to main menu", // 9
 		"You must correct the answer of the question ", // 10
-		"Send the results by email", // 11
 	],
 }
 

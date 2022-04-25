@@ -21,7 +21,6 @@ const port = 2526;
 app.post('/mailServer', async(request, response) => {
 	// Where the data is located. This requires that the entered parameter is an object with property "mail"
 	let entry = request.body;
-
 	try{
 		let transporter = nodemailer.createTransport({
 			service: 'gmail',
@@ -35,8 +34,8 @@ app.post('/mailServer', async(request, response) => {
 		message = {
 			from: entry.useremail_val,
 			to: entry.teacheremail_val,
-			subject: "Prueba",
-			text: "Email de prueba. Ya con la aplicación funcionando",
+			subject: entry.subject,
+			text: entry.body,
 		}
 
 		transporter.sendMail(message, function(err, info) {
@@ -56,8 +55,3 @@ app.post('/mailServer', async(request, response) => {
 app.listen(port, () => {
 	console.log(`Server running on port ${port}`);
 });
-
-
-
-
-

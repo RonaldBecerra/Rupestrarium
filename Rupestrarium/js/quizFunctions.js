@@ -8,7 +8,7 @@ function loadQuiz(){
 	quiz = true;
 
 	if (quizFinished){
-		finishQuiz();
+		showResultsView();
 	}
 	else if (sendingEmail){
 		sendEmailView();
@@ -18,7 +18,7 @@ function loadQuiz(){
 		nextQuestion(false);
 	}
 	else{
-		finishQuiz();
+		showResultsView();
 	}
 }
 
@@ -129,7 +129,10 @@ function testQuiz(){
 function finishQuiz(){
 	quizFinished = true;
 	testQuiz();
+	sendEmailView();
+}
 
+function showResultsView(){
 	let len = incorrectAnswers.length;
 	let totalPossibilities = quiz_questions[language].length;
 	let texts = quizResults_texts[language];
@@ -140,7 +143,6 @@ function finishQuiz(){
 		stringIncorrects += incorrectAnswers[i].toString() + ", ";
 	}
 	stringIncorrects = stringIncorrects.slice(0, -2);
-	console.log("stringIncorrects = ", stringIncorrects);
 
 	if (len > 0){
 		if (len > 4){
@@ -148,7 +150,6 @@ function finishQuiz(){
 		}
 		else{
 			let corrects = totalPossibilities - len;
-			console.log("corrects = ", corrects);
 			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
 			str += (len > 1) ? texts[5] : (texts[10] + `<br>`);
 			str += stringIncorrects + `<br><br>`;	
@@ -176,22 +177,14 @@ function finishQuiz(){
 	document.getElementById("main-background").innerHTML = 
 		`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
 			<p class="centered_FontRupes">` + str + 
-			// Try again
-			((currentAttempt == 1) ? auxiliarDiv(texts[8], "tryAgain()") : ``) + 
-			// Send results by email
-			((currentAttempt < 3) ? auxiliarDiv(texts[11], "sendEmailView()") : ``) +
+			// Try again (currentAttempt is which will start, not what has already been made)
+			((currentAttempt == 2) ? auxiliarDiv(texts[8], "tryAgain()") : ``) + 
 			// Return to main menu
-			auxiliarDiv(texts[9], "loadCentralImage(5); restoreDefaultValues(true);") + 
+			auxiliarDiv(texts[9], "loadCentralImage(5); restoreDefaultValues()") + 
 		`</div>`;
 }
 
-function restoreQuizValues(){
-	quizFinished = false;
-	numQuestion = 0;
-	currentAttempt += 1;
-}
-
 function tryAgain(){
-	restoreQuizValues()
+	quizFinished = false;
 	loadQuiz();
 }

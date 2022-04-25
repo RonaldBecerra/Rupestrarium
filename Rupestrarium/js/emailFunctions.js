@@ -5,7 +5,6 @@
 
 function sendEmailView(useremail_val="", userpassword_val="", passwordShown=false, teacheremail_val=""){
 	resetDiv('main-background');
-	quizFinished = false;
 	sendingEmail = true;
 
 	poblateMainBackground("horizontalSections_view",
@@ -81,83 +80,65 @@ function change_language_sendingEmail(){
 // Submit the complete form to the teacher
 function submitForm(){
 	let info = getEmailInputsValues();
+	let incorrects = [...incorrectAnswers];
+	let questions = quiz_questions[language];
+	let totalPossibilities = questions.length;
+	let texts = mailBody_texts[language];
 
+	let parts = figureParts[language];
+	let subject = texts[0];
+
+	let body = texts[9] + currentAttempt + "\n";
+	body += texts[1] + (totalPossibilities - incorrects.length).toString() + "/" + totalPossibilities.toString() + "\n\n";
+	
+	// Middle questions
+	let i = 0;
+	while (i < totalPossibilities - 1){
+		body += questions[i].question + "\n" + texts[2] + questions[i].options[userAnswers[i]];
+
+		if (incorrects[0] == i+1){
+			body += "\n" + texts[3];
+			incorrects.shift();
+		}
+		body += "\n\n";
+		i++;
+	}
+
+	// Last question
+	body += questions[i].question + "\n";
+	body += texts[2] + questions[totalPossibilities-1].options[lastQ_selectedOption];
+	for (k=0; k < 3; k++){
+		body += "\n" + texts[k+4] + parts[head_body_feet_forQuiz[k]];
+	}
+	if (totalPossibilities === incorrects.pop()){
+		body += "\n" + texts[3];
+	}
+
+	// Eliminate tags and extra spaces from the text
+	body = deleteHTMLTagsFromText(body);
+
+	// Send the email
 	$.ajax({
 		type: "post",
 		url: smtpServerURL, 
 		dataType: "json",
 		contentType: "application/json; charset=UTF-8",
-		data: JSON.stringify(info),
+		data: JSON.stringify({...info, subject, body}),
 
 		success: data => {
 			if (data){
-				loadCentralImage(5); 
+				alert(texts[7]);
 				currentAttempt += 1; 
 				numQuestion = 0; 
-				sendingEmail = false;	
+				sendingEmail = false;
+				showResultsView();	
+			} else {
+				throw Error("");
 			}
 		},
 		error: function(e){
-			alert("The error is ", e);
+			alert(texts[8]);
 		}
 	})
-
-	// // *** FALTA SEPARAR LOS DOS IDIOMAS EN ESTA LíNEA
-	// let str = "mailto:INGRESE_SU_CORREO_AQUI@gmail.com?Subject=Respuestas Rupestrarium&body=";
-	// let questions = quiz_questions[language];
-	// let currentQ = questions[0];
-
-	// // First question
-	// str += "1-" + currentQ.question + "%0D%0A  " + currentQ.options[userAnswers[0]];
-
-	// // Middle questions
-	// let i = 1;
-	// let ind = 2;
-	// while (i < questions.length - 1){
-	// 	currentQ = questions[i];
-	// 	str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  " + currentQ.options[userAnswers[i]];
-	// 	i += 1;
-	// 	ind += 1;
-	// }
-
-	// // Last question
-	// currentQ = questions[i]
-	// str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  "
-	// 	+ "Cabeza: " + parts[head_body_feet[0]] 
-	// 	+ "%0D%0A  Cuerpo: " + parts[head_body_feet[1]] 
-	// 	+ "%0D%0A  Inferior: " + parts[head_body_feet[2]] 
-	// 	+ "%0D%0A    Respuesta:  " +currentQ.options[userAnswers[i]];
-
-	// window.location.href = str;
 }
 
-// Submit the complete form of quiz results to the teacher
-// function submitForm(){
-// 	// *** FALTA SEPARAR LOS DOS IDIOMAS EN ESTA LíNEA
-// 	let str = "mailto:INGRESE_SU_CORREO_AQUI@gmail.com?Subject=Respuestas Rupestrarium&body=";
-// 	let questions = quiz_questions[language];
-// 	let currentQ = questions[0];
-
-// 	// First question
-// 	str += "1-" + currentQ.question + "%0D%0A  " + currentQ.options[userAnswers[0]];
-
-// 	// Middle questions
-// 	let i = 1;
-// 	let ind = 2;
-// 	while (i < questions.length - 1){
-// 		currentQ = questions[i];
-// 		str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  " + currentQ.options[userAnswers[i]];
-// 		i += 1;
-// 		ind += 1;
-// 	}
-
-// 	// Last question
-// 	currentQ = questions[i]
-// 	str += "%0D%0A%0D%0A" + ind.toString() + currentQ.question + "%0D%0A  "
-// 		+ "Cabeza: " + parts[head_body_feet[0]] 
-// 		+ "%0D%0A  Cuerpo: " + parts[head_body_feet[1]] 
-// 		+ "%0D%0A  Inferior: " + parts[head_body_feet[2]] 
-// 		+ "%0D%0A    Respuesta:  " +currentQ.options[userAnswers[i]];
-
-// 	window.location.href = str;
-// }

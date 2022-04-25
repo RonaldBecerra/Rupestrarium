@@ -3,8 +3,31 @@
  *
  */
 
+// Returns an integer between the min and the max indicated
 function getRandomInt(min, max){
 	return Math.floor(Math.random(min, max) * (max - min)) + min;
+}
+
+/*
+ * Since many texts in this app will include HTML tags, this function allows to recover the plain text
+ *
+ * NOTE: Currently it only deletes the "<br>&nbsp&nbsp&nbsp" parts or the "<br>"" tags, because
+ *       those are what we are interested for now. Maybe this must be extended in the future.
+ */
+function deleteHTMLTagsFromText(text){
+	brSpaceSplit = text.split("<br>&nbsp&nbsp&nbsp");
+
+	let result = "";
+	for (i = 0; i < brSpaceSplit.length; i++){
+		result += brSpaceSplit[i];
+	}
+
+	brSplit = result.split("<br>");
+	result = brSplit[0];
+	for (i = 1; i < brSplit.length; i++){
+		result += " " + brSplit[i];
+	}
+	return result;
 }
 
 // Here we put everything that needs to be initialized when the page is loaded
@@ -84,7 +107,7 @@ function change_language(newLanguage){
 				change_language_sendingEmail();
 			}
 			else if (quizFinished){
-				finishQuiz();
+				showResultsView();
 			}
 			else{
 				nextQuestion(false);
@@ -136,7 +159,7 @@ function loadCentralImage(num){
 }
 
 // In this function we also restore variables that indicate the state of the view to their default values
-function restoreDefaultValues(restore_quiz_values=false){
+function restoreDefaultValues(){
 	figures = quiz = false;
 	head_body_feet = [0, 0, 0];
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
@@ -147,10 +170,6 @@ function restoreDefaultValues(restore_quiz_values=false){
 	var elems = document.getElementsByTagName('button');
 	for (var i = 0; i < elems.length; i++) {
 		elems[i].style.removeProperty('background'); // This property is which could have the black color
-	}
-
-	if (restore_quiz_values){
-		restoreQuizValues();
 	}
 }
 
