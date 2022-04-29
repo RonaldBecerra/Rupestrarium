@@ -19,20 +19,29 @@ const port = 2526;
 
 // Controller
 app.post('/mailServer', async(request, response) => {
-	// Where the data is located. This requires that the entered parameter is an object with property "mail"
 	let entry = request.body;
+
+	// Host's information
+	HOST_EMAIL_USER = "AKIAYNT5UXOKI2MMOG4F";
+	HOST_EMAIL_PASSWORD = "BFeil55GOIasbwaD5sqrXTVCz2phLUzbSkNOOkE81Yk5";
+	HOST_EMAIL_SERVER = "email-smtp.us-east-1.amazonaws.com";
+	HOST_EMAIL_PORT = 465;
+	HOST_EMAIL_SENT_FROM = "info@ajdelgados.com";
+	//HOST_EMAIL_TO = ['arturo@orquesta.agency'];
+
 	try{
 		let transporter = nodemailer.createTransport({
-			service: 'gmail',
-			port: port+1,
+			secure: true,
+			host: HOST_EMAIL_SERVER,
+			port: HOST_EMAIL_PORT,
 			auth: {
-				user: entry.useremail_val,
-				pass: entry.userpassword_val,
+				user: HOST_EMAIL_USER,
+				pass: HOST_EMAIL_PASSWORD,
 			}
 		})
 
 		message = {
-			from: entry.useremail_val,
+			from: HOST_EMAIL_SENT_FROM, // The email is always sent from the same origin
 			to: entry.teacheremail_val,
 			subject: entry.subject,
 			text: entry.body,
@@ -40,6 +49,7 @@ app.post('/mailServer', async(request, response) => {
 
 		transporter.sendMail(message, function(err, info) {
 			if (err) {
+				console.log("err = ", err);
 				throw Error("");
 			} else {
 				response.send(true);

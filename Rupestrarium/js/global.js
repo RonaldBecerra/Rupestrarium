@@ -291,19 +291,15 @@ const correctOptions = [2,2,1,2,2,1,1];
 const sendEmail_texts = {
 	spanish: [
 		"Enviar resultados", // 0
-		"Correo electrónico del estudiante:", // 1
-		"Contraseña:", // 2
-		"&nbsp;&nbsp;Mostrar contraseña", // 3
-		"Correo electrónico del profesor:", // 4
-		"ENVIAR", // 5
+		"Nombre del estudiante:", // 1
+		"Correo electrónico del profesor:", // 2
+		"ENVIAR", // 3
 	],
 	english: [
 		"Submit results", // 0
-		"Student's email:", // 1
-		"Password:", // 2
-		"&nbsp;&nbsp;Show password", // 3
-		"Teacher's email:", // 4
-		"SEND", // 5
+		"Student's name:", // 1
+		"Teacher's email:", // 2
+		"SEND", // 3
 	]
 }
 

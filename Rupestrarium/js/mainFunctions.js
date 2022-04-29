@@ -17,16 +17,13 @@ function getRandomInt(min, max){
 function deleteHTMLTagsFromText(text){
 	brSpaceSplit = text.split("<br>&nbsp&nbsp&nbsp");
 
-	let result = "";
-	for (i = 0; i < brSpaceSplit.length; i++){
-		result += brSpaceSplit[i];
-	}
+	// This concatenates all elements of the previous array in a single string
+	// We must put "" inside join in order that a comma between them does not appear
+	let result = brSpaceSplit.join(""); 
 
 	brSplit = result.split("<br>");
-	result = brSplit[0];
-	for (i = 1; i < brSplit.length; i++){
-		result += " " + brSplit[i];
-	}
+	result = brSplit.join(" ");
+	
 	return result;
 }
 

@@ -3,68 +3,50 @@
  *
  */
 
-function sendEmailView(useremail_val="", userpassword_val="", passwordShown=false, teacheremail_val=""){
+function sendEmailView(username_val="", teacheremail_val=""){
 	resetDiv('main-background');
 	sendingEmail = true;
 
 	poblateMainBackground("horizontalSections_view",
-		[['desc','14'],['useremail','23'],['userpassword','23'],['teacheremail','23'],['sendButton','17']],
+		[['desc','14'],['username','32'],['teacheremail','32'],['sendButton','22']],
 		"column"
 	);
 
 	document.getElementById("main-background-container").style.cssText += "color:white; font-size:2.7vmin;";
 
+	// Subtitle: Submit results
 	document.getElementById("desc").innerHTML =
 		`<div class="centered_FontRupes" style="font-size:3.5vmin; padding-top:2%">` + sendEmail_texts[language][0] + `</div>`;
 
 	let divInit = `<div class="centeredFlex" style="flex-direction:column; align-items:flex-start; width:70%; height:100%;">`;
 
-	document.getElementById("useremail").innerHTML = divInit +
-			`<label for="useremail_input">` + sendEmail_texts[language][1] + `</label>
-			<input class="emailInput" type="text" id="useremail_input" name="useremail_input" value="` + useremail_val + `">` 
-		+ `</div>`;
-		
-
-	document.getElementById("userpassword").innerHTML = divInit +
-			`<label for="password_input">` + sendEmail_texts[language][2] + `</label>
-			<input class="emailInput" type="password" id="password_input" name="password_input" value="` + userpassword_val + `">
-			<div style="height:7.5%"></div>
-			<div class="centeredFlex" style="flex-direction:row; height:10%; justify-content:flex-start; font-size:2.3vmin">
-				<input type="checkbox" id="showHide_password" onClick="show_or_hide_password()"/>`
-				+ sendEmail_texts[language][3] +
-			`</div>` 
+	// Student's name
+	document.getElementById("username").innerHTML = divInit +
+			`<label for="username_input">` + sendEmail_texts[language][1] + `</label>
+			<input class="emailInput" type="text" id="username_input" name="username_input" value="` + username_val + `">` 
 		+ `</div>`;
 
+	// Teacher's email
 	document.getElementById("teacheremail").innerHTML = divInit + 
-			`<label for="teacheremail_input">` + sendEmail_texts[language][4] + `</label>
+			`<label for="teacheremail_input">` + sendEmail_texts[language][2] + `</label>
 			<input class="emailInput" type="text" id="teacheremail_input" name="teacheremail_input" value="` + teacheremail_val + `">` 
 		+ `</div>`;
 
 	let buttonDiv = document.getElementById("sendButton");
 	buttonDiv.style["flex-direction"] = "row";
 
+	// SEND
 	buttonDiv.innerHTML =
 		`<div class="centeredFlex" style="padding-bottom:2%" onClick="submitForm()">
 			<form id="sendEmailButton" class"centeredFlex" style="color:black" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">
-				<p style="font-size:3vmin; font-family:'Arial'">`+ sendEmail_texts[language][5] + `</p>
+				<p style="font-size:3vmin; font-family:'Arial'">`+ sendEmail_texts[language][3] + `</p>
 			</form>
 		</div>`;
 }
 
-// To make visible or not the password that the user is entering
-function show_or_hide_password(){
-	if ($('#showHide_password').is(':checked')) {
-		$('#password_input').attr('type', 'text');
-	} 
-	else {
-		$('#password_input').attr('type', 'password');
-	}
-}
-
 // To get the values of the email fields that the user has entered
 getEmailInputsValues = () => ({
-	useremail_val: document.getElementById("useremail_input").value,
-	userpassword_val: document.getElementById("password_input").value,
+	username_val: document.getElementById("username_input").value,
 	teacheremail_val: document.getElementById("teacheremail_input").value,
 })
 
@@ -74,19 +56,20 @@ getEmailInputsValues = () => ({
 function change_language_sendingEmail(){
 	let res = getEmailInputsValues();
 	let passwordShown = null;
-	sendEmailView(res.useremail_val, res.userpassword_val, passwordShown, res.teacheremail_val);
+	sendEmailView(res.username_val, res.teacheremail_val);
 }
 
 // Submit the complete form to the teacher
 function submitForm(){
 	let info = getEmailInputsValues();
+	let teacheremail_val = info.teacheremail_val;
 	let incorrects = [...incorrectAnswers];
 	let questions = quiz_questions[language];
 	let totalPossibilities = questions.length;
 	let texts = mailBody_texts[language];
 
 	let parts = figureParts[language];
-	let subject = texts[0];
+	let subject = texts[0] + " - " + info.username_val;
 
 	let body = texts[9] + currentAttempt + "\n";
 	body += texts[1] + (totalPossibilities - incorrects.length).toString() + "/" + totalPossibilities.toString() + "\n\n";
@@ -114,7 +97,7 @@ function submitForm(){
 		body += "\n" + texts[3];
 	}
 
-	// Eliminate tags and extra spaces from the text
+	// Eliminate tags added to give format to the text, and also the extra spaces
 	body = deleteHTMLTagsFromText(body);
 
 	// Send the email
@@ -123,11 +106,11 @@ function submitForm(){
 		url: smtpServerURL, 
 		dataType: "json",
 		contentType: "application/json; charset=UTF-8",
-		data: JSON.stringify({...info, subject, body}),
+		data: JSON.stringify({teacheremail_val, subject, body}),
 
 		success: data => {
 			if (data){
-				alert(texts[7]);
+				alert(texts[7]); // Message: "THe email was sent successfully"
 				currentAttempt += 1; 
 				numQuestion = 0; 
 				sendingEmail = false;
@@ -137,7 +120,7 @@ function submitForm(){
 			}
 		},
 		error: function(e){
-			alert(texts[8]);
+			alert(texts[8]); // Message: "The email could not be sent"
 		}
 	})
 }
