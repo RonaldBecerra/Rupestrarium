@@ -53,7 +53,7 @@ function nextQuestion(figureNotCreated=true){
 // Submit an answer
 function submitA(num){
 	// Note that we must not add the "checked" to the last answer (position 7 currently, that is actually the 8th)
-	const str = 'input[name=p' + num.toString() + ((num == 7) ? ']' : ']:checked');
+	const str = 'input[name=p' + num.toString() + ']:checked';
 	userAnswers[num] = document.querySelector(str).value;
 }
 
@@ -134,7 +134,6 @@ function finishQuiz(){
 
 function showResultsView(){
 	let len = incorrectAnswers.length;
-	let totalPossibilities = quiz_questions[language].length;
 	let texts = quizResults_texts[language];
 	let str = `<span style="font-size:5vmin; font-weight:bold">` + texts[0] + `</span><br><br>`;
 
@@ -149,14 +148,14 @@ function showResultsView(){
 			str += texts[1] + `<br>` + stringIncorrects + `<br><br>`;
 		}
 		else{
-			let corrects = totalPossibilities - len;
+			let corrects = totalQuestions - len;
 			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
 			str += (len > 1) ? texts[5] : (texts[10] + `<br>`);
 			str += stringIncorrects + `<br><br>`;	
 		}
 	}
 	else {
-		str += texts[6] + `<br>` + texts[7] + totalPossibilities.toString() + texts[4];
+		str += texts[6] + `<br>` + texts[7] + totalQuestions.toString() + texts[4];
 	}
 
 	let formString = 

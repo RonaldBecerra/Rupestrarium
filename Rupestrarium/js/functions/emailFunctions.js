@@ -65,18 +65,17 @@ function submitForm(){
 	let teacheremail_val = info.teacheremail_val;
 	let incorrects = [...incorrectAnswers];
 	let questions = quiz_questions[language];
-	let totalPossibilities = questions.length;
 	let texts = mailBody_texts[language];
 
 	let parts = figureParts[language];
 	let subject = texts[0] + " - " + info.username_val;
 
-	let body = texts[9] + currentAttempt + "\n";
-	body += texts[1] + (totalPossibilities - incorrects.length).toString() + "/" + totalPossibilities.toString() + "\n\n";
+	let body = texts[7] + currentAttempt + "\n";
+	body += texts[1] + (totalQuestions - incorrects.length).toString() + "/" + totalQuestions.toString() + "\n\n";
 	
 	// Middle questions
 	let i = 0;
-	while (i < totalPossibilities - 1){
+	while (i < totalQuestions - 1){
 		body += questions[i].question + "\n" + texts[2] + questions[i].options[userAnswers[i]];
 
 		if (incorrects[0] == i+1){
@@ -89,11 +88,11 @@ function submitForm(){
 
 	// Last question
 	body += questions[i].question + "\n";
-	body += texts[2] + questions[totalPossibilities-1].options[lastQ_selectedOption];
+	body += texts[2] + questions[totalQuestions-1].options[lastQ_selectedOption];
 	for (k=0; k < 3; k++){
 		body += "\n" + texts[k+4] + parts[head_body_feet_forQuiz[k]];
 	}
-	if (totalPossibilities === incorrects.pop()){
+	if (totalQuestions === incorrects.pop()){
 		body += "\n" + texts[3];
 	}
 
@@ -110,7 +109,7 @@ function submitForm(){
 
 		success: data => {
 			if (data){
-				alert(texts[7]); // Message: "THe email was sent successfully"
+				alert(emailSent_texts[language][0]); // Message: "THe email was sent successfully"
 				currentAttempt += 1; 
 				numQuestion = 0; 
 				sendingEmail = false;
@@ -120,7 +119,7 @@ function submitForm(){
 			}
 		},
 		error: function(e){
-			alert(texts[8]); // Message: "The email could not be sent"
+			alert(emailSent_texts[language][1]); // Message: "The email could not be sent"
 		}
 	})
 }

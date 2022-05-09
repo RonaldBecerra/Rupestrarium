@@ -3,30 +3,6 @@
  *
  */
 
-// Returns an integer between the min and the max indicated
-function getRandomInt(min, max){
-	return Math.floor(Math.random(min, max) * (max - min)) + min;
-}
-
-/*
- * Since many texts in this app will include HTML tags, this function allows to recover the plain text
- *
- * NOTE: Currently it only deletes the "<br>&nbsp&nbsp&nbsp" parts or the "<br>"" tags, because
- *       those are what we are interested for now. Maybe this must be extended in the future.
- */
-function deleteHTMLTagsFromText(text){
-	brSpaceSplit = text.split("<br>&nbsp&nbsp&nbsp");
-
-	// This concatenates all elements of the previous array in a single string
-	// We must put "" inside join in order that a comma between them does not appear
-	let result = brSpaceSplit.join(""); 
-
-	brSplit = result.split("<br>");
-	result = brSplit.join(" ");
-	
-	return result;
-}
-
 // Here we put everything that needs to be initialized when the page is loaded
 window.onload = async function(){
 	generateColumnMenus();
@@ -34,6 +10,7 @@ window.onload = async function(){
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Put the background image of the central section
 	loadCentralImage(5); // Put the initial central image in its place (it is not the same as the background)
+	setQuizValues(); // Establish any necessary data for the quiz
 }
 
 // To poblate the "leftColumnMenu" and "rightColumnMenu" divs
@@ -128,7 +105,7 @@ function loadDef(num=null){
 	else{
 		loadFigure(num);
 		let str = `<p style="width:95%; font-family:'FontTexto'; font-size:0.9vmax"><b>`;
-		str += definitions_texts[language][num];
+		str += manifestationsDefinitions_texts[language][num];
 		str += `</b></p>`;
 
 		div.innerHTML = str;
@@ -153,6 +130,17 @@ function loadCentralImage(num){
 		div.innerHTML = mainLabels_texts[language][3][1];
 	}
 	document.getElementById("img").src = imagesSources[num];
+}
+
+function setQuizValues(){
+	totalQuestions = quiz_questions[language].length;
+	for (i=0; i<totalQuestions-1; i++){
+		// We don't want to push an element for the last question
+		userAnswers.push("a");
+	}
+	for (i=0; i<quiz_questions[language][totalQuestions-1].options.length; i++){
+		lastQ_optionsOrder.push(i);
+	}
 }
 
 // In this function we also restore variables that indicate the state of the view to their default values
@@ -237,4 +225,28 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 		default:
 			break;	
 	}
+}
+
+// Returns an integer between the min and the max indicated
+function getRandomInt(min, max){
+	return Math.floor(Math.random(min, max) * (max - min)) + min;
+}
+
+/*
+ * Since many texts in this app will include HTML tags, this function allows to recover the plain text
+ *
+ * NOTE: Currently it only deletes the "<br>&nbsp&nbsp&nbsp" parts or the "<br>"" tags, because
+ *       those are what we are interested for now. Maybe this must be extended in the future.
+ */
+function deleteHTMLTagsFromText(text){
+	brSpaceSplit = text.split("<br>&nbsp&nbsp&nbsp");
+
+	// This concatenates all elements of the previous array in a single string
+	// We must put "" inside join in order that a comma between them does not appear
+	let result = brSpaceSplit.join(""); 
+
+	brSplit = result.split("<br>");
+	result = brSplit.join(" ");
+	
+	return result;
 }
