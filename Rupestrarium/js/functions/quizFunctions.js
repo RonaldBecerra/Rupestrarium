@@ -31,14 +31,20 @@ function nextQuestion(figureNotCreated=true){
 		let possibleAnswers = currentQ.options;
 		let str = '';
 		for (i=0; i < possibleAnswers.length; i++){
-			str += `<input type="radio" name="p`+ numQuestion.toString() + `" value="` 
-					+ i.toString() + `"` + ((i==0) ? `checked>` : `>`) + " " + possibleAnswers[i] + `<br>`;
+			str += 
+				`<div style="display:flex; flex-direction:row; justify-content:flex-start;">
+					<input type="radio" name="p`+ numQuestion.toString() + `" value="` 
+						+ i.toString() + `"` + ((i==0) ? `checked>` : `>`) + " "
+					+ `<p style="padding-left:10px; font-size:3vmin; font-family:'FontTexto'">` 
+							+ possibleAnswers[i] + 
+						`</p>
+				</div>`;
 		}
 
 		// Here we put the question followed by its possible answers
 		document.getElementById("question").innerHTML = 
 			`<b style="font-size:1.5vw">` + currentQ.question + `</b><br><br>
-			<span style="font-size:3vmin">` + str + `</span>`;
+			<span>` + str + `</span>`;
 
 		// Here we put the image of the hand to advance to the next question
 		document.getElementById("handToRight").innerHTML =
@@ -49,6 +55,39 @@ function nextQuestion(figureNotCreated=true){
 		lastQuestion(currentQ, figureNotCreated); 
 	}
 }
+
+// Gets the question of the quiz to display and increases the number of current question in 1
+// function nextQuestion(figureNotCreated=true){
+// 	let questions = quiz_questions[language];
+// 	let currentQ = questions[numQuestion];
+	
+// 	if (numQuestion < questions.length - 1){
+// 		let possibleAnswers = currentQ.options;
+// 		let str = '';
+// 		for (i=0; i < possibleAnswers.length; i++){
+// 			str += `<input type="radio" name="p`+ numQuestion.toString() + `" value="` 
+// 					+ i.toString() + `"` + ((i==0) ? `checked>` : `>`) + " " + possibleAnswers[i] + `<br>`;
+// 		}
+
+// 		// Here we put the question followed by its possible answers
+// 		// document.getElementById("question").innerHTML = 
+// 		// 	`<b style="font-size:1.5vw">` + currentQ.question + `</b><br><br>
+// 		// 	<span style="font-size:3vmin">` + str + `</span>`;
+
+// 		// Here we put the question followed by its possible answers
+// 		document.getElementById("question").innerHTML = 
+// 			`<b style="font-size:1.5vw">` + currentQ.question + `</b><br><br>
+// 			<span style="font-size:3vmin">` + str + `</span>`;
+
+// 		// Here we put the image of the hand to advance to the next question
+// 		document.getElementById("handToRight").innerHTML =
+// 			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="position:relative; height:6vmin" 
+// 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
+// 	}
+// 	else{ // The last question needs a different treatment
+// 		lastQuestion(currentQ, figureNotCreated); 
+// 	}
+// }
 
 // Submit an answer
 function submitA(num){

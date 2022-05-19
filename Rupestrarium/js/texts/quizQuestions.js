@@ -2,16 +2,16 @@
 const quiz_questions = {
 	spanish: [
 		{ // 0
-			question: "1- Las Manifestaciones Rupestres<br>son importantes porque: _____________",
+			question: "1- Las Manifestaciones Rupestres son importantes porque: _____________",
 			options: [ 
 				"Son obras artísticas", // 0
 				"Es posible trasladarlas de un sitio a otro", // 1
-				"Son el intento más antiguo de comunicación<br>&nbsp&nbsp&nbsp humana", // 2
+				"Son el intento más antiguo de comunicación humana", // 2
 				"Se encuentran solo en África", // 3
 			],
 		},
 		{ // 1
-			question: "2- El ____________ permite acercarnos a las<br>diversas expresiones gráficas, con los<br>distintos contenidos de nuestras primeras<br>sociedades",
+			question: "2- El ____________ permite acercarnos a las diversas expresiones gráficas, con los distintos contenidos de nuestras primeras sociedades",
 			options: [ 
 				"Dolmen", // 0
 				"Agua", // 1
@@ -20,16 +20,16 @@ const quiz_questions = {
 			],
 		},
 		{ // 2
-			question: "3- ¿En cuáles de estas manifestaciones<br>encontramos gráficos o dibujos, pintados<br>o grabados?",
+			question: "3- ¿En cuáles de estas manifestaciones encontramos gráficos o dibujos, pintados o grabados?",
 			options: [
 				"Cerros Míticos Naturales", // 0
-				"Pinturas Rupestres, Pictografías<br>&nbsp&nbsp&nbsp o Micropetroglifos", // 1
+				"Pinturas Rupestres, Pictografías o Micropetroglifos", // 1
 				"Puntos Acoplados", // 2
 				"Solo Micropetroglifos", // 3
 			],
 		},
 		{ // 3
-			question: "4- Se llaman ____________ las representaciones<br>del Ser humano -cuerpo entero, la cabeza,<br>huellas de manos y pies...-",
+			question: "4- Se llaman ____________ las representaciones del Ser humano -cuerpo entero, la cabeza, huellas de manos y pies...-",
 			options: [
 				"Figuras Geométricas", // 0
 				"Figuras Zoomorfas", // 1
@@ -38,7 +38,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 4
-			question: "5- Las representaciones de imágenes más<br>abstractas las llamamos _________, o _________",
+			question: "5- Las representaciones de imágenes más abstractas las llamamos _________, o _________",
 			options: [
 				"Zoomorfas", // 0
 				"Antropomorfas", // 1
@@ -47,7 +47,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 5
-			question: "6- Las figuras Zoomorfas<br>son representaciones de:",
+			question: "6- Las figuras Zoomorfas son representaciones de:",
 			options: [
 				"Plantas", // 0
 				"Animales", // 1
@@ -56,7 +56,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 6
-			question: "7- La mezcla de figuras Antropomorfas con<br>Zoomorfas genera representaciones ___________",
+			question: "7- La mezcla de figuras Antropomorfas con Zoomorfas genera representaciones ___________",
 			options: [
 				"Geoantropomorfas", // 0
 				"Antropozoomorfas", // 1
@@ -65,7 +65,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "8- Realiza la figura que prefieras (que no sea básica) e identifícala,<br>seleccionando su nombre en el recuadro de abajo",
+			question: "8- Realiza la figura que prefieras (que no sea básica) e identifícala, seleccionando su nombre en el recuadro de abajo",
 			finishButton: "FINALIZAR",
 			options: [
 				`ANTROPOMORFA`, // 0
@@ -88,16 +88,16 @@ const quiz_questions = {
 	],
 	english: [
 		{ // 0
-			question: "1- The Rock Art expressions<br>are important because: _________________",
+			question: "1- The Rock Art expressions are important because: _________________",
 			options: [
 				"They are artistic works", // 0
-				"It is possible to transfer them from one<br>&nbsp&nbsp&nbsp site to another", // 1
-				"They are the oldest attempt of human<br>&nbsp&nbsp&nbsp communication", // 2
+				"It is possible to transfer them from one site to another", // 1
+				"They are the oldest attempt of human communication", // 2
 				"They are located only in Africa", // 3
 			],
 		},
 		{ // 1
-			question: "2- The ____________________ allows us to reach<br>the diverse graphic expressions, with the<br>different contents of our first societies.",
+			question: "2- The ____________________ allows us to reach the diverse graphic expressions, with the different contents of our first societies.",
 			options: [
 				"Dolmen", // 0
 				"Water", // 1
@@ -106,7 +106,7 @@ const quiz_questions = {
 			],					
 		},
 		{ // 2
-			question: "3- In which of these Expressions do we find<br>graphics or drawings, painted or engraved?",
+			question: "3- In which of these Expressions do we find graphics or drawings, painted or engraved?",
 			options: [
 				"Mythical Natural Hills", // 0
 				"Rock Art Paintings or Pictograms", // 1
@@ -115,7 +115,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 3
-			question: "4- ______________ are human representations of<br>the Human Being –whole body, head, hands<br>and feet prints...-",
+			question: "4- ______________ are human representations of the Human Being –whole body, head, hands and feet prints...-",
 			options: [
 				"Geometric figures", // 0
 				"Zoomorphic figures", // 1
@@ -124,7 +124,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 4
-			question: "5- Representations of more abstract images<br>are called ______________, or _______________",
+			question: "5- Representations of more abstract images are called ______________, or _______________",
 			options: [
 				"Zoomorphic", // 0
 				"Anthropomorphic", // 1
@@ -133,7 +133,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 5
-			question: "6- Zoomorphic shapes<br>are representations of:",
+			question: "6- Zoomorphic shapes are representations of:",
 			options: [
 				"Plants", // 0
 				"Animals", // 1
@@ -142,7 +142,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 6
-			question: "7- Combination of anthropomorphic and<br>Zoomorphic shapes generates _____________<br>representations",
+			question: "7- Combination of anthropomorphic and Zoomorphic shapes generates _____________ representations",
 			options: [
 				"Geoanthropomorphic", // 0
 				"Anthropozoomorphic", // 1
@@ -151,7 +151,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "8- Make the figure you prefer (that is not basic) and identify it,<br>by selecting its name in the box below",
+			question: "8- Make the figure you prefer (that is not basic) and identify it, by selecting its name in the box below",
 			finishButton: "FINISH",
 			options: [
 				`ANTHROPOMORPHIC`, // 0

@@ -259,9 +259,15 @@ p {
 	font-family: "bauhaus";
 }
 
+/*
 input[type=radio] {
 	width:1.5em;
 	height:3vmin
+}*/
+
+input[type=radio] {
+	width: 20px;
+	height:20px;
 }
 
 @font-face {
