@@ -3,15 +3,26 @@
  *
  */
 
+function setQuizValues(){
+	totalQuestions = quiz_questions[language].length;
+	for (i=0; i<totalQuestions-1; i++){
+		// We don't want to push an element for the last question
+		userAnswers.push("a");
+	}
+	for (i=0; i<quiz_questions[language][totalQuestions-1].options.length; i++){
+		lastQ_optionsOrder.push(i);
+	}
+}
+
 function loadQuiz(){
 	resetDiv('main-background');
 	quiz = true;
 
-	if (quizFinished){
-		showResultsView();
-	}
-	else if (sendingEmail){
+	if (sendingEmail){
 		sendEmailView();
+	}
+	else if (quizFinished){
+		showResultsView();
 	}
 	else if (currentAttempt < 3){
 		poblateMainBackground("quizQuestion_view");
@@ -27,67 +38,39 @@ function nextQuestion(figureNotCreated=true){
 	let questions = quiz_questions[language];
 	let currentQ = questions[numQuestion];
 	
-	if (numQuestion < questions.length - 1){
+	if (numQuestion < totalQuestions - 1){
+
 		let possibleAnswers = currentQ.options;
-		let str = '';
+		let istr, id, str = '';
+
 		for (i=0; i < possibleAnswers.length; i++){
+			istr = i.toString();
+			id  = "input_" + istr; // Id of each input radio
+
+			// Giving all the input radio buttons of the current question the same name indicates
+			// that they belong to the same group and so only one can be selected
 			str += 
-				`<div style="display:flex; flex-direction:row; justify-content:flex-start;">
-					<input type="radio" name="p`+ numQuestion.toString() + `" value="` 
-						+ i.toString() + `"` + ((i==0) ? `checked>` : `>`) + " "
-					+ `<p style="padding-left:10px; font-size:3vmin; font-family:'FontTexto'">` 
-							+ possibleAnswers[i] + 
-						`</p>
+				`<div class="inputAnswer">
+					  <input id="` + id + `"  type="radio"   name="p`+ numQuestion.toString() 
+						    + `" value="` + istr + `"` + ((i==0) ? `checked/>` : `/>`) 
+					+ `<label for="` + id + `" class="normalQAnswer">` + possibleAnswers[i] + `</label><br>
 				</div>`;
 		}
 
 		// Here we put the question followed by its possible answers
 		document.getElementById("question").innerHTML = 
-			`<b style="font-size:1.5vw">` + currentQ.question + `</b><br><br>
-			<span>` + str + `</span>`;
+			`<b id="normalQuestion">` + currentQ.question + `</b><br><br>
+			<span style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start">` + str + `</span>`;
 
 		// Here we put the image of the hand to advance to the next question
 		document.getElementById("handToRight").innerHTML =
-			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="position:relative; height:6vmin" 
+			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="height:6vmin" 
 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
 	}
 	else{ // The last question needs a different treatment
 		lastQuestion(currentQ, figureNotCreated); 
 	}
 }
-
-// Gets the question of the quiz to display and increases the number of current question in 1
-// function nextQuestion(figureNotCreated=true){
-// 	let questions = quiz_questions[language];
-// 	let currentQ = questions[numQuestion];
-	
-// 	if (numQuestion < questions.length - 1){
-// 		let possibleAnswers = currentQ.options;
-// 		let str = '';
-// 		for (i=0; i < possibleAnswers.length; i++){
-// 			str += `<input type="radio" name="p`+ numQuestion.toString() + `" value="` 
-// 					+ i.toString() + `"` + ((i==0) ? `checked>` : `>`) + " " + possibleAnswers[i] + `<br>`;
-// 		}
-
-// 		// Here we put the question followed by its possible answers
-// 		// document.getElementById("question").innerHTML = 
-// 		// 	`<b style="font-size:1.5vw">` + currentQ.question + `</b><br><br>
-// 		// 	<span style="font-size:3vmin">` + str + `</span>`;
-
-// 		// Here we put the question followed by its possible answers
-// 		document.getElementById("question").innerHTML = 
-// 			`<b style="font-size:1.5vw">` + currentQ.question + `</b><br><br>
-// 			<span style="font-size:3vmin">` + str + `</span>`;
-
-// 		// Here we put the image of the hand to advance to the next question
-// 		document.getElementById("handToRight").innerHTML =
-// 			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="position:relative; height:6vmin" 
-// 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
-// 	}
-// 	else{ // The last question needs a different treatment
-// 		lastQuestion(currentQ, figureNotCreated); 
-// 	}
-// }
 
 // Submit an answer
 function submitA(num){
@@ -96,7 +79,7 @@ function submitA(num){
 	userAnswers[num] = document.querySelector(str).value;
 }
 
-// Last question of the quiz, that has the format of a slider figure
+// Last question of the quiz, that has the same layout format of a slider figure view
 function lastQuestion(currentQ, figureNotCreated){
 	if (figureNotCreated){
 		figureNum = getRandomInt(0,4); // The 4 is the number of currently available figures, that is the max index plus one
@@ -108,44 +91,46 @@ function lastQuestion(currentQ, figureNotCreated){
 		loadFigure(figureNum);
 	}
 	document.getElementById("desc").innerHTML = 
-		`<form class="whole centeredFlex whiteBackground_blackBorder" style="width:88%; height:85%">
-			<p class="centeredBold_FontTexto" style="font-size:1.2vmax">` + currentQ.question + `</p>
+		`<form id="lastQDesc" class="centeredFlex whiteBackground_blackBorder">
+			<p class="centeredBold_FontTexto">` + currentQ.question + `</p>
 		</form>`;
 
 	let div = document.getElementById("kind_rotulos");
-	div.style["flex-direction"] = "row-reverse";
+	div.style["flex-direction"] = "row-reverse"; // We will start creating from right to left
 
+	// Create the finish button
 	div.innerHTML = 
-		`<div class="centeredFlex" style="width:31%; padding-bottom:5%">
+		`<div class="centeredFlex" style="padding-bottom:5%">
 			<div class="centeredFlex" onClick="finishQuiz()">
-				<form id="finishButton" class"centeredFlex" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">
-					<p style="font-size:2vmin; font-family:'Arial'">`+ currentQ.finishButton + `</p>
+				<form id="finishButton" class"centeredFlex">
+					<p style="font-family:'Arial'">`+ currentQ.finishButton + `</p>
 				</form>
 			</div>
 		</div>`;
 
-	let answer, num;
-	let str = 
+	// Create the box with choosable options
+	let answer, num, str = 
 		`<select id="figure-chosen-name" name="figure-chosen-name" class="centeredBold_FontTexto"
-			style="width:38%; font-size:2.4vmin" onChange="lastQ_selectedOption = this.value;">`;
+			     onChange="lastQ_selectedOption = this.value;">`;
 
 	for (i=0; i < currentQ.options.length; i++){
 		num = lastQ_optionsOrder[i];
 		answer = currentQ.options[num];
 		str += `<option class="centeredBold_FontTexto" value="`+ num + `">` + answer + `</option>`;
 	}
-	str += `</select><div style="width:31%"></div>`;
+	str += `</select><div></div>`;
 	
 	div.innerHTML += str;
 	document.getElementById("figure-chosen-name").value = lastQ_selectedOption;
 }
 
-function testQuiz(){
+// It inserts the numbers of questions that the user failed to the global array "incorrectAnswers"
+function evaluateQuiz(){
 	let lastQ = quiz_questions[language][numQuestion];
 	var i = 0;
 	incorrectAnswers = [];
 
-	// Determine the correction of the first questions
+	// Determine the correction of the first group of questions
 	while (i < correctOptions.length){
 		if (correctOptions[i] != userAnswers[i]){
 			incorrectAnswers.push(i+1);
@@ -164,10 +149,9 @@ function testQuiz(){
 	}
 }
 
-//function showQuizResults(){
 function finishQuiz(){
 	quizFinished = true;
-	testQuiz();
+	evaluateQuiz();
 	sendEmailView();
 }
 
@@ -215,7 +199,7 @@ function showResultsView(){
 	document.getElementById("main-background").innerHTML = 
 		`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
 			<p class="centered_FontRupes">` + str + 
-			// Try again (currentAttempt is which will start, not what has already been made)
+			// Try again (currentAttempt number is which will start, not what has already been made)
 			((currentAttempt == 2) ? auxiliarDiv(texts[8], "tryAgain()") : ``) + 
 			// Return to main menu
 			auxiliarDiv(texts[9], "loadCentralImage(5); restoreDefaultValues()") + 

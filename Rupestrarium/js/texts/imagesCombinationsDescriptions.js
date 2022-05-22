@@ -24,7 +24,7 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["spanish"];
 
 	descriptions[0][0][0] = {
-		description: "Figuras que representan al ser humano, de cuerpo entero, la cabeza,<br>con huellas de manos y pies, como abstracción de la imagen",
+		description: "Figuras que representan al ser humano,<br>de cuerpo entero, la cabeza, con huellas de manos y pies,<br>como abstracción de la imagen",
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Flopi di Nadro</span><br>Valcamónica<br>Italia, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">Alia, Diosa de la<br> fertilidad y del amor</span><br>Arabia Saudita<br>África`, // 1
@@ -35,7 +35,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][1][1] = {
-		description: `Representaciones con elementos gráficos como puntos, líneas, círculos<br>o imágenes abstractas, compuestas con los mismos elementos`,
+		description: `Representaciones con elementos gráficos<br>como puntos, líneas, círculos, etc., o imágenes abstractas,<br>compuestas con los mismos elementos`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>España, Europa`, // 0
 			`Petroglifo<br> <span style="font-style:italic">El Bolsillo</span><br>Río Guasanare,<br> estado Zulia<br>Venezuela, Sudamérica`, // 1
@@ -67,12 +67,12 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[0][1][2] = {
-		description: `Figuras Antropomorfas, mezcladas con componentes Geométricos y Zoomorfos,<br>generan representaciones Antropogeozoomorfas`,
+		description: `Figuras Antropomorfas, mezcladas con componentes<br>Geométricos y Zoomorfos,<br>generan representaciones Antropogeozoomorfas`,
 		kind: `ANTROPOGEOZOOMORFA`,
 	};
 
 	descriptions[0][2][1] = {
-		description: `Figuras Antropomorfas, mezcladas con componentes Zoomorfos y Geométricos,<br>generan representaciones Antropozoogeométricas`,
+		description: `Figuras Antropomorfas, mezcladas con componentes<br>Zoomorfos y Geométricos,<br>generan representaciones Antropozoogeométricas`,
 		kind: `ANTROPOZOOGEOMÉTRICA`,
 	};
 
@@ -87,12 +87,12 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][0][2] = {
-		description: `Figuras Geométricas, mezcladas con componentes Antropomorfos y Zoomorfos,<br>generan representaciones Geoantropozoomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes<br>Antropomorfos y Zoomorfos,<br>generan representaciones Geoantropozoomorfas`,
 		kind: `GEOANTROPOZOOMORFA`,
 	};
 
 	descriptions[1][2][0] = {
-		description: `Figuras Geométricas, mezcladas con componentes Zoomorfos y Antropomorfos,<br>generan representaciones Geozooantropomorfas`,
+		description: `Figuras Geométricas, mezcladas con componentes<br>Zoomorfos y Antropomorfos,<br>generan representaciones Geozooantropomorfas`,
 		kind: `GEOZOOANTROPOMORFA`,
 	};
 
@@ -107,12 +107,12 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][0][1] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Antropomorfos y Geométricos,<br>generan representaciones Zooantropogeométricas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes<br>Antropomorfos y Geométricos,<br>generan representaciones Zooantropogeométricas`,
 		kind: `ZOOANTROPOGEOMÉTRICA`,
 	};
 
 	descriptions[2][1][0] = {
-		description: `Figuras Zoomorfas, mezcladas con componentes Geométricos y Antropomorfos,<br>generan representaciones Zoogeoantropomorfas`,
+		description: `Figuras Zoomorfas, mezcladas con componentes<br>Geométricos y Antropomorfos,<br>generan representaciones Zoogeoantropomorfas`,
 		kind: `ZOOGEOANTROPOMORFA`,
 	};
 
@@ -120,7 +120,7 @@ function initializeImagesDescriptions(){
 	descriptions = images_combinations_descriptions["english"];
 
 	descriptions[0][0][0] = {
-		description: `Figures that represent the human being, whole body, head,<br>with hand and foot prints, as an image abstraction`,
+		description: `Figures that represent the human being,<br>whole body, head, with hand and foot prints,<br>as an image abstraction`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Fopli di Nadro</span><br>Valcamonica<br>Italy, Europe`, // 0
 			`Petroglyph<br> <span style="font-style:italic">Alia, Goddess of<br> Fertility and of Love</span><br>Saudi Arabia<br>Africa`, // 1
@@ -131,7 +131,7 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][1][1] = {
-		description: `Representation with graphic elements like dots, lines, circles<br>or more abstract images, formed with the same elements`,
+		description: `Representation with graphic elements<br>like dots, lines, circles, etc., or more abstract images,<br>formed with the same elements`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>Spain, Europe`, // 0
 			`Petroglyph<br> <span style="font-style:italic">El Bolsillo</span><br>Guasanare river<br>Zulia State<br>Venezuela, South America`, // 1
@@ -163,12 +163,12 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[0][1][2] = {
-		description: `Anthropomorphic figures, mixed with Geometric and Zoomorphic components,<br>generate Anthropogeozoomorphic representations`,
+		description: `Anthropomorphic figures,<br>mixed with Geometric and Zoomorphic components,<br>generate Anthropogeozoomorphic representations`,
 		kind: `ANTHROPOGEOZOOMORPHIC`,
 	};
 
 	descriptions[0][2][1] = {
-		description: `Anthropomorphic figures, mixed with Zoomorphic and Geometric components,<br>generate Anthropozoogeometric representations`,
+		description: `Anthropomorphic figures,<br>mixed with Zoomorphic and Geometric components,<br>generate Anthropozoogeometric representations`,
 		kind: `ANTHROPOZOOGEOMETRIC`,
 	};
 
@@ -183,12 +183,12 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[1][0][2] = {
-		description: `Geometric figures, mixed with Anthropomorphic and Zoomorphic components,<br>generate Geozooanthropomorphic representations`,
+		description: `Geometric figures,<br>mixed with Anthropomorphic and Zoomorphic components,<br>generate Geozooanthropomorphic representations`,
 		kind: `GEOANTHROPOZOOMORPHIC`,
 	};
 
 	descriptions[1][2][0] = {
-		description: `Geometric figures, mixed with Zoomorphic and Anthropomorphic components,<br>generate Geozooanthropomorphic representations`,
+		description: `Geometric figures,<br>mixed with Zoomorphic and Anthropomorphic components,<br>generate Geozooanthropomorphic representations`,
 		kind: `GEOZOOANTHROPOMORPHIC`,
 	};
 
@@ -203,12 +203,12 @@ function initializeImagesDescriptions(){
 	};
 
 	descriptions[2][0][1] = {
-		description: `Zoomorphic figures, mixed with Anthropomorphic and Geometric components,<br>generate Zooanthropogeometric representations`,
+		description: `Zoomorphic figures,<br>mixed with Anthropomorphic and Geometric components,<br>generate Zooanthropogeometric representations`,
 		kind: `ZOOANTHROPOGEOMETRIC`,
 	};
 
 	descriptions[2][1][0] = {
-		description: `Zoomorphic figures, mixed with Geometric and Anthropomorphic components,<br>generate Zoogeoanthropomorphic representations`,
+		description: `Zoomorphic figures,<br>mixed with Geometric and Anthropomorphic components,<br>generate Zoogeoanthropomorphic representations`,
 		kind: `ZOOGEOANTHROPOMORPHIC`,
 	};
 }

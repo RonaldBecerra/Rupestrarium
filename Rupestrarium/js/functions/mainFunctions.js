@@ -13,6 +13,26 @@ window.onload = async function(){
 	setQuizValues(); // Establish any necessary data for the quiz
 }
 
+// It calls the correct css file depending on the 
+function adjustStyle(width, height) {
+	let rel = width/height;
+	if (rel < 0.8) {
+		$("#size-stylesheet").attr("href", "css/narrow.css");
+	} else if (rel < 1.38) {
+		$("#size-stylesheet").attr("href", "css/medium.css");
+	} else {
+		$("#size-stylesheet").attr("href", "css/wide.css"); 
+	}
+}
+
+// Function to listen the current size, so we can apply the correct css file
+$(function() {
+	adjustStyle($(this).width(), $(this).height());
+	$(window).resize(function() {
+		adjustStyle($(this).width(), $(this).height());
+	});
+});
+
 // To poblate the "leftColumnMenu" and "rightColumnMenu" divs
 function generateColumnMenus(){
 	let str, div, i, j;
@@ -22,25 +42,25 @@ function generateColumnMenus(){
 	div = document.getElementById("leftColumnMenu");
 	str = "";
 	while(i < 5){ // Number of buttons on the left side
-		str += `<button class="menuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i.toString()+`);">`;
+		str += `<button class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i.toString()+`);">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		i += 1;
 	}
-	str += `<img id="image_Y" style="width: 100%; height: 80%" src="img/Cueva_de_las_manos.jpg">`;
+	str += `<img style="width: 100%; height: 80%" src="img/Cueva_de_las_manos.jpg">`;
 	div.innerHTML = str;
 
 	// --- Right side
 	div = document.getElementById("rightColumnMenu");
 	str = "";
 	while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
-		str += `<button class="menuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
+		str += `<button class="mainMenuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
 		str += `loadDef(`+k.toString()+`);">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		k += 1;
 		i += 1;
 	}
 	// "Recapitulate" button
-	str += `<button class="menuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+	str += `<button class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
 	str += `<div id="def" class="centeredFlex" style="flex-direction: row; width: 100%; height: 80%"></div>`;
@@ -57,7 +77,7 @@ function change_language(newLanguage){
 			document.getElementById('textButton' + i.toString()).innerHTML = texts[i];
 		}
 
-		// We translate the texts of the of the main labels (title and vertical texts)
+		// We translate the texts of the of the main labels (subtitle, vertical texts and footer text)
 		let elem, div;
 		texts = mainLabels_texts[newLanguage];
 		for (i=0; i < texts.length; i++){
@@ -104,7 +124,7 @@ function loadDef(num=null){
 	// Case when we must load the definition of a Petroglyph or Rock painting
 	else{
 		loadFigure(num);
-		let str = `<p style="width:95%; font-family:'FontTexto'; font-size:0.9vmax"><b>`;
+		let str = `<p id="definition"><b>`;
 		str += manifestationsDefinitions_texts[language][num];
 		str += `</b></p>`;
 
@@ -130,17 +150,6 @@ function loadCentralImage(num){
 		div.innerHTML = mainLabels_texts[language][3][1];
 	}
 	document.getElementById("img").src = imagesSources[num];
-}
-
-function setQuizValues(){
-	totalQuestions = quiz_questions[language].length;
-	for (i=0; i<totalQuestions-1; i++){
-		// We don't want to push an element for the last question
-		userAnswers.push("a");
-	}
-	for (i=0; i<quiz_questions[language][totalQuestions-1].options.length; i++){
-		lastQ_optionsOrder.push(i);
-	}
 }
 
 // In this function we also restore variables that indicate the state of the view to their default values
@@ -181,11 +190,12 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 	let div = document.getElementById("main-background");
 
 	switch (kind){
-		// When we put the image that appears on the beginning, or those that are invoked with the left buttons
+		// When we put the image that appears on the beginning, or those that are invoked with the buttons of the left column menu
 		case "centralImage_view":
 			div.innerHTML = 
-				`<div class="img-side">
-					<div id="central-image-label" class="vertical-text-bottom-to-top" 
+				`<div class="img-side">`
+					// This is to put the vertical text next to the image that appears when starting the app
+					+ `<div id="central-image-label" class="vertical-text-bottom-to-top" 
 						style="display:none; text-align:right">
 					</div>
 				</div>
@@ -213,7 +223,7 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 			div.innerHTML =
 				`<div class="whole" style="flex-direction:column">
 					<div class="whole centeredFlex" style="height:74%">
-						<form class="whiteBackground_blackBorder" style="max-width:70%"">
+						<form class="whiteBackground_blackBorder" style="max-width:85%"">
 							<p id="question" style="font-family:'FontTexto'"></p>
 						</form>
 					</div>
@@ -244,6 +254,12 @@ function deleteHTMLTagsFromText(text){
 	// This concatenates all elements of the previous array in a single string
 	// We must put "" inside join in order that a comma between them does not appear
 	let result = brSpaceSplit.join(""); 
+
+	redSplit = result.split("<span style='color:red'>");
+	result = redSplit.join("");
+
+	spanCloseSplit = result.split("</span>");
+	result = spanCloseSplit.join("");
 
 	brSplit = result.split("<br>");
 	result = brSplit.join(" ");

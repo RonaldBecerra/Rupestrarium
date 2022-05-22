@@ -65,7 +65,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "8- Realiza la figura que prefieras (que no sea básica) e identifícala, seleccionando su nombre en el recuadro de abajo",
+			question: "8- Realiza una figura <span style='color:red'>no básica</span> que prefieras e identifícala,<br>seleccionando su nombre en el recuadro de abajo",
 			finishButton: "FINALIZAR",
 			options: [
 				`ANTROPOMORFA`, // 0
@@ -151,7 +151,7 @@ const quiz_questions = {
 			],
 		},
 		{ // 7
-			question: "8- Make the figure you prefer (that is not basic) and identify it, by selecting its name in the box below",
+			question: "8- Make a <span style='color:red'>non-basic</span> figure that you prefer and identify it,<br>by selecting its name in the box below",
 			finishButton: "FINISH",
 			options: [
 				`ANTHROPOMORPHIC`, // 0

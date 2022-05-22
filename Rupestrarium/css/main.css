@@ -28,194 +28,15 @@ body {
 	justify-content: flex-start;
 }
 
-header {
-	background-color: #cc6600;
-	width: 100%; 
-	height: 21vh; 
-	display: flex; 
-	align-items: flex-end;
-}
-
-header .stone-texture {
-	width: 100%;
-	height: 85%;
-	background-color: #cfc8c2;
-	background-image: url("../img/textura-de-piedra.png");
-	background-size: calc(100% / 4) auto;
-	background-repeat: space;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: 1fr;
-	grid-column-gap: 0px;
-	grid-row-gap: 0px;
-}
-.stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
-.stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
-.stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
-.stone-texture div {display: flex; justify-content: center; align-items: center;}
-
-main {
-	background-color: #a03322;
-	width: 100%;
-	height: 72vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
-}
-
-main .main-container {
-	width: 100%; 
-	display: flex; 
-	flex-direction: row;
-}
-
-#subtitle{
-	font-family: 'FontRupes'; 
-	font-weight: lighter; 
-	font-size: 4.6vmin; 
-	text-align: center; 
+/* These two styles let the respective buttons change their respective colors when the mouse
+   is located over them */ 
+#finishButton:hover, #sendEmailButton:hover{
 	color: white;
 }
-
-/*For the two red borders with vertical text*/
-.border{
-	width: 5%; 
-	height: 100%; 
-	display: flex;
-	justify-content: center;
-	align-items: flex-end; 
-	padding-bottom: 2vh;
-}
-
-/* For the images (not the slider figures) that appear on the center of the main-background */
-#img{
-	height: 100%;
-	width: 50%;
-	display: flex;
-	align-items: center;
-}
-
-/* For the two spaces that are on the side of the "img" div */
-.img-side{
-	position: relative;
-	width: 25%;
-	height: 100%;
-	display: flex;
-	justify-content: flex-end;
-	padding-bottom: 2vh;
-	padding-right: 0.95vw;
-}
-
-.vertical-text-bottom-to-top{
-	transform: rotate(180deg); 
-	writing-mode: vertical-lr; 
-	font-family: 'Century Gothic'; 
-	font-size: 2vmin; 
-	color: white;
-}
-
-/*For the menus that may appear on the left and/or the right of the view*/
-.columnMenu{
-	height: 100%; 
-	width: 35%; 
-	display: flex; 
-	flex-direction: column; 
-	justify-content: flex-start; 
-	align-items: center; 
-	background-image: url('../img/fondo_intro.jpg');
-}
-
-/* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
-
-/*Buttons that display the different main views */
-.menuButton{
-	background-size: cover;
-	width: 100%;
-	height: 6.5vh;
-	outline: none;
-	font-family: 'FontRupes'; 
-	font-size: 2vw;
-}
-
-/*Text of a lateral menu button*/
-.text_mb{
-	color: white;
-	font-weight: lighter;
-	font-size: 1.65vmax;
-}
-
-/*Subclass of menuButton*/
-.darkRed_mb{
-	background-image: url('../img/button/button_darkred.png');
-}
-
-/*Subclass of menuButton*/
-.red_mb{
-	background-image: url('../img/button/button_red.png');
-}
-
-/*Subclass of menuButton*/
-.gray_mb{
-	background-image: url('../img/button/button_gray.png');
-}
-
-/*Subclass of menuButton*/
-.orange_mb{
-	background-image: url('../img/button/button_orange.png');
-}
-
-/* ------------- END OF FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
 
 .normalCursor{
 	cursor: default;
 }
-
-.whiteBackground_blackBorder{
-	border-radius: 15px;
-	border-style: solid;
-	border-color: black;
-	background: white;
-	padding: 2%;
-	border-width: 5px;
-}
-
-#finishButton{
-	border-radius: 8px;
-	border-style: solid;
-	border-color: black;
-	background: #ed1c24; /*Similar to red*/
-	padding: 7%;
-	cursor: default;
-}
-
-#sendEmailButton{
-	border-radius: 8px;
-	border-style: solid;
-	border-color: black;
-	background: #4285F4; /*Blue color used by Google*/
-	padding: 12%;
-	cursor: default;
-}
-
-.modal {
-	display: flex; 
-	position: absolute; 
-	z-index: 1; 
-	width: 80%; 
-	height: 80%;
-	background-color: white;
-}
-
-/* For the text input boxes that are used to enter the send email fields*/
-.emailInput{
-	height: 28%; 
-	width: 100%; 
-	font-size: 2.8vmin; 
-	padding-left:5px; 
-	padding-right: 5px;
-}
-
 
 .centeredBold_FontTexto{
 	text-align: center; 
@@ -240,34 +61,17 @@ main .main-container {
 	font-family: 'FontRupes';
 }
 
-footer{
-	bottom: 0px;
-	width: 100%;
-	height: 7vh;
-	background: black;
-}
-
-/* Menu in which the user can change the language of the app and has the links to social networks */
-.links_language{
-	width: 37%; 
-	height: 100%; 
-	display: flex; 
-	justify-content: flex-end;
-}
-
 p {
 	font-family: "bauhaus";
 }
 
-/*
-input[type=radio] {
-	width:1.5em;
-	height:3vmin
-}*/
-
-input[type=radio] {
-	width: 20px;
-	height:20px;
+/* It is used to put the input radio next to the text of a possible answer in the quiz */
+.inputAnswer{
+	display: table;
+}
+.inputAnswer input, .inputAnswer label{
+	display: table-cell;
+	vertical-align: middle;
 }
 
 @font-face {

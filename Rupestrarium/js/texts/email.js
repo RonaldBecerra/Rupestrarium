@@ -2,15 +2,19 @@
 const sendEmail_texts = {
 	spanish: [
 		"Enviar resultados", // 0
-		"Nombre del estudiante:", // 1
-		"Correo electrónico del profesor:", // 2
-		"ENVIAR", // 3
+		"Nombre completo del estudiante:", // 1
+		"Número de cédula:", // 2
+		"Carnet estudiantil:", // 3
+		"Correo electrónico del profesor:", // 4
+		"ENVIAR", // 5
 	],
 	english: [
 		"Submit results", // 0
-		"Student's name:", // 1
-		"Teacher's email:", // 2
-		"SEND", // 3
+		"Student's full name:", // 1
+		"Identification card number:", // 2
+		"Student card number:", // 3
+		"Teacher's email:", // 4
+		"SEND", // 5
 	]
 }
 

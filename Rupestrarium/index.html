@@ -5,7 +5,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Rupestrarium</title>
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link id="size-stylesheet" rel="stylesheet" type="text/css" href="css/narrow.css"/>
 </head>
 
 <body>
@@ -14,28 +15,28 @@
 		<!-- Logo container, with stone texture background  -->
 		<div class="stone-texture">
 			<div class="div1">
-				<img src="img/logo-FUNDABITAT.png" style="width:28%; height:80%; margin:0 auto">
+				<img id="logo-fundabitat" src="img/logo-FUNDABITAT.png">
 			</div>
 			<div class="div2">
-				<img src="img/titulo RUPESTRARIUM.png" style="width: 80%;">
+				<img id="rupestrarium-title"src="img/titulo RUPESTRARIUM.png">
 			</div>
 			<div class="div3">
-				<img src="img/logo ANAR.png" style="width: 55%; height:90%">
+				<img id="logo-anar" src="img/logo ANAR.png">
 			</div>
 		</div>
 	</header>
 
 	<!-- Middle section with red color-->
 	<main>
-		<div class="centeredFlex" style="height:8%">
+		<div id="subtitle-container" class="centeredFlex">
 			<!-- Text: Figuras rupestres -->
 			<div id="subtitle"></div>
 		</div>
 
 		<!-- Central section that has contents displayed horizontally-->
-		<div class="main-container" style="height:92%">
+		<div class="main-container">
 
-			<div class="border">
+			<div class="viewBorder">
 				<!-- Text: "Cueva de las manos - Argentina" -->
 				<div id="main-left-label" class="vertical-text-bottom-to-top"></div>
 			</div>
@@ -49,7 +50,7 @@
 			<!-- Here is the place of the buttons "Petroglyphs 1", "Petroglyphs 2", "Rock Paintings 1", "Rock Paintings 2" and "Contact", plus the description of an art or the South of Morocco image-->
 			<div id="rightColumnMenu" class="columnMenu"></div>
 
-			<div class="border">
+			<div class="viewBorder">
 				<!-- Text: "Sur de Marruecos - África" -->
 				<div id="main-right-label" class="vertical-text-bottom-to-top"></div>
 			</div>
@@ -60,32 +61,36 @@
 
 	<footer>
 		<div class="centeredFlex" style="flex-direction: row;">
-			<div class="links_language" style="justify-content: flex-end">
-				<div class="centeredFlex" style="width:11%">
+			<div class="links_language" style="justify-content:flex-end; padding-right:3%">
+				<div class="centeredFlex">
 					<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%">
 				</div>
 
-				<div class="centeredFlex" style="width:11%">
+				<div class="centeredFlex">
 					<img src="img/footer/uk.png" onclick="change_language('english');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%;">
 				</div>
 			</div>
 
-			<img src="img/footer/footer_es.png" style="width:26%; height:100%;">
+			<!--<img src="img/footer/footer_es.png" style="height:100%;">-->
+			<div id="footer-label"></div>
 
-			<div class="links_language" style="justify-content:flex-start">
-				<a class="centeredFlex" style="width:11%" target="_blank" href="https://www.facebook.com/anarvenezuela/">
+			<div class="links_language" style="justify-content:flex-start; padding-left:3%">
+				<a class="centeredFlex" target="_blank" href="https://www.facebook.com/anarvenezuela/">
 					<img src="img/footer/icono-facebook.png" onmouseover="this.style.height='80%'" onmouseout="this.style.height='70%'" style="position:absolute; height:70%;">
 				</a>
-				<a class="centeredFlex" style="width:11%" target="_blank" href="mailto:anarvenezuela@gmail.com">
+				<a class="centeredFlex" target="_blank" href="mailto:anarvenezuela@gmail.com">
 					<img src="img/footer/icono-e-mail.png" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%;">
 				</a>
-				<a class="centeredFlex" style="width:11%" target="_blank">
+				<a class="centeredFlex" target="_blank">
 					<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='96%'" onmouseout="this.style.height='83%'" style="position:absolute; height:83%;">
 				</a>
 			</div>
 		</div>
 	</footer>
 </body>
+
+<!-- JQuery -->
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
 <!-- Import global variables and constants -->
 <script type="text/javascript" src="js/global.js"></script>
@@ -112,8 +117,5 @@
 
 <!-- Import the functions that are invoked putting an underscore (_) -->
 <script type="text/javascript" src="js/underscore-min.js"></script>
-
-<!-- JQuery -->
-<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
 </html>

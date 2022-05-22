@@ -36,17 +36,17 @@ function getDescription(){
 	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
 
 	document.getElementById("desc").innerHTML = 
-		`<p class="centered_FontTexto" style='font-size:1.5vw; width:90%; color:` + color +`;'>`+ object.description + `</p>`;
+		`<p id="figureDesc" class="centered_FontTexto" style='color:` + color +`;'>`+ object.description + `</p>`;
 
 	let div = document.getElementById("kind_rotulos");
-	div.innerHTML = `<p class="centered_FontSub" style="font-size:3vmin; color:` + color +`;">` + object.kind + `</p>`;
+	div.innerHTML = `<p id="figureKind" class="centered_FontSub" style="color:` + color +`;">` + object.kind + `</p>`;
 
 	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
 		div.innerHTML += 
-			`<p style="position:absolute; width:100%; padding-left:75%; padding-bottom:5%; font-family:sans-serif; 
-						color:` + color + `; text-align:left; font-size:1.9vmin; font-family:'Century Gothic'">` 
+			`<p id="figureRotulo" style="position:absolute; text-align:left; font-family:'Century Gothic'; color:` + color + `;">` 
 				+ object.rotulos[figureType] 
-				+ `</p></div>`;
+			+ `</p>
+			</div>`;
 	}
 }
 
@@ -58,7 +58,7 @@ function buildFigure(array = [true, true, true]){
 
 	for (i=0; i<3; i++){
 		if (array[i]){
-			str =  loadArrow(i, "left") + `<img class="whole" style="width:54%" src=` + currentFigure[i][hbf[i]] + `>` + loadArrow(i, "right")
+			str =  loadArrow(i, "left") + `<img class="figureSection whole" src=` + currentFigure[i][hbf[i]] + `>` + loadArrow(i, "right");
 			document.getElementById(sections[i]).innerHTML = str;
 		}
 	}
@@ -67,11 +67,9 @@ function buildFigure(array = [true, true, true]){
 // Arrows that let the user slide the sections of the figures
 function loadArrow(figurePosition, direction){
 	let str = 
-		`<div class="centeredFlex"; style="position:relative; width:23%; height:100%">
+		`<div class="arrowContainer centeredFlex"; style="height:100%">
 			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
-				`onmouseover="this.style.height='18%'" onmouseout="this.style.height='13%'"
-				style="position:relative; height:13%;"
-				src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
+				`src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
 			>
 		</div>`;
 	return str;
