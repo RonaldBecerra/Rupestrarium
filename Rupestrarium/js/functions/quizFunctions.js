@@ -3,6 +3,7 @@
  *
  */
 
+// Establishes initial values to the global variables related to the quiz
 function setQuizValues(){
 	totalQuestions = quiz_questions[language].length;
 	for (i=0; i<totalQuestions-1; i++){
@@ -14,6 +15,7 @@ function setQuizValues(){
 	}
 }
 
+// It loads the correct view when the user clicks on the "Recapitulate" button
 function loadQuiz(){
 	resetDiv('main-background');
 	quiz = true;
@@ -124,89 +126,31 @@ function lastQuestion(currentQ, figureNotCreated){
 	document.getElementById("figure-chosen-name").value = lastQ_selectedOption;
 }
 
-// It inserts the numbers of questions that the user failed to the global array "incorrectAnswers"
-function evaluateQuiz(){
-	let lastQ = quiz_questions[language][numQuestion];
-	var i = 0;
-	incorrectAnswers = [];
-
-	// Determine the correction of the first group of questions
-	while (i < correctOptions.length){
-		if (correctOptions[i] != userAnswers[i]){
-			incorrectAnswers.push(i+1);
-		}
-		i++;
-	}
-	let [hbf, icd] = [head_body_feet_forQuiz, images_combinations_descriptions]; // Abreviations
-
-	// Determine the correction of the last question
-	if ( 
-		((hbf[0] == hbf[1]) && (hbf[0] == hbf[2])) ||
-		(lastQ.options[lastQ_selectedOption] !== icd[language][hbf[0]][hbf[1]][hbf[2]].kind)
-		)
-	{
-		incorrectAnswers.push(i+1);
-	}
-}
-
 function finishQuiz(){
 	quizFinished = true;
 	evaluateQuiz();
 	sendEmailView();
 }
 
-function showResultsView(){
-	let len = incorrectAnswers.length;
-	let texts = quizResults_texts[language];
-	let str = `<span style="font-size:5vmin; font-weight:bold">` + texts[0] + `</span><br><br>`;
+// It inserts the numbers of questions that the user failed to the global array "incorrectAnswers"
+function evaluateQuiz(){
+	let lastQ = quiz_questions[language][numQuestion];
+	incorrectAnswers = [];
 
-	let stringIncorrects = "";
-	for (i=0; i < len; i++){
-		stringIncorrects += incorrectAnswers[i].toString() + ", ";
-	}
-	stringIncorrects = stringIncorrects.slice(0, -2);
-
-	if (len > 0){
-		if (len > 4){
-			str += texts[1] + `<br>` + stringIncorrects + `<br><br>`;
-		}
-		else{
-			let corrects = totalQuestions - len;
-			str += texts[2] + `<br>` + texts[3] + corrects.toString() + texts[4] + `<br>`;
-			str += (len > 1) ? texts[5] : (texts[10] + `<br>`);
-			str += stringIncorrects + `<br><br>`;	
+	// Determine the correction of the first group of questions
+	for (i=0; i < correctOptions.length; i++){
+		if (correctOptions[i] != userAnswers[i]){
+			incorrectAnswers.push(i+1);
 		}
 	}
-	else {
-		str += texts[6] + `<br>` + texts[7] + totalQuestions.toString() + texts[4];
+	let [hbf, icd] = [head_body_feet_forQuiz, images_combinations_descriptions[language]]; // Abreviations
+
+	// Determine the correction of the last question
+	if ( 
+		((hbf[0] == hbf[1]) && (hbf[0] == hbf[2])) ||
+		(lastQ.options[lastQ_selectedOption] !== icd[hbf[0]][hbf[1]][hbf[2]].kind)
+		)
+	{
+		incorrectAnswers.push(totalQuestions);
 	}
-
-	let formString = 
-		`<form class"centeredFlex" style="padding-top:2%"
-			onmouseover="this.style.color='red'; this.style.fontWeight='bold'; this.style.fontSize='3.4vmin'"
-			onmouseout="this.style.color='#F26D0B'; this.style.fontWeight='lighter'; this.style.fontSize='3vmin'"
-			style="color:#F26D0B; font-size:3vmin"
-		>
-			<p style="color:#F26D0B; font-size:3vmin">`;
-
-	let auxiliarDiv = (text, onClick) => (
-		`<div class="centeredFlex centered_FontRupes" style="cursor:default" onClick=` + onClick + `>`
-			+ formString + text + `</p>
-			</form>
-		</div>`
-	)
-
-	document.getElementById("main-background").innerHTML = 
-		`<div id="myModal" class="centeredFlex modal whiteBackground_blackBorder" style="padding:6%; flex-direction:column; font-size:3vmin">
-			<p class="centered_FontRupes">` + str + 
-			// Try again (currentAttempt number is which will start, not what has already been made)
-			((currentAttempt == 2) ? auxiliarDiv(texts[8], "tryAgain()") : ``) + 
-			// Return to main menu
-			auxiliarDiv(texts[9], "loadCentralImage(5); restoreDefaultValues()") + 
-		`</div>`;
-}
-
-function tryAgain(){
-	quizFinished = false;
-	loadQuiz();
 }

@@ -9,7 +9,7 @@ const mainLabels_texts = {
 		["footer-label", "Todos los derechos reservados. ©FUNDABITAT, 2022"], // 4
 	],
 	english: [
-		["subtitle", "Cave Figures"], // 0
+		["subtitle", "Rock Art Figures"], // 0
 		["main-left-label", "Cave of the hands - Argentina"], // 1
 		["main-right-label", "South of Morocco - Africa"], // 2
 		["central-image-label", '<span style="font-style:italic">Alia, Goddess of Fertility and Love</span>. Saudi Arabia'], // 3

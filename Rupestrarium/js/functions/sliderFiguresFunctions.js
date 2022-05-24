@@ -92,5 +92,5 @@ function slideFigure(figurePosition, direction){
 	}
 	let array = [false, false, false];
 	array[figurePosition] = true;
-	buildFigure(array)
+	buildFigure(array);
 }

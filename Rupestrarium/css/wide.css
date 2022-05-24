@@ -33,7 +33,7 @@ header .stone-texture {
 }
 #rupestrarium-title{
 	width: 80%;
-	height: 45%;
+	height: 48%;
 }
 #logo-anar{
 	width: 55%; 
@@ -115,6 +115,15 @@ main {
 	justify-content: flex-start; 
 	align-items: center; 
 	background-image: url('../img/fondo_intro.jpg');
+}
+
+.whiteBackground_blackBorder{
+	border-radius: 15px;
+	border-style: solid;
+	border-color: black;
+	background: white;
+	padding: 2%;
+	border-width: 3.5px;
 }
 
 /* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
@@ -256,14 +265,8 @@ input[type=radio] {
 
 /* ------------- END OF FORMAT FOR ELEMENTS RELATED TO THE QUIZ ------------ */
 
-.whiteBackground_blackBorder{
-	border-radius: 15px;
-	border-style: solid;
-	border-color: black;
-	background: white;
-	padding: 2%;
-	border-width: 3.5px;
-}
+
+/* ------------- FORMAT FOR ELEMENTS RELATED TO SENDING THE EMAIL ------------ */
 
 #sendEmailDesc{
 	font-size: 3.5vmin;
@@ -297,14 +300,30 @@ input[type=radio] {
 	font-size: 2.8vmin; 
 }
 
-.modal {
-	display: flex; 
-	position: absolute; 
-	z-index: 1; 
-	width: 80%; 
-	height: 80%;
-	background-color: white;
+/* ------------- END OF FORMAT FOR ELEMENTS RELATED TO SENDING THE EMAIL ------------ */
+
+
+/* ------------- FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
+
+#results-container {
+	min-width: 60%;
+	max-width: 70%; 
+	min-height: 60%;
+	max-height: 70%;
+	font-size: 3vmin;
 }
+
+#results-title{
+	font-size: 5vmin; 
+}
+
+/* Try again and Back to main menu */
+.results_clickableText:hover{
+	font-weight: bold; 
+	font-size: 3.1vmin;
+}
+
+/* ------------- END OF FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
 
 footer{
 	bottom: 0px;
@@ -320,11 +339,9 @@ footer{
 	display: flex; 
 	justify-content: flex-end;
 }
-
 .links_language div{
 	width: 11%;
 }
-
 .links_language a{
 	width: 11%;
 }

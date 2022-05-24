@@ -8,6 +8,7 @@ var language = null;
 const possible_languages = ["spanish", "english"];
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
+var centralImage = true; // Indicates if the user is currently in one of the views: Presentation, Instructions, etc., that actually consist on an image
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
 var quizFinished = false;
@@ -33,4 +34,53 @@ var totalQuestions = null;
 // because we don't want them to always appear in the same order. It will be initialized as [0,1,2,3,...]
 var lastQ_optionsOrder = []; 
 var lastQ_selectedOption = 0;
+// ------ END
+
+// ------ BEGIN: Images directions
+var Root = "img/art/petroglyph1/";
+const petroglyph1 = [
+    [Root+"cabeza_antro_petro.png", Root+"cabeza_geo_petro.png", Root+"cabeza_zoo_petro.png"],
+    [Root+"cuerpo_antro_petro.png", Root+"cuerpo_geo_petro.png", Root+"cuerpo_zoo_petro.png"],
+    [Root+"inferior_antro_petro.png", Root+"inferior_geo_petro.png", Root+"inferior_zoo_petro.png"],
+];
+
+Root = "img/art/petroglyph2/";
+const petroglyph2 = [
+    [Root+"cabeza_antro_petro2.png", Root+"cabeza_geo_petro2.png", Root+"cabeza_zoo_petro2.png"],
+    [Root+"cuerpo_antro_petro2.png", Root+"cuerpo_geo_petro2.png", Root+"cuerpo_zoo_petro2.png"],
+    [Root+"inferior_antro_petro2.png", Root+"inferior_geo_petro2.png", Root+"inferior_zoo_petro2.png"],
+];
+
+Root = "img/art/rockPainting1/";
+const rockPainting1 = [
+    [Root+"cabeza_antro.png", Root+"cabeza_geo.png", Root+"cabeza_zoo.png"],
+    [Root+"cuerpo_antro.png", Root+"cuerpo_geo.png", Root+"cuerpo_zoo.png"],
+    [Root+"inferior_antro.png", Root+"inferior_geo.png", Root+"inferior_zoo.png"],
+];
+
+Root = "img/art/rockPainting2/";
+const rockPainting2 = [
+    [Root+"cabeza_antro2.png", Root+"cabeza_geo2.png", Root+"cabeza_zoo2.png"],
+    [Root+"cuerpo_antro2.png", Root+"cuerpo_geo2.png", Root+"cuerpo_zoo2.png"],
+    [Root+"inferior_antro2.png", Root+"inferior_geo2.png", Root+"inferior_zoo2.png"],
+];
+
+const possible_figures = [petroglyph1, petroglyph2, rockPainting1, rockPainting2];
+
+const imagesThatVaryWithLanguage = {
+    spanish: {
+        presentacion: "img/text/presentacion_es.png",
+        intro: "img/text/intro_es.png",
+        instrucciones: "img/text/instrucciones_mob_es.png", // CAMBIAR
+        creditos: "img/text/creditos_es.png",
+        contacto: "img/text/contacto.png",
+    },
+    english: {
+        presentacion: "img/text/presentacion_en.png",
+        intro: "img/text/intro_en.png",
+        instrucciones: "img/text/instrucciones_mob_en.png", // CAMBIAR
+        creditos: "img/text/creditos_en.png",
+        contacto: "img/text/contacto.png",
+    },
+}
 // ------ END

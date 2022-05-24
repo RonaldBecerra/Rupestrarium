@@ -117,6 +117,15 @@ main {
 	background-image: url('../img/fondo_intro.jpg');
 }
 
+.whiteBackground_blackBorder{
+	border-radius: 15px;
+	border-style: solid;
+	border-color: black;
+	background: white;
+	padding: 2%;
+	border-width: 3px;
+}
+
 /* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
 
 /*Buttons that display the different main views */
@@ -206,13 +215,13 @@ main {
 
 /* Format of a question that is not the last one */
 #normalQuestion{
-	font-size: 1.9vw;
+	font-size: 2vw;
 }
 
 /* Format of a possible answer of a question that is not the last one */
 .normalQAnswer{
 	padding-left: 10px; 
-	font-size: 1.9vw; 
+	font-size: 2vw; 
 	font-family: 'FontTexto';
 }
 
@@ -256,14 +265,8 @@ input[type=radio] {
 
 /* ------------- END OF FORMAT FOR ELEMENTS RELATED TO THE QUIZ ------------ */
 
-.whiteBackground_blackBorder{
-	border-radius: 15px;
-	border-style: solid;
-	border-color: black;
-	background: white;
-	padding: 2%;
-	border-width: 3px;
-}
+
+/* ------------- FORMAT FOR ELEMENTS RELATED TO SENDING THE EMAIL ------------ */
 
 #sendEmailDesc{
 	font-size: 3.5vmin;
@@ -297,14 +300,30 @@ input[type=radio] {
 	font-size: 2.8vmin; 
 }
 
-.modal {
-	display: flex; 
-	position: absolute; 
-	z-index: 1; 
-	width: 80%; 
-	height: 80%;
-	background-color: white;
+/* ------------- END OF FORMAT FOR ELEMENTS RELATED TO SENDING THE EMAIL ------------ */
+
+
+/* ------------- FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
+
+#results-container {
+	min-width: 65%;
+	max-width: 80%; 
+	min-height: 50%;
+	max-height: 70%;
+	font-size: 2.7vmin;
 }
+
+#results-title{
+	font-size: 4.5vmin; 
+}
+
+/* Try again and Back to main menu */
+.results_clickableText:hover{
+	font-weight: bold; 
+	font-size: 2.8vmin;
+}
+
+/* ------------- END OF FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
 
 footer{
 	bottom: 0px;
@@ -320,11 +339,9 @@ footer{
 	display: flex; 
 	justify-content: flex-end;
 }
-
 .links_language div{
 	width: 25%;
 }
-
 .links_language a{
 	width: 25%;
 }

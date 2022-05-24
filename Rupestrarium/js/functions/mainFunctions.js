@@ -3,15 +3,13 @@
  *
  */
 
-// Here we put everything that needs to be initialized when the page is loaded
-window.onload = async function(){
-	generateColumnMenus();
-	change_language('spanish');
-	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
-	resetDiv("main-background"); // Put the background image of the central section
-	loadCentralImage(5); // Put the initial central image in its place (it is not the same as the background)
-	setQuizValues(); // Establish any necessary data for the quiz
-}
+// Function to listen the current size, so we can apply the correct css file
+$(function() {
+	adjustStyle($(this).width(), $(this).height());
+	$(window).resize(function() {
+		adjustStyle($(this).width(), $(this).height());
+	});
+});
 
 // It calls the correct css file depending on the 
 function adjustStyle(width, height) {
@@ -25,13 +23,15 @@ function adjustStyle(width, height) {
 	}
 }
 
-// Function to listen the current size, so we can apply the correct css file
-$(function() {
-	adjustStyle($(this).width(), $(this).height());
-	$(window).resize(function() {
-		adjustStyle($(this).width(), $(this).height());
-	});
-});
+// Here we put everything that needs to be initialized when the page is loaded
+window.onload = async function(){
+	generateColumnMenus();
+	change_language('spanish');
+	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
+	resetDiv("main-background"); // Put the background image of the central section
+	loadCentralImage(5); // Put the initial central image in its place (it is not the same as the background)
+	setQuizValues(); // Establish any necessary data for the quiz
+}
 
 // To poblate the "leftColumnMenu" and "rightColumnMenu" divs
 function generateColumnMenus(){
@@ -42,7 +42,7 @@ function generateColumnMenus(){
 	div = document.getElementById("leftColumnMenu");
 	str = "";
 	while(i < 5){ // Number of buttons on the left side
-		str += `<button class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i.toString()+`);">`;
+		str += `<button id="b`+i.toString()+`" class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i.toString()+`);">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		i += 1;
 	}
@@ -53,14 +53,15 @@ function generateColumnMenus(){
 	div = document.getElementById("rightColumnMenu");
 	str = "";
 	while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
-		str += `<button class="mainMenuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
+		str += `<button id="b`+i.toString()+`" class="mainMenuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
 		str += `loadDef(`+k.toString()+`);">`;
 		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 		k += 1;
 		i += 1;
 	}
 	// "Recapitulate" button
-	str += `<button class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()"><b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+	str += `<button id="b`+i.toString()+`" class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()">`;
+	str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
 	str += `<div id="def" class="centeredFlex" style="flex-direction: row; width: 100%; height: 80%"></div>`;
@@ -86,6 +87,23 @@ function change_language(newLanguage){
 			if (div !== null){
 				div.innerHTML = elem[1];
 			}	
+		}
+
+		// Case when the user was in one of the views that consist on a central image: Introduction, Presentation,...
+		if (centralImage){
+			var notFound = true;
+			for (i=0; i < 5; i++) { // 5 is the number of buttons related to the central image
+				let div = document.getElementById("b"+i.toString());
+				if (div.style.background == 'black'){
+					notFound = false;
+					div.onclick(); // We make as if the user selected again the button
+					break;
+				}
+			}
+			// We must put the initial image
+			if (notFound){
+				loadCentralImage(5);
+			}
 		}
 		
 		// Case when there is a figure on the view and the user is not solving the quiz
@@ -135,10 +153,11 @@ function loadDef(num=null){
 
 /* Loads an image that will be shown in the center.
    Normally that image has text, so it cannot be automatically translated when the language is changed.
-   Another image should be loaded in that case (NOT IMPLEMENTED YET)
+   Another image should be loaded in that case.
  */
 function loadCentralImage(num){
 	poblateMainBackground('centralImage_view');
+	centralImage = true;
 
 	let im = imagesThatVaryWithLanguage[language];
 	const imagesSources = [im.presentacion, im.intro, im.instrucciones, im.creditos, im.contacto, "img/imagen_inicial.png"];
@@ -154,7 +173,7 @@ function loadCentralImage(num){
 
 // In this function we also restore variables that indicate the state of the view to their default values
 function restoreDefaultValues(){
-	figures = quiz = false;
+	centralImage = figures = quiz = false;
 	head_body_feet = [0, 0, 0];
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Restore the default background of the central section

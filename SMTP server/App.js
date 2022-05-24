@@ -40,7 +40,7 @@ app.post('/mailServer', async(request, response) => {
 			}
 		})
 
-		message = {
+		let message = {
 			from: HOST_EMAIL_SENT_FROM, // The email is always sent from the same origin
 			to: entry.teacheremail_val,
 			subject: entry.subject,
