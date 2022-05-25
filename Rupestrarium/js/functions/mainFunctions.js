@@ -78,16 +78,43 @@ function change_language(newLanguage){
 			document.getElementById('textButton' + i.toString()).innerHTML = texts[i];
 		}
 
-		// We translate the texts of the of the main labels (subtitle, vertical texts and footer text)
-		let elem, div;
+		// We translate the texts and images of the of the main labels (title, subtitle, vertical texts and footer text)
+		let object, div;
 		texts = mainLabels_texts[newLanguage];
 		for (i=0; i < texts.length; i++){
-			elem = texts[i];
-			div = document.getElementById(elem[0]);
-			if (div !== null){
-				div.innerHTML = elem[1];
-			}	
+			object = texts[i];
+			console.log("\nobject = ", object);
+			if (object.type === "id"){
+				div = document.getElementById(object.identifier);
+				console.log("    forzado = ", document.getElementById("central-image-label"));
+				//console.log("document.getElementById('main-right-label') = ", document.getElementById('main-right-label'));
+				if (div !== null){
+					div[object.location] = object.content;
+					console.log("    div.innerHTML = ", div.innerHTML);
+					console.log("    div[object.location] = ", div[object.location]);
+					console.log("    object.content = ", object.content);
+				}
+				else {
+					console.log("        >>>> Fue nulo, con id = ", object.identifier);
+				}
+			}
+			else if (object.type === "class"){
+				div = document.getElementsByClassName(object.identifier);
+				for(k=0; k < div.length; k++){
+					div[k][object.location] = object.content;
+				}
+			}
 		}
+
+		// let elem, div;
+		// texts = mainLabels_texts[newLanguage];
+		// for (i=0; i < texts.length; i++){
+		// 	elem = texts[i];
+		// 	div = document.getElementById(elem[0]);
+		// 	if (div !== null){
+		// 		div.innerHTML = elem[1];
+		// 	}	
+		// }
 
 		// Case when the user was in one of the views that consist on a central image: Introduction, Presentation,...
 		if (centralImage){
@@ -221,7 +248,11 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 
 				<img id="img" class="whole">
 
-				<div class="img-side"></div>`;
+				<div class="img-side"></div>;
+
+				<div class="whole centeredFlex" style="position:absolute">
+					<div id="subtitle"></div>
+				</div>`;
 			break;
 
 		// When we want to segment it in some horizontal pieces

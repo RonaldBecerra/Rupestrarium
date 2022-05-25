@@ -1,8 +1,8 @@
 
 header {
-	background-color: #cc6600;
+	background-color: #a03322;
 	width: 100%; 
-	height: 21vh; 
+	height: 8vh; 
 	display: flex; 
 	align-items: flex-end;
 }
@@ -10,15 +10,11 @@ header {
 header .stone-texture {
 	display: none;
 }
-.stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
-.stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
-.stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
-.stone-texture div {display: flex; justify-content: center; align-items: center;}
 
 main {
 	background-color: #a03322;
 	width: 100%;
-	height: 72vh;
+	height: 84vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -27,7 +23,7 @@ main {
 
 main .main-container {
 	width: 100%;
-	height: 92%;
+	height: 100%;
 	display: flex; 
 	flex-direction: row;
 }
@@ -48,7 +44,7 @@ main .main-container {
 /* For the images (not the slider figures) that appear on the center of the main-background */
 #img{
 	height: 100%;
-	width: 50%;
+	width: 100%;
 	display: flex;
 	align-items: center;
 }
@@ -56,7 +52,7 @@ main .main-container {
 /* For the two spaces that are on the side of the "img" div */
 .img-side{
 	position: relative;
-	width: 25%;
+	width: 0%;
 	height: 100%;
 	display: flex;
 	justify-content: flex-end;
@@ -143,7 +139,7 @@ main .main-container {
 
 /* Kind of a slider figure (e.g. Anthropomorphic) */
 #figureKind{
-	font-size: 3vmin;
+	font-size: 4.5vw;
 }
 
 /* Label that has information related to a figure, like its name, location, etc. */
@@ -151,24 +147,16 @@ main .main-container {
 	width: 100%; 
 	padding-left: 75%; 
 	padding-bottom: 5%;
-	font-size: 1.9vmin;
+	font-size: 2.5vw;
 }
 
 /* Each of the three parts of the slider figure */
 .figureSection{
-	width: 54%;
+	width: 100%;
 }
 
 .arrowContainer{
 	display: none;
-}
-
-.arrowContainer img{
-	height: 13%;
-}
-
-.arrowContainer img:hover{
-	height: 18%;
 }
 
 /* ------------- FORMAT FOR ELEMENTS RELATED TO THE QUIZ ------------ */
@@ -288,14 +276,18 @@ input[type=radio] {
 footer{
 	bottom: 0px;
 	width: 100%;
-	height: 7vh;
+	height: 8vh;
 	background: black;
 }
 
 /* Menu in which the user can change the language of the app and has the links to social networks */
 .links_language{
-	width: 37%; 
-	height: 100%; 
-	display: flex; 
-	justify-content: flex-end;
+	display: none;
+}
+
+#footer-label{
+	font-family: 'Century Gothic';
+	font-size: 1.7vh; 
+	text-align: center;
+	color: #f9efec;
 }

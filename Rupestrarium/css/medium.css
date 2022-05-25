@@ -82,7 +82,7 @@ main {
 /* For the images (not the slider figures) that appear on the center of the main-background */
 #img{
 	height: 100%;
-	width: 70%;
+	width: 74%;
 	display: flex;
 	align-items: center;
 }
@@ -90,7 +90,7 @@ main {
 /* For the two spaces that are on the side of the "img" div */
 .img-side{
 	position: relative;
-	width: 15%;
+	width: 17%;
 	height: 100%;
 	display: flex;
 	justify-content: flex-end;
