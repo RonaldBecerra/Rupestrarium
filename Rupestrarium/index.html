@@ -12,16 +12,43 @@
 <body>
 	<!-- Header, with light brown color -->
 	<header>
-		<!-- Logo container, with stone texture background  -->
+		<!-- Web normal version: Logo container, with stone texture background  -->
 		<div class="stone-texture">
 			<div class="div1">
 				<img id="logo-fundabitat" src="img/logo-FUNDABITAT.png">
 			</div>
 			<div class="div2">
-				<img id="rupestrarium-title" src="img/titulo RUPESTRARIUM.png">
+				<img id="rupestrarium-title" class="appTitle">
 			</div>
 			<div class="div3">
 				<img id="logo-anar" src="img/logo ANAR.png">
+			</div>
+		</div>
+
+		<!-- Narrow version (mobile)-->
+		<div class="whole centeredFlex narrowOnly">
+
+			<div class="centeredFlex" style="width:14%">
+				<!-- The image that was found is gray, so we invert its color to make it almost white -->
+				<img style="filter: invert(100%); height:35%" src="img/hamburger-menu.png">
+			</div>
+
+			<div style="width:48%">
+				<img id="rupestrarium-title-for-narrow" class="appTitle">
+			</div>
+
+			<div class="centeredFlex" style="width:38%; height:95%">
+				<div style="width:90%; height:100%; display:flex; flex-direction:row; justify-content:space-around">
+					<a class="centeredFlex" target="_blank" href="https://www.facebook.com/anarvenezuela/">
+						<img src="img/footer/icono-facebook.png" onmouseover="this.style.height='80%'" onmouseout="this.style.height='70%'" style="position:absolute; height:70%;">
+					</a>
+					<a class="centeredFlex" target="_blank" href="mailto:anarvenezuela@gmail.com">
+						<img src="img/footer/icono-e-mail.png" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%;">
+					</a>
+					<a class="centeredFlex" target="_blank">
+						<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='68%'" onmouseout="this.style.height='59%'" style="position:absolute; height:59%;">
+					</a>
+				</div>
 			</div>
 		</div>
 	</header>
@@ -30,7 +57,7 @@
 	<main>
 		<div id="subtitle-container" class="centeredFlex">
 			<!-- Text: Figuras rupestres -->
-			<div id="subtitle"></div>
+			<div class="subtitle"></div>
 		</div>
 
 		<!-- Central section that has contents displayed horizontally-->
@@ -61,6 +88,7 @@
 
 	<footer>
 		<div class="centeredFlex" style="flex-direction: row;">
+			<!-- Web normal version -->
 			<div class="links_language" style="justify-content:flex-end; padding-right:3%">
 				<div class="centeredFlex">
 					<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%">
@@ -71,9 +99,15 @@
 				</div>
 			</div>
 
-			<!--<img src="img/footer/footer_es.png" style="height:100%;">-->
+			<!-- Narrow version (mobile) -->
+			<div class="narrowOnly narrow_language_section centeredFlex">
+				<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%">
+			</div>
+
+			<!--Text: All rights reserved -->
 			<div id="footer-label"></div>
 
+			<!-- Web normal version -->
 			<div class="links_language" style="justify-content:flex-start; padding-left:3%">
 				<a class="centeredFlex" target="_blank" href="https://www.facebook.com/anarvenezuela/">
 					<img src="img/footer/icono-facebook.png" onmouseover="this.style.height='80%'" onmouseout="this.style.height='70%'" style="position:absolute; height:70%;">
@@ -82,8 +116,13 @@
 					<img src="img/footer/icono-e-mail.png" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%;">
 				</a>
 				<a class="centeredFlex" target="_blank">
-					<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='96%'" onmouseout="this.style.height='83%'" style="position:absolute; height:83%;">
+					<img src="img/footer/icono-pag-web.png"; onmouseover="this.style.height='68%'" onmouseout="this.style.height='59%'" style="position:absolute; height:59%;">
 				</a>
+			</div>
+
+			<!-- Narrow version (mobile) -->
+			<div class="narrowOnly narrow_language_section centeredFlex">
+				<img src="img/footer/uk.png" onclick="change_language('english');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" style="position:absolute; height:60%;">
 			</div>
 		</div>
 	</footer>

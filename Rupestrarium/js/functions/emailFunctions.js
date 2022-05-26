@@ -105,6 +105,7 @@ function submitForm(){
 	// Eliminate tags added to give format to the text, and also the extra spaces
 	body = deleteHTMLTagsFromText(body);
 
+	/* ------------- BORRAR * ----------------- */
 	console.log(body);
 
 				alert(texts2[0]); // Message: "The email was sent successfully"
@@ -114,6 +115,7 @@ function submitForm(){
 				showResultsView();
 
 	return;
+	/* ------------------- FIN BORRAR ----------- */
 
 	// Send the email
 	$.ajax({

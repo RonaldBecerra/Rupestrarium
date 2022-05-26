@@ -16,7 +16,7 @@ function adjustStyle(width, height) {
 	let rel = width/height;
 	if (rel < 0.8) {
 		$("#size-stylesheet").attr("href", "css/narrow.css");
-	} else if (rel < 1.38) {
+	} else if (rel < 1.42) {
 		$("#size-stylesheet").attr("href", "css/medium.css");
 	} else {
 		$("#size-stylesheet").attr("href", "css/wide.css"); 
@@ -29,7 +29,6 @@ window.onload = async function(){
 	change_language('spanish');
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Put the background image of the central section
-	loadCentralImage(5); // Put the initial central image in its place (it is not the same as the background)
 	setQuizValues(); // Establish any necessary data for the quiz
 }
 
@@ -78,44 +77,6 @@ function change_language(newLanguage){
 			document.getElementById('textButton' + i.toString()).innerHTML = texts[i];
 		}
 
-		// We translate the texts and images of the of the main labels (title, subtitle, vertical texts and footer text)
-		let object, div;
-		texts = mainLabels_texts[newLanguage];
-		for (i=0; i < texts.length; i++){
-			object = texts[i];
-			console.log("\nobject = ", object);
-			if (object.type === "id"){
-				div = document.getElementById(object.identifier);
-				console.log("    forzado = ", document.getElementById("central-image-label"));
-				//console.log("document.getElementById('main-right-label') = ", document.getElementById('main-right-label'));
-				if (div !== null){
-					div[object.location] = object.content;
-					console.log("    div.innerHTML = ", div.innerHTML);
-					console.log("    div[object.location] = ", div[object.location]);
-					console.log("    object.content = ", object.content);
-				}
-				else {
-					console.log("        >>>> Fue nulo, con id = ", object.identifier);
-				}
-			}
-			else if (object.type === "class"){
-				div = document.getElementsByClassName(object.identifier);
-				for(k=0; k < div.length; k++){
-					div[k][object.location] = object.content;
-				}
-			}
-		}
-
-		// let elem, div;
-		// texts = mainLabels_texts[newLanguage];
-		// for (i=0; i < texts.length; i++){
-		// 	elem = texts[i];
-		// 	div = document.getElementById(elem[0]);
-		// 	if (div !== null){
-		// 		div.innerHTML = elem[1];
-		// 	}	
-		// }
-
 		// Case when the user was in one of the views that consist on a central image: Introduction, Presentation,...
 		if (centralImage){
 			var notFound = true;
@@ -128,8 +89,30 @@ function change_language(newLanguage){
 				}
 			}
 			// We must put the initial image
+			// (ONE CASE IN WHICH THIS OCCURS IS WHEN THE APP IS STARTING)
 			if (notFound){
 				loadCentralImage(5);
+			}
+		}
+
+		// We translate the texts and images of the of the main labels (title, subtitle, vertical texts and footer text)
+		let object, div;
+		texts = mainLabels_texts[newLanguage];
+		for (i=0; i < texts.length; i++){
+			object = texts[i];
+			if (object.type === "id"){
+				div = document.getElementById(object.identifier);
+				if (div !== null){
+					div[object.location] = object.content;
+				}
+			}
+			else if (object.type === "class"){
+				div = document.getElementsByClassName(object.identifier);
+				globala = div;
+				globalObject = object;
+				for(k=0; k < div.length; k++){
+					div[k][object.location] = object.content;
+				}
 			}
 		}
 		
@@ -163,7 +146,7 @@ function loadDef(num=null){
 	// Case when we must put the "Sur_de_marruecos.jpg" image in its position with its text
 	if (num == null){
 		div.innerHTML = `<img class="whole" src="img/Sur_de_marruecos.jpg">`;
-		mainRightLabel.innerHTML = mainLabels_texts[language][2][1];
+		mainRightLabel.innerHTML = mainLabels_texts[language][3].content;
 	}
 
 	// Case when we must load the definition of a Petroglyph or Rock painting
@@ -193,7 +176,18 @@ function loadCentralImage(num){
 	if (num == 5){
 		let div = document.getElementById("central-image-label");
 		div.style.display = "flex";
-		div.innerHTML = mainLabels_texts[language][3][1];
+		div.innerHTML = mainLabels_texts[language][4].content;
+
+		// Put the title and the substitle on the center of the view for the narrow version
+		div = document.getElementById("main-background");
+		div.innerHTML += 
+			`<div class="whole centeredFlex narrowOnly" style="position:absolute; flex-direction:column">
+				<img id="rupestrarium-title-central-image" class="appTitle">
+				<div class="subtitle"></div>
+			</div>`;
+
+		// Bright the central image in order that the title image (ROCKARTIUM) is readable
+		document.getElementById("img").style.filter = "brightness(1.25)";
 	}
 	document.getElementById("img").src = imagesSources[num];
 }
@@ -248,11 +242,7 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 
 				<img id="img" class="whole">
 
-				<div class="img-side"></div>;
-
-				<div class="whole centeredFlex" style="position:absolute">
-					<div id="subtitle"></div>
-				</div>`;
+				<div class="img-side"></div>`;
 			break;
 
 		// When we want to segment it in some horizontal pieces

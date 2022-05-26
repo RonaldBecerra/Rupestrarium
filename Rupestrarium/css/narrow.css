@@ -1,18 +1,27 @@
+body{
+	background-color: #a03322;
+}
 
 header {
-	background-color: #a03322;
 	width: 100%; 
 	height: 8vh; 
 	display: flex; 
-	align-items: flex-end;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 header .stone-texture {
 	display: none;
 }
 
+/* Title that appears on the header besides the hamburger menu and other buttons */
+#rupestrarium-title-for-narrow{
+	width: 100%;
+	height: 70%;
+	filter: brightness(1.4);
+}
+
 main {
-	background-color: #a03322;
 	width: 100%;
 	height: 84vh;
 	display: flex;
@@ -32,8 +41,13 @@ main .main-container {
 	display: none;
 }
 
-#subtitle{
-	display: none;
+.subtitle{
+	font-family: 'FontRupes'; 
+	font-size: 8.5vw; 
+	text-align: center; 
+	color: black;
+	padding-top: 2.5%;
+	text-shadow: 2px 4px 3px white;
 }
 
 /*For the two red borders of the whole view, with vertical text*/
@@ -49,15 +63,17 @@ main .main-container {
 	align-items: center;
 }
 
+/* For the title that appears over the central image in the narrow version */
+#rupestrarium-title-central-image{
+	width: 88%; 
+	height: 9%; 
+	padding-bottom: 2.5%;
+	filter: brightness(1.4);
+}
+
 /* For the two spaces that are on the side of the "img" div */
 .img-side{
-	position: relative;
-	width: 0%;
-	height: 100%;
-	display: flex;
-	justify-content: flex-end;
-	padding-bottom: 2vh;
-	padding-right: 0.95vw;
+	display: none;
 }
 
 .vertical-text-bottom-to-top{
@@ -277,12 +293,18 @@ footer{
 	bottom: 0px;
 	width: 100%;
 	height: 8vh;
-	background: black;
 }
 
 /* Menu in which the user can change the language of the app and has the links to social networks */
 .links_language{
 	display: none;
+}
+
+/* Menu in which the user can change the language of the app */
+.narrow_language_section{
+	min-width: 10%;
+	height: 100%;
+	flex: 1;
 }
 
 #footer-label{

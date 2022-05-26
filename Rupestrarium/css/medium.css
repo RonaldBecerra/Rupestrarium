@@ -1,3 +1,7 @@
+/* We don't want to display anything that is marked only for narrow */
+.narrowOnly{
+	display: none;
+}
 
 header {
 	background-color: #cc6600;
@@ -61,7 +65,7 @@ main {
 	height: 8%;
 }
 
-#subtitle{
+.subtitle{
 	font-family: 'FontRupes'; 
 	font-weight: lighter; 
 	font-size: 4vmin; 
@@ -339,10 +343,7 @@ footer{
 	display: flex; 
 	justify-content: flex-end;
 }
-.links_language div{
-	width: 25%;
-}
-.links_language a{
+.links_language div, .links_language a{
 	width: 25%;
 }
 
