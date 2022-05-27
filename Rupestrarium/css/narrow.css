@@ -1,27 +1,42 @@
-body{
-	background-color: #a03322;
-}
-
-header {
-	width: 100%; 
-	height: 8vh; 
-	display: flex; 
-	align-items: center;
-	justify-content: flex-start;
-}
-
-header .stone-texture {
+/* As long as possible, we will try to not put this class into the necessary html element
+   but putting "display:none" in the corresponding class in this file */
+.webOnly{
 	display: none;
 }
 
-/* Title that appears on the header besides the hamburger menu and other buttons */
-#rupestrarium-title-for-narrow{
+header {
+	background-color: #cc6600;
+	width: 100%; 
+	height: 9vh; 
+	display: flex; 
+	align-items: flex-end;
+}
+
+header .stone-texture {
 	width: 100%;
-	height: 70%;
-	filter: brightness(1.4);
+	height: 90%;
+	background-color: #cfc8c2;
+	background-image: url("../img/textura-de-piedra.png");
+	background-size: calc(100% / 4) auto;
+	background-repeat: space;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+.stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
+.stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
+.stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
+.stone-texture div {display: flex; justify-content: center; align-items: center;}
+
+.rupestrarium-title{
+	width: 100%;
+	height: 45%;
 }
 
 main {
+	background-color: #a03322;
 	width: 100%;
 	height: 84vh;
 	display: flex;
@@ -30,24 +45,23 @@ main {
 	justify-content: flex-end;
 }
 
-main .main-container {
+#subtitle-container{
+	height: 6%;
+}
+
+#subtitle{
+	font-family: 'FontRupes'; 
+	font-weight: lighter; 
+	font-size: 5.2vmin; 
+	text-align: center; 
+	color: white;
+}
+
+.main-container {
 	width: 100%;
-	height: 100%;
+	height: 94%;
 	display: flex; 
 	flex-direction: row;
-}
-
-#subtitle-container{
-	display: none;
-}
-
-.subtitle{
-	font-family: 'FontRupes'; 
-	font-size: 8.5vw; 
-	text-align: center; 
-	color: black;
-	padding-top: 2.5%;
-	text-shadow: 2px 4px 3px white;
 }
 
 /*For the two red borders of the whole view, with vertical text*/
@@ -58,29 +72,25 @@ main .main-container {
 /* For the images (not the slider figures) that appear on the center of the main-background */
 #img{
 	height: 100%;
-	width: 100%;
-	display: flex;
-	align-items: center;
-}
-
-/* For the title that appears over the central image in the narrow version */
-#rupestrarium-title-central-image{
-	width: 88%; 
-	height: 9%; 
-	padding-bottom: 2.5%;
-	filter: brightness(1.4);
+	width: 84%;
+	flex-grow: 1; /* This makes it fill the container when there are not img-sides */s
 }
 
 /* For the two spaces that are on the side of the "img" div */
 .img-side{
-	display: none;
+	position: relative;
+	width: 8%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 2vh;
 }
 
 .vertical-text-bottom-to-top{
 	transform: rotate(180deg); 
 	writing-mode: vertical-lr; 
 	font-family: 'Century Gothic'; 
-	font-size: 2vmin; 
+	font-size: 2vh; 
 	color: white;
 }
 
@@ -292,7 +302,8 @@ input[type=radio] {
 footer{
 	bottom: 0px;
 	width: 100%;
-	height: 8vh;
+	height: 7vh;
+	background: black;
 }
 
 /* Menu in which the user can change the language of the app and has the links to social networks */

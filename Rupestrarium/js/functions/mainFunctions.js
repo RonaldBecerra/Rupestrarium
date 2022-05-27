@@ -169,25 +169,21 @@ function loadCentralImage(num){
 	poblateMainBackground('centralImage_view');
 	centralImage = true;
 
-	let im = imagesThatVaryWithLanguage[language];
-	const imagesSources = [im.presentacion, im.intro, im.instrucciones, im.creditos, im.contacto, "img/imagen_inicial.png"];
+	let div, im = imagesThatVaryWithLanguage[language];
+	const imagesSources = [im.presentation, im.intro, im.instructions, im.credits, im.contact, "img/imagen_inicial.png"];
 
 	// For the initial image we must put a vertical text on its side
 	if (num == 5){
-		let div = document.getElementById("central-image-label");
-		div.style.display = "flex";
-		div.innerHTML = mainLabels_texts[language][4].content;
-
-		// Put the title and the substitle on the center of the view for the narrow version
-		div = document.getElementById("main-background");
-		div.innerHTML += 
-			`<div class="whole centeredFlex narrowOnly" style="position:absolute; flex-direction:column">
-				<img id="rupestrarium-title-central-image" class="appTitle">
-				<div class="subtitle"></div>
-			</div>`;
-
-		// Bright the central image in order that the title image (ROCKARTIUM) is readable
-		document.getElementById("img").style.filter = "brightness(1.25)";
+		document.getElementById("central-image-label").innerHTML = mainLabels_texts[language][4].content;
+	}
+	else{
+		/* We don't want the two sides of the image (that have the dark gray background behind)
+		   appear in the mobile version when the image is not the initial one. For the web version
+		   it does not matter that they are also not displayed because the central image will have 
+		   a fixed width */
+		document.querySelectorAll(".img-side").forEach(element =>{
+			element.style.display = "none";
+		});
 	}
 	document.getElementById("img").src = imagesSources[num];
 }
@@ -201,10 +197,9 @@ function restoreDefaultValues(){
 
 	// Since menu buttons turn black when selected, when we choose another we must first restore the color of the previous one.
 	// We are currently not controlling which one was selected, so we have to iterate over them all.
-	var elems = document.getElementsByTagName('button');
-	for (var i = 0; i < elems.length; i++) {
-		elems[i].style.removeProperty('background'); // This property is which could have the black color
-	}
+	document.querySelectorAll("button").forEach(element => {
+		element.style.removeProperty("background");
+	});
 }
 
 // Restablish a div to its default state
@@ -232,15 +227,16 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 	switch (kind){
 		// When we put the image that appears on the beginning, or those that are invoked with the buttons of the left column menu
 		case "centralImage_view":
-			div.innerHTML = 
+			div.innerHTML =
 				`<div class="img-side">`
 					// This is to put the vertical text next to the image that appears when starting the app
 					+ `<div id="central-image-label" class="vertical-text-bottom-to-top" 
-						style="display:none; text-align:right">
+						style="text-align:left">
 					</div>
 				</div>
 
-				<img id="img" class="whole">
+				<img id="img">
+				<img id="img-mob">
 
 				<div class="img-side"></div>`;
 			break;

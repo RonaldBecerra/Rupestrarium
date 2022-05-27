@@ -69,18 +69,18 @@ const possible_figures = [petroglyph1, petroglyph2, rockPainting1, rockPainting2
 
 const imagesThatVaryWithLanguage = {
     spanish: {
-        presentacion: "img/text/presentacion_es.png",
+        presentation: "img/text/presentacion_es.png",
         intro: "img/text/intro_es.png",
-        instrucciones: "img/text/instrucciones_mob_es.png", // CAMBIAR
-        creditos: "img/text/creditos_es.png",
-        contacto: "img/text/contacto.png",
+        instructions: "img/text/instrucciones_mob_es.png", // CAMBIAR
+        credits: "img/text/creditos_es.png",
+        contact: "img/text/contacto.png",
     },
     english: {
         presentacion: "img/text/presentacion_en.png",
         intro: "img/text/intro_en.png",
-        instrucciones: "img/text/instrucciones_mob_en.png", // CAMBIAR
-        creditos: "img/text/creditos_en.png",
-        contacto: "img/text/contacto.png",
+        instructions: "img/text/instrucciones_mob_en.png", // CAMBIAR
+        credits: "img/text/creditos_en.png",
+        contact: "img/text/contacto.png",
     },
 }
 // ------ END
