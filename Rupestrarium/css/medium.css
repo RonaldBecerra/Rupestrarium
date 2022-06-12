@@ -27,7 +27,7 @@ header .stone-texture {
 .stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
 .stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
 .stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
-.stone-texture div {display: flex; justify-content: center; align-items: center;}
+.stone-texture .web_div {display: flex; justify-content: center; align-items: center;}
 
 /* The next three elements appear in the header */
 #logo-fundabitat{
@@ -84,10 +84,9 @@ main {
 }
 
 /* For the images (not the slider figures) that appear on the center of the main-background */
-#img{
+.central_img{
 	height: 100%;
 	width: 74%;
-	display: flex;
 	align-items: center;
 }
 

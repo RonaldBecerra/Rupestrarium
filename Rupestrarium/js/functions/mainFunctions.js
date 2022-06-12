@@ -185,7 +185,16 @@ function loadCentralImage(num){
 			element.style.display = "none";
 		});
 	}
-	document.getElementById("img").src = imagesSources[num];
+	
+	// Credits and instructions have two versions depending of if it's pure web or narrow (mobile)
+	if ((num == 2) || (num == 3)){
+		document.getElementById("img-web").src = imagesSources[num].web;
+		document.getElementById("img-mob").src = imagesSources[num].narrow;
+	} else {
+		document.querySelectorAll(".central_img").forEach(element => {
+			element.src = imagesSources[num];
+		});
+	}
 }
 
 // In this function we also restore variables that indicate the state of the view to their default values
@@ -235,8 +244,8 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 					</div>
 				</div>
 
-				<img id="img">
-				<img id="img-mob">
+				<img id="img-web" class="webOnly central_img">
+				<img id="img-mob" class="narrowOnly central_img">
 
 				<div class="img-side"></div>`;
 			break;

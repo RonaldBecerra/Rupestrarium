@@ -36,7 +36,7 @@ function getDescription(){
 	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
 
 	document.getElementById("desc").innerHTML = 
-		`<p id="figureDesc" class="centered_FontTexto" style='color:` + color +`;'>`+ object.description + `</p>`;
+		`<p id="figureDesc" class="centered_FontRupes" style='color:` + color +`;'>`+ object.description + `</p>`;
 
 	let div = document.getElementById("kind_rotulos");
 	div.innerHTML = `<p id="figureKind" class="centered_FontSub" style="color:` + color +`;">` + object.kind + `</p>`;

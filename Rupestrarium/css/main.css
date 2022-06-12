@@ -34,19 +34,10 @@ body {
 	color: white;
 }
 
-.normalCursor{
-	cursor: default;
-}
-
 .centeredBold_FontTexto{
 	text-align: center; 
 	font-family: 'FontTexto';
 	font-weight: 600;
-}
-
-.centered_FontTexto{
-	text-align: center; 
-	font-family: 'FontRupes';
 }
 
 /* For the text that indicates the kind (anthropomorphic, etc.) of the slider figure */
