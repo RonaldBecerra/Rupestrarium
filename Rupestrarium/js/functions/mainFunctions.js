@@ -108,8 +108,6 @@ function change_language(newLanguage){
 			}
 			else if (object.type === "class"){
 				div = document.getElementsByClassName(object.identifier);
-				globala = div;
-				globalObject = object;
 				for(k=0; k < div.length; k++){
 					div[k][object.location] = object.content;
 				}
@@ -224,7 +222,7 @@ function resetDiv(id){
 }
 
 /* The "main-background" div can have different inner HTML objects depending to the case.
-   Here we build that internal part according to the case
+   Here we build that internal part according to it.
 
    @param kind -> indicates how we want to poblate it.
    @param namesHeights -> array of arrays, each having the id (name) of a div we will include, and its %height written as a string

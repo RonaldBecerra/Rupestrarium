@@ -1,5 +1,6 @@
-// This includes the title and the vertical texts. In this case we also put the id of the corresponding HTML object,
-// so the elements are of the form [id, text].
+// This includes the title, subtitle and the vertical texts. Since the title is an image, not a plain text,
+// we need to put its URL instead, so this time we differentiate according of if what we will modify is the
+// source or the inner HTML. Moreover, we need to differentiate if we will apply this to a class or to an id.
 const mainLabels_texts = {
 	spanish: [
 		{type:"class", location:"src", identifier:"rupestrarium-title", content:"img/text/title_es.png"}, // 0

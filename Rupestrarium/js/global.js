@@ -8,12 +8,11 @@ var language = null;
 const possible_languages = ["spanish", "english"];
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
-var centralImage = true; // Indicates if the user is currently in one of the views: Presentation, Instructions, etc., that actually consist on an image
+var centralImage = true; // It refers to any of the views: Presentation, Instructions, etc., that actually consist on an image on the center
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
 var quizFinished = false;
 var sendingEmail = false; // Indicates if the user is in the form view to send an email
-var espdoc = false; // Indicates if the user is currently in the "For teachers only" space
 // ------ END
 
 // ------ BEGIN: Variables related to the slider figures
