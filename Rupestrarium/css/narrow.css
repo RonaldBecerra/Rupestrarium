@@ -108,48 +108,6 @@ main {
 	border-width: 3px;
 }
 
-/* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
-
-/*Buttons that display the different main views */
-.mainMenuButton{
-	background-size: cover;
-	width: 100%;
-	height: 6.5vh;
-	outline: none;
-	font-family: 'FontRupes'; 
-	font-size: 2vw;
-}
-
-/*Text of a lateral menu button*/
-.text_mb{
-	color: white;
-	font-weight: lighter;
-	font-size: 1.65vmax;
-}
-
-/*Subclass of mainMenuButton*/
-.darkRed_mb{
-	background-image: url('../img/button/button_darkred.png');
-}
-
-/*Subclass of mainMenuButton*/
-.red_mb{
-	background-image: url('../img/button/button_red.png');
-}
-
-/*Subclass of mainMenuButton*/
-.gray_mb{
-	background-image: url('../img/button/button_gray.png');
-}
-
-/*Subclass of mainMenuButton*/
-.orange_mb{
-	background-image: url('../img/button/button_orange.png');
-}
-
-/* ------------- END OF FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
-
-
 /* Large texts of definitions of Petroglyphs and Rock Paintings */
 #definition{
 	width: 95%; 

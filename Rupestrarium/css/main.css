@@ -28,6 +28,40 @@ body {
 	justify-content: flex-start;
 }
 
+/* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
+
+/*Buttons that display the different main views */
+.mainMenuButton{
+	background-size: cover;
+	width: 100%;
+	height: 6.5vh;
+	outline: none;
+	font-family: 'FontRupes'; 
+	font-size: 2vw;
+}
+
+/*Subclass of mainMenuButton*/
+.darkRed_mb{
+	background-image: url('../img/button/button_darkred.png');
+}
+
+/*Subclass of mainMenuButton*/
+.red_mb{
+	background-image: url('../img/button/button_red.png');
+}
+
+/*Subclass of mainMenuButton*/
+.gray_mb{
+	background-image: url('../img/button/button_gray.png');
+}
+
+/*Subclass of mainMenuButton*/
+.orange_mb{
+	background-image: url('../img/button/button_orange.png');
+}
+
+/* ------------- END OF FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
+
 /* These two styles let the respective buttons change their respective colors when the mouse
    is located over them */ 
 #finishButton:hover, #sendEmailButton:hover{

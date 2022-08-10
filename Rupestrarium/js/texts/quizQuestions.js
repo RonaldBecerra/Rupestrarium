@@ -2,7 +2,7 @@
 const quiz_questions = {
 	spanish: [
 		{ // 0
-			question: "1- Las Manifestaciones Rupestres son importantes porque: _____________",
+			question: "1- Las Manifestaciones Rupestres son importantes, porque: _____________",
 			options: [ 
 				"Son obras artísticas", // 0
 				"Es posible trasladarlas de un sitio a otro", // 1
@@ -23,9 +23,9 @@ const quiz_questions = {
 			question: "3- ¿En cuáles de estas manifestaciones encontramos gráficos o dibujos, pintados o grabados?",
 			options: [
 				"Cerros Míticos Naturales", // 0
-				"Pinturas Rupestres, Pictografías o Micropetroglifos", // 1
+				"Pinturas Rupestres o Pictografías", // 1
 				"Puntos Acoplados", // 2
-				"Solo Micropetroglifos", // 3
+				"Micropetroglifos", // 3
 			],
 		},
 		{ // 3
@@ -88,12 +88,12 @@ const quiz_questions = {
 	],
 	english: [
 		{ // 0
-			question: "1- The Rock Art expressions are important because: _________________",
+			question: "1- The Rock Art manifestations are important, because: _________________",
 			options: [
 				"They are artistic works", // 0
 				"It is possible to transfer them from one site to another", // 1
-				"They are the oldest attempt of human communication", // 2
-				"They are located only in Africa", // 3
+				"Are the oldest attempt of human communication", // 2
+				"Are located only in Africa", // 3
 			],
 		},
 		{ // 1
@@ -106,7 +106,7 @@ const quiz_questions = {
 			],					
 		},
 		{ // 2
-			question: "3- In which of these Expressions do we find graphics or drawings, painted or engraved?",
+			question: "3- In which of these manifestations do we find graphics or drawings, painted or engraved?",
 			options: [
 				"Mythical Natural Hills", // 0
 				"Rock Art Paintings or Pictograms", // 1

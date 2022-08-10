@@ -24,7 +24,7 @@ function sendEmailView({username_val="", userdni_val="", studentcard_val="", tea
 	// Auxiliar sub-function
 	let poblateDiv = (id, textNumber) => {
 		document.getElementById(id).innerHTML = divInit +
-			`<label for="` + id + `_input">` + sendEmail_texts[language][textNumber] + `</label>
+			`<label for="` + id + `_input" style="font-family:'FontRupes'">` + sendEmail_texts[language][textNumber] + `</label>
 			 <input type="text" id="` + id + `_input" name="` + id + `_input" value="` + dict[id+"_val"] + `">` 
 		+ `</div>`;	
 	}
