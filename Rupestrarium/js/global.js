@@ -19,6 +19,7 @@ var sendingEmail = false; // Indicates if the user is in the form view to send a
 var figureType = 0; // Kind of slider figure that the user could be currently seeing (0: petroglyph1, 1: petroglyph2, 2: rockPainting1; 3: rockPainting2)
 var currentFigure = null; // Unlike "figureType", it has the array with the uris of the images that represent the figure.
 var head_body_feet = [0, 0, 0]; // Indicates in which of the three parts below each of the three sections of the figure currently is
+var kindNotClicked = true; // Dtermines if the kind of the figure must be box shadowed when hovering it.
 // ------ END
 
 // ------ BEGIN: Variables related to the quiz

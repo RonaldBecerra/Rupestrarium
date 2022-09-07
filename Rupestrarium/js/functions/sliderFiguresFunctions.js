@@ -30,20 +30,31 @@ function loadFigure(num, randomizeParts=false){
 
 // Get description of the current image according to which combination the user has stablished
 function getDescription(){
-	resetDiv("kind_rotulos"); 
+	resetDiv("kind_rotulos");
+	kindNotClicked = true;
 
 	let color = ((figures == 'petroglyph') ? 'white' : 'black');
 	let object = images_combinations_descriptions[language][head_body_feet[0]][head_body_feet[1]][head_body_feet[2]];
 
 	document.getElementById("desc").innerHTML = 
-		`<p id="figureDesc" class="centered_FontRupes" style='color:` + color +`;'>`+ object.description + `</p>`;
+		`<p id="figureDesc" class="centered_FontRupes" style='color:` + color +`; visibility:hidden'>`+ object.description + `</p>`;
 
 	let div = document.getElementById("kind_rotulos");
-	div.innerHTML = `<p id="figureKind" class="centered_FontSub" style="color:` + color +`;">` + object.kind + `</p>`;
+	div.innerHTML = `<p id="figureKind" class="centered_FontSub" style="z-index:1; color:` + color +`"
+						onmouseover="if (kindNotClicked){
+										this.style.cursor='pointer';
+										this.style.boxShadow='inset -2px -3px 10px -0.5px `+ color + 
+														`, inset 2px 3px 10px -0.5px ` + color + `'
+									}"
+						onmouseout="this.style.boxShadow='none'"
+						onclick="document.getElementById('figureDesc').style.visibility='visible';
+								this.style.boxShadow='none'; kindNotClicked=false; this.style.cursor='auto'">`
+						+ object.kind + 
+					`</p>`;
 
 	if ((object.rotulos!= null) && (object.rotulos[figureType] != null)){
 		div.innerHTML += 
-			`<p id="figureRotulo" style="position:absolute; text-align:left; font-family:'Century Gothic'; color:` + color + `;">` 
+			`<p id="figureRotulo" style="position:absolute; text-align:left; font-family:'Century Gothic'; color:` + color + `">` 
 				+ object.rotulos[figureType] 
 			+ `</p>
 			</div>`;

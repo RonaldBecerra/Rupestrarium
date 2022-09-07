@@ -3,28 +3,25 @@
  *
  */
 
-// Function to listen the current size, so we can apply the correct css file
-$(function() {
-	adjustStyle($(this).width(), $(this).height());
-	$(window).resize(function() {
-		adjustStyle($(this).width(), $(this).height());
-	});
-});
-
 // It calls the correct css file depending on the 
 function adjustStyle(width, height) {
 	let rel = width/height;
 	if (rel < 0.8) {
-		$("#size-stylesheet").attr("href", "css/narrow.css");
+		document.getElementById("size-stylesheet").href = "css/narrow.css";
 	} else if (rel < 1.42) {
-		$("#size-stylesheet").attr("href", "css/medium.css");
+		document.getElementById("size-stylesheet").href = "css/medium.css";
 	} else {
-		$("#size-stylesheet").attr("href", "css/wide.css"); 
+		document.getElementById("size-stylesheet").href = "css/wide.css";
 	}
 }
 
 // Here we put everything that needs to be initialized when the page is loaded
 window.onload = async function(){
+	// Apply the correct css file, according to the initial dimensions
+	adjustStyle(window.innerWidth, window.innerHeight);
+	// This is to listen the current size, so we can apply the correct css file
+	window.addEventListener('resize', () => adjustStyle(window.innerWidth, window.innerHeight));
+
 	generateColumnMenus();
 	change_language('spanish');
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
