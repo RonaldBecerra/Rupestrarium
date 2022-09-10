@@ -31,13 +31,15 @@ header .stone-texture {
 
 /* The next three elements appear in the header */
 #logo-fundabitat{
-	width: 28%; 
+	width: 28%;
 	height: 80%; 
 	margin: 0 auto;
 }
 .rupestrarium-title{
-	width: 80%;
-	height: 48%;
+	max-width: 100%;
+	width: auto;
+	max-height: 80%;
+	height: auto;
 }
 #logo-anar{
 	width: 55%; 
@@ -159,7 +161,7 @@ main {
 	width: 100%; 
 	padding-left: 75%; 
 	padding-bottom: 5%;
-	font-size: 1.9vmin;
+	font-size: 1.8vmin;
 }
 
 /* Each of the three parts of the slider figure */
@@ -247,12 +249,14 @@ input[type=radio] {
 .emailInput label{
 	font-size: 2.6vmin; 
 }
-.emailInput input{
-	height: 45%; 
+.emailInput input, .emailInput textarea{
+	height: 42%; 
 	width: 100%; 
 	font-size: 2.6vmin; 
-	padding-left: 5px; 
-	padding-right: 5px;
+	padding: 5px; 
+}
+.emailInput textarea{
+	height: 21%;
 }
 
 #sendEmailButton{

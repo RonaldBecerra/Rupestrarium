@@ -2,19 +2,17 @@
 const sendEmail_texts = {
 	spanish: [
 		"Enviar resultados", // 0
-		"Nombre completo del estudiante:", // 1
-		"Número de cédula:", // 2
-		"Carnet estudiantil:", // 3
-		"Correo electrónico del profesor:", // 4
-		"ENVIAR", // 5
+		"Nombre completo:", // 1
+		"Información adicional (C.I., Institución, Grado, Correo electrónico, etc.):", // 2
+		"Correo electrónico del destinatario (Ej: Profesor):", // 3
+		"ENVIAR", // 4
 	],
 	english: [
 		"Submit results", // 0
-		"Student's full name:", // 1
-		"Identification card number:", // 2
-		"Student card number:", // 3
-		"Teacher's email:", // 4
-		"SEND", // 5
+		"Full name:", // 1
+		"Additional information (ID, Institution, Grade, E-mail):", // 2
+		"Recipient's e-mail (Ex: Professor):", // 3
+		"SEND", // 4
 	]
 }
 
@@ -29,6 +27,7 @@ const mailBody_texts = {
 		"    - Cuerpo: ", // 5
 		"    - Inferior: ", // 6
 		"Intento: ", // 7
+		"Información adicional del usuario:", // 8
 	],
 	english: [
 		"Rupestrarium quiz results", // 0
@@ -39,6 +38,7 @@ const mailBody_texts = {
 		"    - Body: ", // 5
 		"    - Lower: ", // 6
 		"Attempt: ", // 7
+		"Additional user information:", // 8
 	]
 }
 

@@ -3,13 +3,13 @@
  *
  */
 
-function sendEmailView({username_val="", userdni_val="", studentcard_val="", teacheremail_val=""}={}){
-	let dict = {username_val, userdni_val, studentcard_val, teacheremail_val};
+function sendEmailView({username_val="", additionalInfo_val="", addresseeEmail_val=""}={}){
+	let dict = {username_val, additionalInfo_val, addresseeEmail_val};
 	resetDiv('main-background');
 	sendingEmail = true;
 
 	poblateMainBackground("horizontalSections_view",
-		[['desc','14'],['username','18'],['userdni','18'],['studentcard','18'],['teacheremail','18'],['sendButton','14']],
+		[['desc','14'],['username','18'],['additionalInfo','36'],['addresseeEmail','18'],['sendButton','14']],
 		"column"
 	);
 
@@ -22,16 +22,21 @@ function sendEmailView({username_val="", userdni_val="", studentcard_val="", tea
 	let divInit = `<div class="centeredFlex emailInput" style="flex-direction:column; align-items:flex-start; height:100%;">`;
 
 	// Auxiliar sub-function
-	let poblateDiv = (id, textNumber) => {
+	let poblateDiv = (id, textNumber, textArea=false) => {
+		let elemValue = dict[id+"_val"];
+		let [textFieldBegin, textFieldEnd] = textArea ? [`<textarea oninput="auto_height(this,'username_input')" id="`, `</textarea>`] : [`<input id="`, ``];
+		//let [textFieldBegin, textFieldEnd] = textArea ? [`<textarea id="`, `></textarea>`] : [`<input id="`, `>`];
+
 		document.getElementById(id).innerHTML = divInit +
-			`<label for="` + id + `_input" style="font-family:'FontRupes'">` + sendEmail_texts[language][textNumber] + `</label>
-			 <input type="text" id="` + id + `_input" name="` + id + `_input" value="` + dict[id+"_val"] + `">` 
+			`<label for="` + id + `_input" style="font-family:'FontRupes'">` + sendEmail_texts[language][textNumber] + `</label>`
+			 + textFieldBegin + id + `_input" name="` + id + `_input" value="` + elemValue + `" style="font-family: 'Arial'">`
+			 + (textArea ? elemValue : ``)
+			 + textFieldEnd
 		+ `</div>`;	
 	}
-	poblateDiv("username", 1);     // Student's full name
-	poblateDiv("userdni", 2);      // Identification card number
-	poblateDiv("studentcard", 3);  // Student card number
-	poblateDiv("teacheremail", 4); // Teacher's email
+	poblateDiv("username", 1);
+	poblateDiv("additionalInfo", 2, true); // Any relevant information that the user considers to send
+	poblateDiv("addresseeEmail", 3);  // It may be teacher's email
 
 	let buttonDiv = document.getElementById("sendButton");
 	buttonDiv.style["flex-direction"] = "row";
@@ -40,7 +45,7 @@ function sendEmailView({username_val="", userdni_val="", studentcard_val="", tea
 	buttonDiv.innerHTML =
 		`<div class="centeredFlex" style="padding-bottom:1%" onClick="submitForm()">
 			<form id="sendEmailButton" class"centeredFlex">
-				<p style="font-family:'Arial'">`+ sendEmail_texts[language][5] + `</p>
+				<p style="font-family:'Arial'">`+ sendEmail_texts[language][4] + `</p>
 			</form>
 		</div>`;
 }
@@ -48,9 +53,8 @@ function sendEmailView({username_val="", userdni_val="", studentcard_val="", tea
 // To get the values of the email fields that the user has entered
 getEmailInputsValues = () => ({
 	username_val: document.getElementById("username_input").value,
-	userdni_val: document.getElementById("userdni_input").value,
-	studentcard_val: document.getElementById("studentcard_input").value,
-	teacheremail_val: document.getElementById("teacheremail_input").value,
+	additionalInfo_val: document.getElementById("additionalInfo_input").value,
+	addresseeEmail_val: document.getElementById("addresseeEmail_input").value,
 })
 
 /* Changing the language while sending an email require to the input values
@@ -63,18 +67,24 @@ function change_language_sendingEmail(){
 
 // Submit the complete form to the teacher
 function submitForm(){
+	if (!sendEmailAllowed){
+		return;
+	}
+	sendEmailAllowed = false;
+
 	let info = getEmailInputsValues();
 	let incorrects = [...incorrectAnswers];
 	let questions = quiz_questions[language];
 	let [texts0, texts1, texts2] = [sendEmail_texts[language], mailBody_texts[language], emailSent_texts[language]];
 
 	// Subject: "Rupestrarium quiz results - <username> - Identification card number: <userdni> - Student card number: <studentcard>
-	let subject = texts1[0] + " - " + info.username_val 
-				+ " - " + texts0[2] + " " + info.userdni_val
-				+ " - " + texts0[3] + " " + info.studentcard_val;
+	let subject = texts1[0] + " - " + info.username_val;
+
+	// Additional user information
+	let body = texts1[8] + "\n\n" + info.additionalInfo_val + "\n\n";
 
 	// Attempt: <number>
-	let body = texts1[7] + currentAttempt + "\n";
+	body += texts1[7] + currentAttempt + "\n";
 
 	// Number of correct options: <number>
 	body += texts1[1] + (totalQuestions - incorrects.length).toString() + "/" + totalQuestions.toString() + "\n\n";
@@ -106,15 +116,15 @@ function submitForm(){
 	body = deleteHTMLTagsFromText(body);
 
 	/* ------------- BORRAR * ----------------- */
-	console.log(body);
+	// console.log(body);
 
-				alert(texts2[0]); // Message: "The email was sent successfully"
-				currentAttempt += 1; 
-				numQuestion = 0; 
-				sendingEmail = false;
-				showResultsView();
+	// 			alert(texts2[0]); // Message: "The email was sent successfully"
+	// 			currentAttempt += 1; 
+	// 			numQuestion = 0; 
+	// 			sendingEmail = false;
+	// 			showResultsView();
 
-	return;
+	// return;
 	/* ------------------- FIN BORRAR ----------- */
 
 	// Send the email
@@ -124,7 +134,7 @@ function submitForm(){
 		dataType: "json",
 		contentType: "application/json; charset=UTF-8",
 		data: JSON.stringify({
-			teacheremail_val: info.teacheremail_val, 
+			addresseeEmail_val: info.addresseeEmail_val, 
 			subject, 
 			body
 		}),
@@ -135,13 +145,15 @@ function submitForm(){
 				currentAttempt += 1; 
 				numQuestion = 0; 
 				sendingEmail = false;
-				showResultsView();	
+				sendEmailAllowed = true;	
+				showResultsView();
 			} else {
 				throw Error("");
 			}
 		},
 		error: function(e){
 			alert(texts2[1]); // Message: "The email could not be sent"
+			sendEmailAllowed = true;	
 		}
 	})
 }

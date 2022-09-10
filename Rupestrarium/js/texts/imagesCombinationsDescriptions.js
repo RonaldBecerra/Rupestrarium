@@ -38,7 +38,7 @@ function initializeImagesDescriptions(){
 		description: `Representaciones con elementos gráficos<br>como puntos, líneas, círculos, etc., o imágenes abstractas,<br>compuestas con los mismos elementos`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>España, Europa`, // 0
-			`Petroglifo<br> <span style="font-style:italic">El Bolsillo</span><br>Río Guasanare,<br> estado Zulia<br>Venezuela, Sudamérica`, // 1
+			`Petroglifo<br> <span style="font-style:italic">El Bolsillo</span><br>Río Guasare<br> estado Zulia<br>Venezuela, Sudamérica`, // 1
 			`Pintura Rupestre<br> <span style="font-style:italic">Santo Rosario de<br> Agualinda</span><br>estado Amazonas<br>Venezuela, Sudamérica`, // 2
 			`Pintura Rupestre<br> <span style="font-style:italic">La Pintada</span><br>Sonora<br>México, América del Norte`, // 3
 		],
@@ -49,7 +49,7 @@ function initializeImagesDescriptions(){
 		description: `Figuras de animales o con sus rasgos,<br>recreando la naturaleza con un fin específico`,
 		rotulos: [
 			`Petroglifo<br> <span style="font-style:italic">Toro Muerto</span><br>Arequipa<br>Perú, Sudamérica`, // 0
-			`Petroglifo<br> <span style="font-style:italic">Las Girafas</span><br>Tadrat Acacus<br>Argelia, África`, // 1
+			`Petroglifo<br> <span style="font-style:italic">La Jirafa</span><br>Tadrat Acacus<br>Argelia, África`, // 1
 			`Pintura Rupestre<br> <span style="font-style:italic">Parque Nacional<br>Cerro de Capivara</span><br>Piaiui<br>Brasil, Sudamérica`, // 2
 			`Pintura Rupestre<br> <span style="font-style:italic">Cerro Azul</span><br>Guaviare<br>Colombia, Sudamérica`, // 3
 		],
@@ -134,7 +134,7 @@ function initializeImagesDescriptions(){
 		description: `Representation with graphic elements<br>like dots, lines, circles, etc., or more abstract images,<br>formed with the same elements`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Porte Caldelas</span><br>Pontevedra<br>Spain, Europe`, // 0
-			`Petroglyph<br> <span style="font-style:italic">El Bolsillo</span><br>Guasanare river<br>Zulia State<br>Venezuela, South America`, // 1
+			`Petroglyph<br> <span style="font-style:italic">El Bolsillo</span><br>Guasare river<br>Zulia State<br>Venezuela, South America`, // 1
 			`Rock Art Painting<br> <span style="font-style:italic">Santo Rosario de Agualinda</span><br>State of Amazonas<br>Venezuela, South America`, // 2
 			`Rock Art Painting<br> <span style="font-style:italic">La Pintada</span><br>State of Sonora<br>Mexico, North America`, // 3
 		],
@@ -145,7 +145,7 @@ function initializeImagesDescriptions(){
 		description: `Animal figures with their own features,<br>recreating nature with a specific purpose`,
 		rotulos: [
 			`Petroglyph<br> <span style="font-style:italic">Toro Muerto</span><br>Arequipa<br>Peru, South America`, // 0
-			`Petroglyph<br> <span style="font-style:italic">The Giraffes</span><br>Tadrat Acacus<br>Algeria, Africa`, // 1
+			`Petroglyph<br> <span style="font-style:italic">The Giraffe</span><br>Tadrat Acacus<br>Algeria, Africa`, // 1
 			`Rock Art Painting<br> <span style="font-style:italic">Serra de Capivara<br> National Park</span><br>Piaiui<br>Brazil, South America`, // 2
 			`Rock Art Painting<br> <span style="font-style:italic">Cerro Azul</span><br>Guaviare<br>Colombia, South America`, // 3
 		],

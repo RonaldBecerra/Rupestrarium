@@ -30,8 +30,9 @@ header .stone-texture {
 .stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
 
 .rupestrarium-title{
-	width: 92%;
-	height: 50%;
+	max-width: 100%;
+	width: auto;
+	height: auto;
 	padding-right: 2%;
 }
 
@@ -211,12 +212,14 @@ input[type=radio] {
 .emailInput label{
 	font-size: 2vh; 
 }
-.emailInput input{
+.emailInput input, .emailInput textarea{
 	height: 28%; 
 	width: 100%; 
 	font-size: 2vh; 
-	padding-left: 5px; 
-	padding-right: 5px;
+	padding: 5px;
+}
+.emailInput textarea{
+	height: 14%;
 }
 
 #sendEmailButton{

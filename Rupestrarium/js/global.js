@@ -6,6 +6,7 @@
 const smtpServerURL = "http://localhost:2526/mailServer";
 var language = null;
 const possible_languages = ["spanish", "english"];
+var sendEmailAllowed = true;
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var centralImage = true; // It refers to any of the views: Presentation, Instructions, etc., that actually consist on an image on the center
