@@ -99,8 +99,37 @@ p {
 	vertical-align: middle;
 }
 
+/* This inculdes the index-view, and an empty space (transparent) in which the user can click
+   to close the index*/
+#index-view-container {
+	height: 100%;
+	position: fixed;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	overflow-x: hidden;
+	transition: 0.5s;
+}
+
+/* This is the visible part of the index (the drawer navigator) that is opened with the hamburger menu*/
+#index-view {
+	height: 100%;
+	flex-grow: 1; /* It fills the remaining empty space */
+	flex-direction:column;
+	align-items: center;
+}
+
+/* For the english/spanish buttons that appear on the language menu of the index*/
+.index-language_icon{
+	position:absolute; 
+	height: 70%;
+}
+.index-language_icon:hover{
+	height: 80%;
+}
+
 @font-face {
-	font-family:FontRupes;
+	font-family: FontRupes;
 	src: url(../ttf/BAHAMASN.ttf);
 }
 

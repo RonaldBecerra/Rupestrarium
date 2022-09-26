@@ -37,6 +37,20 @@ var lastQ_optionsOrder = [];
 var lastQ_selectedOption = 0;
 // ------ END
 
+// ------ BEGIN: Processes to perform when an index option is chosen
+const indexOptionsFunctions = [
+	`if( !['b0', 'b1', 'b2'].includes(pressedMainButtonId()) ){
+	 	restoreDefaultValues(); loadCentralImage(0); makeMainButtonBlack(0);
+	 }`, // 0
+	`restoreDefaultValues(); loadDef(0); makeMainButtonBlack(5)`, // 1
+	`restoreDefaultValues(); loadDef(1); makeMainButtonBlack(6)`, // 2
+	`restoreDefaultValues(); loadDef(2); makeMainButtonBlack(7)`, // 3
+	`restoreDefaultValues(); loadDef(3); makeMainButtonBlack(8)`, // 4
+	`restoreDefaultValues(); loadQuiz(); makeMainButtonBlack(9)`, // 5
+	`restoreDefaultValues(); loadCentralImage(3); makeMainButtonBlack(3)`, // 6
+]
+// ------ END
+
 // ------ BEGIN: Images directions
 var Root = "img/art/petroglyph1/";
 const petroglyph1 = [
@@ -96,4 +110,15 @@ const imagesThatVaryWithLanguage = {
 		contact: "img/text/contacto.png",
 	},
 }
+
+const indexOptionsImages = [
+	"img/index/options/start.png", // 0
+	"img/index/options/petroglyphs.png", // 1
+	"img/index/options/petroglyphs2.png", // 2
+	"img/index/options/rock_paintings.png", // 3
+	"img/index/options/rock_paintings2.png", // 4
+	"img/index/options/recapitulate.png", // 5
+	"img/index/options/credits.png", // 6
+]
 // ------ END
+ 

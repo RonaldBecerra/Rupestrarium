@@ -9,6 +9,7 @@ const mainLabels_texts = {
 		{type:"id", location:"innerHTML", identifier:"main-right-label", content:"Sur de Marruecos - África"}, // 3
 		{type:"id", location:"innerHTML", identifier:"central-image-label", content:`<span style="font-style:italic">Alia, Diosa de la Fertilidad y del Amor</span>. Arabia Saudita`}, // 4
 		{type:"id", location:"innerHTML", identifier:"footer-label", content:"Todos los derechos reservados. ©FUNDABITAT, 2022"}, // 5
+		{type:"id", location:"src", identifier:"index-title", content:"img/index/appname_es.png"}, // 6
 	],
 	english: [
 		{type:"class", location:"src", identifier:"rupestrarium-title", content:"img/text/title_en.png"}, // 0
@@ -17,5 +18,6 @@ const mainLabels_texts = {
 		{type:"id", location:"innerHTML", identifier:"main-right-label", content:"South of Morocco - Africa"}, // 3
 		{type:"id", location:"innerHTML", identifier:"central-image-label", content:`<span style="font-style:italic">Alia, Goddess of Fertility and Love</span>. Saudi Arabia`}, // 4
 		{type:"id", location:"innerHTML", identifier:"footer-label", content:"All rights reserved. ©FUNDABITAT, 2022"}, // 5
+		{type:"id", location:"src", identifier:"index-title", content:"img/index/appname_en.png"}, // 6
 	],
 }

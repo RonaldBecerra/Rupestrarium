@@ -74,7 +74,7 @@ main {
 .central_img{
 	height: 100%;
 	width: 84%;
-	flex-grow: 1; /* This makes it fill the container when there are not img-sides */s
+	flex-grow: 1; /* This makes it fill the container when there are not img-sides */
 }
 
 /* For the two spaces that are on the side of the "img" div */
@@ -260,6 +260,8 @@ input[type=radio] {
 
 /* ------------- END OF FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
 
+
+/* ------------------- FORMAT FOR THE FOOTER -------------------- */
 footer{
 	bottom: 0px;
 	width: 100%;
@@ -285,3 +287,27 @@ footer{
 	text-align: center;
 	color: #f9efec;
 }
+/* ------------------- END OF FORMAT FOR THE FOOTER -------------------- */
+
+
+/* ------------------- FORMAT FOR THE INDEX ---------------------- */
+
+/* The part that says "EDUCATIONAL SLIDING PUZZLE" */
+#index-label{
+	text-align: center;
+	font-family: 'Epistolar';
+	font-size: 2.5vw;
+
+	/* This is for a text to be bigger but not the font-size, just streched (width, height)*/
+	transform:scale(1.5,1.3);
+}
+
+.index-clickableText{
+	font-size: 2.25vh;
+	/* This is for a text to be bigger but not the font-size, just streched (width, height)*/
+	transform:scale(1.2,1);
+}
+.index-clickableText:hover{
+	cursor: default;
+}
+/* ------------------- END OF FORMAT FOR THE INDEX -------------------- */

@@ -10,8 +10,10 @@ function adjustStyle(width, height) {
 		document.getElementById("size-stylesheet").href = "css/narrow.css";
 	} else if (rel < 1.42) {
 		document.getElementById("size-stylesheet").href = "css/medium.css";
+		closeIndex();
 	} else {
 		document.getElementById("size-stylesheet").href = "css/wide.css";
+		closeIndex();
 	}
 }
 
@@ -23,6 +25,7 @@ window.onload = async function(){
 	window.addEventListener('resize', () => adjustStyle(window.innerWidth, window.innerHeight));
 
 	generateColumnMenus();
+	generate_indexOptionsRows();
 	change_language('spanish');
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Put the background image of the central section
@@ -38,8 +41,8 @@ function generateColumnMenus(){
 	div = document.getElementById("leftColumnMenu");
 	str = "";
 	while(i < 5){ // Number of buttons on the left side
-		str += `<button id="b`+i.toString()+`" class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i.toString()+`);">`;
-		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+		str += `<button id="b`+i+`" class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i+`);">`;
+		str += `<b id="textButton`+i+`" class="text_mb"></b></button>`;
 		i += 1;
 	}
 	str += `<img style="width: 100%; height: 80%" src="img/Cueva_de_las_manos.jpg">`;
@@ -49,15 +52,15 @@ function generateColumnMenus(){
 	div = document.getElementById("rightColumnMenu");
 	str = "";
 	while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
-		str += `<button id="b`+i.toString()+`" class="mainMenuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
-		str += `loadDef(`+k.toString()+`);">`;
-		str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+		str += `<button id="b`+i+`" class="mainMenuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
+		str += `loadDef(`+k+`);">`;
+		str += `<b id="textButton`+i+`" class="text_mb"></b></button>`;
 		k += 1;
 		i += 1;
 	}
 	// "Recapitulate" button
-	str += `<button id="b`+i.toString()+`" class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()">`;
-	str += `<b id="textButton`+i.toString()+`" class="text_mb"></b></button>`;
+	str += `<button id="b`+i+`" class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()">`;
+	str += `<b id="textButton`+i+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
 	str += `<div id="def" class="centeredFlex" style="flex-direction: row; width: 100%; height: 80%"></div>`;
@@ -71,14 +74,20 @@ function change_language(newLanguage){
 		// We translate the texts of the buttons
 		let texts = buttons_texts[newLanguage];
 		for (i=0; i < texts.length; i++){
-			document.getElementById('textButton' + i.toString()).innerHTML = texts[i];
+			document.getElementById('textButton' + i).innerHTML = texts[i];
+		}
+
+		// We translate the texts of the options of the index that appears in the narrow version
+		texts = indexOptions_texts[newLanguage];
+		for (i=0; i < texts.length; i++){
+			document.getElementById('indexTextOption' + i).innerHTML = texts[i];
 		}
 
 		// Case when the user was in one of the views that consist on a central image: Introduction, Presentation,...
 		if (centralImage){
 			var notFound = true;
 			for (i=0; i < 5; i++) { // 5 is the number of buttons related to the central image
-				let div = document.getElementById("b"+i.toString());
+				let div = document.getElementById("b"+i);
 				if (div.style.background == 'black'){
 					notFound = false;
 					div.onclick(); // We make as if the user selected again the button
@@ -132,6 +141,27 @@ function change_language(newLanguage){
 		}
 	}
 }
+
+/* Makes the color of one of the main buttons be black.
+   This is necessary when we access to the function related to the button
+   but not pressing the button, like through the index menu.
+ */
+ function makeMainButtonBlack(buttonNumber){
+ 	document.getElementById("b" + buttonNumber).style.background = 'black';
+ }
+
+ // To look for the main button that is selected currently (its color is black)
+ function pressedMainButtonId(){
+ 	mainButtons = document.getElementsByClassName("mainMenuButton");
+ 	for (i=0; i < mainButtons.length; i++){
+ 		let elem = mainButtons[i];
+ 		if (elem.style.background === 'black'){
+ 			return elem.id;
+ 		}
+ 	}
+ 	return null;
+}
+
 
 // Load definitions of Petroglyphs and Rock Paintings or to restore the "Sur_de_marruecos.jpg" image
 function loadDef(num=null){

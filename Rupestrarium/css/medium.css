@@ -88,7 +88,9 @@ main {
 /* For the images (not the slider figures) that appear on the center of the main-background */
 .central_img{
 	height: 100%;
-	width: 74%;
+	width: auto;
+	min-width: 74%;
+	max-width: 93%;
 	align-items: center;
 }
 
@@ -161,7 +163,7 @@ main {
 	width: 100%;
 	padding-left: 74%; 
 	padding-bottom: 5%;
-	font-size: 1.4vw;
+	font-size: 1.3vw;
 }
 
 /* Each of the three parts of the slider figure */
@@ -297,6 +299,8 @@ input[type=radio] {
 
 /* ------------- END OF FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
 
+
+/* ------------------- FORMAT FOR THE FOOTER -------------------- */
 footer{
 	bottom: 0px;
 	width: 100%;
@@ -322,3 +326,4 @@ footer{
 	color: #f9efec;
 	max-width: 50%;
 }
+/* ------------------- END OF FORMAT FOR THE FOOTER -------------------- */

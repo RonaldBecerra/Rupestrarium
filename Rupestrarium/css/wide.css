@@ -297,6 +297,8 @@ input[type=radio] {
 
 /* ------------- END OF FORMAT FOR SHOWING THE QUIZ RESULTS ------------ */
 
+
+/* ------------------- FORMAT FOR THE FOOTER -------------------- */
 footer{
 	bottom: 0px;
 	width: 100%;
@@ -322,3 +324,4 @@ footer{
 	color: #f9efec;
 	max-width: 32%;
 }
+/* ------------------- END OF FORMAT FOR THE FOOTER -------------------- */
