@@ -5,6 +5,17 @@
 	position: relative;
 }
 
+:root {
+	/* Background of the main view, and also background of the header in the narrow version */
+	--red-background-main: #a03322;
+
+	/* Background of the header in the narrow version */
+	--red-background-narrow: #961907;
+
+	/* In the narrow version, in the start view, we need the letter of the selected tab to be this color */
+	--tab-letters-central-selected-view: #f59c01;
+}
+
 html {
 	font-size: 62.5%;
 }	
@@ -26,6 +37,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
+}
+
+main {
+	background-color: var(--red-background-main);
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;	
 }
 
 /* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */

@@ -37,13 +37,7 @@ header .stone-texture {
 }
 
 main {
-	background-color: #a03322;
-	width: 100%;
 	height: 84vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
 }
 
 #subtitle-container{
