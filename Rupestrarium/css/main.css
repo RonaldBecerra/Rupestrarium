@@ -34,6 +34,7 @@ html {
 }
 
 body {
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -46,6 +47,13 @@ main {
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;	
+}
+
+header {
+	background-color: #cc6600;
+	width: 100%; 
+	display: flex; 
+	align-items: flex-end;
 }
 
 /* ------------- FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */

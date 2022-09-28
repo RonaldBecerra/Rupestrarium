@@ -319,50 +319,32 @@ function poblateMainBackground(kind, namesHeights=null, innerDirection="row"){
 
 // The header in the narrow version changes according to the current view
 function createNarrowVersionHeader(kind=null, num=null){
-	let div = document.getElementById("narrowHeader");
-	switch(kind){
-		case "start":
-			div.innerHTML = 
-				`<div class="whole centeredFlex" style="height:9.2857%; width:100%; background:var(--red-background-narrow)">
-				</div>
-				<div class="whole centeredFlex" style="height:9.2857%; width:100%; background:var(--red-background-narrow)">
-				</div>`;
-			break;
-		default:
-			div.innerHTML = 
-				`<div class="whole" style="display:flex; justify-content:flex-start; flex-direction:row">
-					<div class="centeredFlex" style="width:14%">
-						<img src="img/hamburger-menu.png"  onclick="openIndex()" onmouseover="this.style.height='65%'" onmouseout="this.style.height='55%'" ontouchend="this.onmouseout()" style="height:55%" >
-					</div>
+	let narrowInitHeader = document.getElementById("narrowInitHeader");
+	let narrowMainHeader = document.getElementById("narrowMainHeader");
+	let header = document.getElementsByTagName("header")[0];
 
-					<div class="centeredFlex" style="width:59%">
-						<img class="rupestrarium-title">
-					</div>
+	// Restore all the default values firstly. Later we will establish the necessary ones
+	narrowInitHeader.style.display = narrowMainHeader.style.display = "none";
+	header.style.height = null; 
 
-					<div class="centeredFlex" style="width:27%; height:95%">
-						<div style="width:90%; height:100%; display:flex; flex-direction:row; justify-content:space-around">
-							<a class="centeredFlex" target="_blank" href="https://www.facebook.com/anarvenezuela/">
-								<img src="img/footer/icon-facebook.png" onmouseover="this.style.height='75%'" onmouseout="this.style.height='65%'" ontouchend="this.onmouseout()" style="position:absolute; height:65%;">
-							</a>
-							<a class="centeredFlex" target="_blank" href="mailto:anarvenezuela@gmail.com">
-								<img src="img/footer/icon-e-mail.png" onmouseover="this.style.height='65%'" onmouseout="this.style.height='55%'" ontouchend="this.onmouseout()" style="position:absolute; height:55%;">
-							</a>
-							<a class="centeredFlex" target="_blank" href="https://anar.org.ve/">
-								<img src="img/footer/icon-pag-web.png"; onmouseover="this.style.height='63%'" onmouseout="this.style.height='54%'" ontouchend="this.onmouseout()" style="position:absolute; height:54%;">
-							</a>
-						</div>
-					</div>
-				</div>`;
-
-				// The only time "language" could be null is when the app is starting
-				if (language!=null){
-					let elems = document.getElementsByClassName("rupestrarium-title");
-					for (i=0; i < elems.length; i++){
-						elems[i].src = mainLabels_texts[language][0].content;
-					}
-				}
-			break;
+	if (null == kind){
+		narrowInitHeader.style.display = null;
 	}
+	else{
+		narrowMainHeader.style.display = null;
+		switch(kind){
+			case "start":
+				header.style.height = "18.5714vh";
+				narrowMainHeader.innerHTML = 
+					`<div class="whole centeredFlex" style="height:50%; width:100%; background:var(--red-background-narrow)">
+					</div>
+					<div class="whole centeredFlex" style="height:50%; width:100%; background:var(--red-background-narrow)">
+					</div>`;
+				break;
+			default:
+				break;
+			}
+		}
 }
 
 // Returns an integer between the min and the max indicated
