@@ -7,7 +7,7 @@ header {
 	height: 21vh; 
 }
 
-header .stone-texture {
+header #stone-texture {
 	width: 100%;
 	height: 85%;
 	background-color: #cfc8c2;
@@ -20,10 +20,10 @@ header .stone-texture {
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
 }
-.stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
-.stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
-.stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
-.stone-texture .web_div {display: flex; justify-content: center; align-items: center;}
+#stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
+#stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
+#stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
+#stone-texture .web_div {display: flex; justify-content: center; align-items: center;}
 
 /* The next three elements appear in the header */
 #logo-fundabitat{

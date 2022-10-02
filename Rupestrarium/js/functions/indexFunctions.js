@@ -22,7 +22,7 @@ function generate_indexOptionsRows(){
 					<img src="` + indexOptionsImages[i] + `" style="` + currentStyle + `">
 				</div>
 				<div class="centeredFlex" style="height:100%; flex-grow:1; flex-direction:row; justify-content:flex-start">
-					<div id="indexTextOption`+i+`" style="left:3%; font-family:'FontRupes'; font-size:2.4vh"></div>
+					<div id="indexTextOption`+i+`" style="left:3%; font-family:'FontRupes'; font-size:2.5vh"></div>
 				</div>
 			</div>`;
 	}

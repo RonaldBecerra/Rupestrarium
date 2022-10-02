@@ -13,7 +13,7 @@
 	<!-- Header, with light brown color -->
 	<header>
 		<!-- Web normal version: Logo container, with stone texture background -->
-		<div class="stone-texture">
+		<div id="stone-texture">
 			<div class="div1 web_div">
 				<img id="logo-fundabitat" class="webOnly" src="img/logo-FUNDABITAT.png">
 			</div>
@@ -25,7 +25,7 @@
 			</div>
 
 			<!-- Header for the initial view in the narrow version -->
-			<div id="narrowInitHeader" class="narrowOnly whole" style="position:absolute; ">
+			<div id="narrowInitHeader" class="narrowOnly whole" style="position:absolute">
 				<div class="whole" style="display:flex; justify-content:flex-start; flex-direction:row">
 					<div class="centeredFlex" style="width:14%">
 						<img src="img/hamburger-menu.png"  onclick="openIndex()" onmouseover="this.style.height='65%'" onmouseout="this.style.height='55%'" ontouchend="this.onmouseout()" style="height:55%" >
@@ -104,7 +104,7 @@
 
 			<!-- Narrow version (mobile) -->
 			<div class="narrowOnly narrow_language_section centeredFlex">
-				<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" ontouchend="this.onmouseout()" style="position:absolute; height:60%">
+				<img src="img/footer/spain.png" onclick="change_language('spanish');" onmouseover="this.style.height='70%'" onmouseout="this.style.height='60%'" ontouchend="" style="position:absolute; height:60%">
 			</div>
 
 			<!--Text: All rights reserved -->
@@ -132,7 +132,9 @@
 
 	<!-- Drawer navigator (index) -->
 	<div id="index-view-container" class="narrowOnly" style="display:none">
+		<!-- This is the index content properly -->
 		<div id="index-view">
+			<!-- Superior part that has a figure and the Rupestrarium title -->
 			<div id="index-orangeBackground" style="display:flex; flex-direction:column; height:25%; width:100%; background-color:#e76600">
 				<div style="position:absolute; width:100%; height:21.43%; display:flex; flex-direction:row; justify-content:flex-end; align-items:center; padding-right:4%">
 					<!-- X button to close the index -->
@@ -145,20 +147,23 @@
 					<img id="index-title" src="img/index/appname_es.png" style="height: auto; max-height:50%; width:80%; left:3.5%">
 				</div>
 			</div>
-			<div style="height:75%; width:100%; background-image: url('img/index/index_background.png'); font-family:'FontRupes'">
+
+			<!-- Main part of the index where there are the options and the contact addresses -->
+			<div style="position:absolute; height:75%; width:100%; background-image: url('img/index/index_background.png'); font-family:'FontRupes'">
 				<div style="height:2%"></div>
 
 				<!-- This part will be fulfilled with the clickable options, that consist of an image and a text -->
 				<div id="index-options" style="height:78%; width:100%"></div>
 
+				<!-- Contact addresses listed at the bottom -->
 				<div class="centeredFlex" style="height:20%; width:100%">
-					<div style="font-size:1.9vh; text-align:center">www.anar.org.ve<br>anarvenezuela2@gmail.com</div>	
+					<div style="font-size:2.1vh; text-align:center">www.anar.org.ve<br>anarvenezuela2@gmail.com</div>	
 				</div>
 			</div>
 		</div>
 
 		<!-- Transparent part whose purpose is that the user can close the index by touching or clicking it -->
-		<div id="index-empty" style="height:100%; width: 19.68%" onclick="closeIndex()"></div>
+		<div id="index-empty" style="height:100%; width:20%" onclick="closeIndex()"></div>
 	</div>
 </body>
 

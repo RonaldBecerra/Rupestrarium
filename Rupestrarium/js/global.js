@@ -10,7 +10,7 @@ var sendEmailAllowed = true;
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var centralImage = true; // It refers to any of the views: Presentation, Instructions, etc., that actually consist on an image on the center
-var tabNavigator = false; // In the narrow version the presentation, introduction and instructions view are 
+var tabNavigator = false; // In the narrow version the Presentation, Introduction and Instructions views are 
 						  // contained in a common tab navigator, so this indicates if the user is currently in any of them.
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
@@ -92,7 +92,7 @@ const imagesThatVaryWithLanguage = {
 		},
 		intro: "img/text/introduccion_es.png",
 		instructions: {
-			web: "img/text/instrucciones_web.png", 
+			web: "img/text/instrucciones_web_es.png", 
 			narrow: "img/text/instrucciones_mob_es.png",
 		},
 		credits: {
@@ -108,7 +108,7 @@ const imagesThatVaryWithLanguage = {
 		},
 		intro: "img/text/introduccion_en.png",
 		instructions: {
-			web: "img/text/instrucciones_web.png", // CAMBIAR
+			web: "img/text/instrucciones_web_en.png",
 			narrow: "img/text/instrucciones_mob_en.png",
 		},
 		credits: {

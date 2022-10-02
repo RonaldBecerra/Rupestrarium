@@ -213,7 +213,7 @@ function loadCentralImage(num){
 	}
 	
 	// Credits and instructions have two versions depending of if it's pure web or narrow (mobile)
-	if ((num == 2) || (num == 3)){
+	if ((num == 0) || (num == 2) || (num == 3)){
 		document.getElementById("img-web").src = imagesSources[num].web;
 		document.getElementById("img-mob").src = imagesSources[num].narrow;
 	} else {
@@ -226,7 +226,7 @@ function loadCentralImage(num){
 	// They all appear in the "start" option of the index menu
 	if (num < 3){
 		tabNavigator = true;
-		createNarrowVersionHeader("start", num);
+		createNarrowVersionHeader("startMenu", num);
 	} else {
 		createNarrowVersionHeader();
 	}
@@ -322,57 +322,69 @@ function createNarrowVersionHeader(kind=null, num=null){
 	let narrowInitHeader = document.getElementById("narrowInitHeader");
 	let narrowMainHeader = document.getElementById("narrowMainHeader");
 	let header = document.getElementsByTagName("header")[0];
+	let mainContainer = document.getElementsByClassName("main-container")[0];
+
+	console.log("mainContainer = ", mainContainer);
 
 	// Restore all the default values firstly. Later we will establish the necessary ones
 	narrowInitHeader.style.display = narrowMainHeader.style.display = "none";
-	header.style.height = null; 
+	header.className = "";
+	mainContainer.classList.add("wholeAbsoluteInNarrow");
 
 	if (null == kind){
 		narrowInitHeader.style.display = null;
+		mainContainer.classList.remove("wholeAbsoluteInNarrow");
 	}
 	else{
 		narrowMainHeader.style.display = null;
+
+		// Auxiliar function to get the main format of the header (hamburger menu plus content)
+		let headerMainFormat = (content, percentageHeight=10) =>
+			`<div class="centeredFlex" 
+				 style="height:`+percentageHeight+`%; width:100%; justify-content:flex-start; flex-direction:row; background:var(--red-background-narrow)"
+			 >
+				<div class="centeredFlex" style="width:14%; z-index:1">
+					<img src="img/hamburger-menu.png" onclick="openIndex()" onmouseover="this.style.height='65%'" onmouseout="this.style.height='55%'" 
+						ontouchend="this.onmouseout()" style="height:55%; filter:invert(100%)" >
+				</div>`
+				+ content +
+			`</div>`;
+
 		switch(kind){
-			case "start":
-				header.style.height = "18.5714vh";
-				narrowMainHeader.innerHTML = 
-					`<div class="whole centeredFlex" style="height:50%; width:100%; background:var(--red-background-narrow)">
-					</div>
-					<div class="whole centeredFlex" style="height:50%; width:100%; background:var(--red-background-narrow)">
+			// Presentation, Introduction or Instructions view
+			case "startMenu":
+				header.classList.add("headerStartMenu");
+				let hamburgerMenuAndImage = 
+					`<div class="whole centeredFlex" style="position:absolute">
+						<img src="img/index/options/start.png" style="height:45%; width:auto; filter:invert(100%)">
 					</div>`;
+				let tabOptions = "";
+				for (i=0; i<3; i++){
+					let color, borderStyle = "border-bottom: 0.5vh solid ";
+					if (num == i){
+						color = "var(--tab-letters-start-view)";
+						borderStyle += color;
+					} 
+					else {
+						color = "white";
+						borderStyle += "var(--red-background-narrow)";
+					}
+					tabOptions += 
+						`<div class="centeredFlex" style="height:100%; width:calc(100%/3); padding-bottom:3%; cursor:pointer; color:`+color+`; `+borderStyle+`"
+							onclick="restoreDefaultValues(); loadCentralImage(`+ i +`); makeMainButtonBlack(`+ i +`)"
+						>` 
+							+ buttons_texts[language][i].toUpperCase() +
+						`</div>`;
+				}
+				narrowMainHeader.innerHTML = 
+					headerMainFormat(hamburgerMenuAndImage, 62.5) + 
+					`<div class="centeredFlex" 
+							style="height:37.5%; width:100%; font-family:'FontRupes'; font-size:3.9vw; background:var(--red-background-narrow)">`
+						+ tabOptions +
+					`</div>`;
 				break;
 			default:
 				break;
-			}
 		}
-}
-
-// Returns an integer between the min and the max indicated
-function getRandomInt(min, max){
-	return Math.floor(Math.random(min, max) * (max - min)) + min;
-}
-
-/*
- * Since many texts in this app will include HTML tags, this function allows to recover the plain text
- *
- * NOTE: Currently it only deletes the "<br>&nbsp&nbsp&nbsp" parts or the "<br>"" tags, because
- *       those are what we are interested for now. Maybe this must be extended in the future.
- */
-function deleteHTMLTagsFromText(text){
-	brSpaceSplit = text.split("<br>&nbsp&nbsp&nbsp");
-
-	// This concatenates all elements of the previous array in a single string
-	// We must put "" inside join in order that a comma between them does not appear
-	let result = brSpaceSplit.join(""); 
-
-	redSplit = result.split("<span style='color:red'>");
-	result = redSplit.join("");
-
-	spanCloseSplit = result.split("</span>");
-	result = spanCloseSplit.join("");
-
-	brSplit = result.split("<br>");
-	result = brSplit.join(" ");
-	
-	return result;
+	}
 }

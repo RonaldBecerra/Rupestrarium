@@ -12,8 +12,8 @@
 	/* Background of the header in the narrow version */
 	--red-background-narrow: #961907;
 
-	/* In the narrow version, in the start view, we need the letter of the selected tab to be this color */
-	--tab-letters-central-selected-view: #f59c01;
+	/* In the narrow version, in the start view, we need the letters of the selected tab to be this color */
+	--tab-letters-start-view: #f59c01;
 }
 
 html {
@@ -35,6 +35,7 @@ html {
 
 body {
 	height: 100vh;
+	width: 100vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -156,6 +157,7 @@ p {
 	height: 80%;
 }
 
+/* Imported font families */
 @font-face {
 	font-family: FontRupes;
 	src: url(../ttf/BAHAMASN.ttf);
