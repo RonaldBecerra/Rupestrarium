@@ -7,9 +7,9 @@
 // image and text, but the text will not be put here, but in the "change_language" function
 function generate_indexOptionsRows(){
 	let style, str = "";
-	for (i=0; i<indexOptionsImages.length; i++){
+	for (i=0; i < indexOptions_images.length; i++){
 		if (1 < i && i < 4){
-			currentStyle = "height:80%; width:65%";
+			currentStyle = "height:80%; width:60%";
 		}
 		else{
 			currentStyle = "height:65%; width:auto; max-width:80%";
@@ -19,7 +19,7 @@ function generate_indexOptionsRows(){
 					onclick="`+indexOptionsFunctions[i]+`; closeIndex()">
 				<div style="width:3.45%"></div>
 				<div class="centeredFlex" style="height:100%; width:30.17%">
-					<img src="` + indexOptionsImages[i] + `" style="` + currentStyle + `">
+					<img src="` + indexOptions_images[i] + `" style="` + currentStyle + `">
 				</div>
 				<div class="centeredFlex" style="height:100%; flex-grow:1; flex-direction:row; justify-content:flex-start">
 					<div id="indexTextOption`+i+`" style="left:3%; font-family:'FontRupes'; font-size:2.5vh"></div>

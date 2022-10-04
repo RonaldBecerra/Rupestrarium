@@ -119,7 +119,7 @@ const imagesThatVaryWithLanguage = {
 	},
 }
 
-const indexOptionsImages = [
+const indexOptions_images = [
 	"img/index/options/start.png", // 0
 	"img/index/options/petroglyphs.png", // 1
 	"img/index/options/petroglyphs2.png", // 2

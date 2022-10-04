@@ -81,7 +81,7 @@ function change_language(newLanguage){
 		// We translate the texts of the options of the index that appears in the narrow version
 		texts = indexOptions_texts[newLanguage];
 		for (i=0; i < texts.length; i++){
-			document.getElementById('indexTextOption' + i).innerHTML = texts[i];
+			document.getElementById('indexTextOption' + i).innerHTML = deleteHTMLTagsFromText(texts[i]);
 		}
 
 		// Case when the user was in one of the views that consist on a central image: Introduction, Presentation,...
@@ -227,6 +227,8 @@ function loadCentralImage(num){
 	if (num < 3){
 		tabNavigator = true;
 		createNarrowVersionHeader("startMenu", num);
+	} else if (num == 3){
+		createNarrowVersionHeader("credits");
 	} else {
 		createNarrowVersionHeader();
 	}
@@ -324,22 +326,23 @@ function createNarrowVersionHeader(kind=null, num=null){
 	let header = document.getElementsByTagName("header")[0];
 	let mainContainer = document.getElementsByClassName("main-container")[0];
 
-	console.log("mainContainer = ", mainContainer);
-
 	// Restore all the default values firstly. Later we will establish the necessary ones
 	narrowInitHeader.style.display = narrowMainHeader.style.display = "none";
 	header.className = "";
+
+	// Adding this, the mainContainer covers the subtitle that says "Rock Art Figures"
 	mainContainer.classList.add("wholeAbsoluteInNarrow");
 
-	if (null == kind){
+	if (null == kind){ // Initial view
 		narrowInitHeader.style.display = null;
+		// Here we want that the subtitle that says "Rock Art Figures" can be read
 		mainContainer.classList.remove("wholeAbsoluteInNarrow");
 	}
 	else{
 		narrowMainHeader.style.display = null;
 
 		// Auxiliar function to get the main format of the header (hamburger menu plus content)
-		let headerMainFormat = (content, percentageHeight=10) =>
+		let headerMainFormat = (content, percentageHeight=100) =>
 			`<div class="centeredFlex" 
 				 style="height:`+percentageHeight+`%; width:100%; justify-content:flex-start; flex-direction:row; background:var(--red-background-narrow)"
 			 >
@@ -350,41 +353,67 @@ function createNarrowVersionHeader(kind=null, num=null){
 				+ content +
 			`</div>`;
 
-		switch(kind){
-			// Presentation, Introduction or Instructions view
-			case "startMenu":
-				header.classList.add("headerStartMenu");
-				let hamburgerMenuAndImage = 
-					`<div class="whole centeredFlex" style="position:absolute">
-						<img src="img/index/options/start.png" style="height:45%; width:auto; filter:invert(100%)">
-					</div>`;
-				let tabOptions = "";
-				for (i=0; i<3; i++){
-					let color, borderStyle = "border-bottom: 0.5vh solid ";
-					if (num == i){
-						color = "var(--tab-letters-start-view)";
-						borderStyle += color;
-					} 
-					else {
-						color = "white";
-						borderStyle += "var(--red-background-narrow)";
-					}
-					tabOptions += 
-						`<div class="centeredFlex" style="height:100%; width:calc(100%/3); padding-bottom:3%; cursor:pointer; color:`+color+`; `+borderStyle+`"
-							onclick="restoreDefaultValues(); loadCentralImage(`+ i +`); makeMainButtonBlack(`+ i +`)"
-						>` 
-							+ buttons_texts[language][i].toUpperCase() +
-						`</div>`;
+		if (kind === "startMenu"){ // Presentation, Introduction or Instructions view
+			header.classList.add("headerStartMenu");
+			let hamburgerMenuAndImage = 
+				`<div class="whole centeredFlex" style="position:absolute">
+					<img src="`+indexOptions_images[0]+`" style="height:45%; width:auto; filter:invert(100%)">
+				</div>`;
+			let tabOptions = "";
+			for (i=0; i<3; i++){
+				let color, borderStyle = "border-bottom: 0.5vh solid ";
+				if (num == i){
+					color = "var(--tab-letters-start-view)";
+					borderStyle += color;
+				} 
+				else {
+					color = "white";
+					borderStyle += "var(--red-background-narrow)";
 				}
-				narrowMainHeader.innerHTML = 
-					headerMainFormat(hamburgerMenuAndImage, 62.5) + 
-					`<div class="centeredFlex" 
-							style="height:37.5%; width:100%; font-family:'FontRupes'; font-size:3.9vw; background:var(--red-background-narrow)">`
-						+ tabOptions +
+				tabOptions += 
+					`<div class="centeredFlex" style="height:100%; width:calc(100%/3); padding-bottom:3%; cursor:pointer; color:`+color+`; `+borderStyle+`"
+						onclick="restoreDefaultValues(); loadCentralImage(`+ i +`); makeMainButtonBlack(`+ i +`)"
+					>` 
+						+ buttons_texts[language][i].toUpperCase() +
 					`</div>`;
-				break;
-			default:
-				break;
+			}
+			narrowMainHeader.innerHTML = 
+				headerMainFormat(hamburgerMenuAndImage, 62.5) + 
+				`<div class="centeredFlex" 
+						style="height:37.5%; width:100%; font-family:'FontRupes'; font-size:3.9vw; background:var(--red-background-narrow)">`
+					+ tabOptions +
+				`</div>`;
+		} else {
+			let indexOptionNum, imageStyle = "height:45%; width:auto; filter:invert(100%)";
+			if (kind === "credits"){
+				indexOptionNum = 6;
+			}
+			else if (kind === "recapitulate"){
+				indexOptionNum = 5;
+			}
+			else if (kind === "sliderFigure"){
+				indexOptionNum = num + 1;
+				if ([2,3].includes(indexOptionNum)){
+					imageStyle = "height:68%; width:58%";
+				}
+				else {
+					imageStyle = "height:55%; width:auto";
+				}	
+			}
+			else{
+				return;
+			}
+			header.classList.add("headerStandardView");
+			narrowMainHeader.innerHTML = headerMainFormat(
+				`<div class="centeredFlex" style="height:100%; width:21.5%; justify-content:flex-end">
+					<img src="`+indexOptions_images[indexOptionNum]+`" style="`+imageStyle+`">
+				</div>
+				<div class="centeredFlex" style="height:100%; width:62.5%">
+					<div style="font-family:'FontRupes'; font-size:6.7vw; color: var(--font-color-narrow-header)">`
+						+indexOptions_texts[language][indexOptionNum]+
+					`</div>
+				</div>`
+			);
 		}
 	}
 }

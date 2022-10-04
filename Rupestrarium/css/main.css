@@ -14,6 +14,9 @@
 
 	/* In the narrow version, in the start view, we need the letters of the selected tab to be this color */
 	--tab-letters-start-view: #f59c01;
+
+	/* Color of the letters that appear in the header of the narrow version */
+	--font-color-narrow-header: #e0bab5;
 }
 
 html {

@@ -5,6 +5,7 @@
 
 // Load the corresponding figure, divided into three sections 
 function loadFigure(num, randomizeParts=false){
+	createNarrowVersionHeader("sliderFigure", num);
 	figureType = num;
 	currentFigure = possible_figures[num];
 

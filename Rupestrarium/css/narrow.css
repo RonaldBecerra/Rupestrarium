@@ -27,8 +27,12 @@ header #stone-texture {
 
 /* Necessary class for the header when the user is in any of the views Presentation, Introduction or Instructions */
 .headerStartMenu{
-	/*position: absolute;*/
 	height: 16%;
+}
+/* Necessary class for the header when the user is not in any of the views mentioned before, 
+   and neither in the initial one */
+.headerStandardView{
+	height: 10%;
 }
 
 .rupestrarium-title{

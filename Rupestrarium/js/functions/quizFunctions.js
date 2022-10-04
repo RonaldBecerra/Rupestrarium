@@ -17,6 +17,7 @@ function setQuizValues(){
 
 // It loads the correct view when the user clicks on the "Recapitulate" button
 function loadQuiz(){
+	createNarrowVersionHeader("recapitulate");
 	resetDiv('main-background');
 	quiz = true;
 
