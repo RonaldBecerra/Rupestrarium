@@ -79,12 +79,7 @@ main {
 
 /* For the two spaces that are on the side of the "img" div */
 .img-side{
-	position: relative;
-	width: 8%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	padding-bottom: 2vh;
+	display: none;
 }
 
 .vertical-text-bottom-to-top{
@@ -171,16 +166,16 @@ input[type=radio] {
 
 /* Description of the last question. It also appears above a slider figure */
 #lastQDesc{
-	max-height: 85%;
+	height:auto;
 }
 #lastQDesc p{
-	font-size: 1.2vmax;
+	font-size: 3.08vw;
 }
 
 /* Box of choosable options in the last question */
 #kind_rotulos select{
-	font-size: 2.4vmin;
-	width: 38%;
+	font-size: 3.8vw;
+	width: auto;
 }
 
 /* The two sides of the box of the choosable options */
@@ -198,7 +193,7 @@ input[type=radio] {
 	padding: 7%;
 	cursor: default;
 	color: black;
-	font-size: 2vmin;
+	font-size: 3.2vw;
 }
 
 /* ------------- END OF FORMAT FOR ELEMENTS RELATED TO THE QUIZ ------------ */
@@ -233,7 +228,7 @@ input[type=radio] {
 	border-color: black;
 	background: #4285F4; /*Blue color used by Google*/
 	padding: 9%;
-	cursor: default;
+	cursor: pointer;
 	color: black;
 }
 #sendEmailButton p{

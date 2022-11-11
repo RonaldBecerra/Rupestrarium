@@ -213,7 +213,7 @@ function loadCentralImage(num){
 		});
 	}
 	
-	// Credits and instructions have two versions depending of if it's pure web or narrow (mobile)
+	// Presentation, credits and instructions have two versions depending of if it's pure web or narrow (mobile)
 	if ((num == 0) || (num == 2) || (num == 3)){
 		document.getElementById("img-web").src = imagesSources[num].web;
 		document.getElementById("img-mob").src = imagesSources[num].narrow;

@@ -260,7 +260,7 @@ input[type=radio] {
 	border-color: black;
 	background: #4285F4; /*Blue color used by Google*/
 	padding: 9%;
-	cursor: default;
+	cursor: pointer;
 	color: black;
 }
 #sendEmailButton p{
