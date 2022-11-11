@@ -118,13 +118,13 @@ main {
 
 /* Description that appears above a slider figure */
 #figureDesc{
-	font-size: 1.7vw; 
+	font-size: 3.7vw; 
 	width: 97%;
 }
 
 /* Kind of a slider figure (e.g. Anthropomorphic) */
 #figureKind{
-	font-size: 4.5vw;
+	font-size: 5.3vw;
 }
 
 /* Label that has information related to a figure, like its name, location, etc. */
@@ -148,14 +148,19 @@ main {
 
 /* Format of a question that is not the last one */
 #normalQuestion{
-	font-size: 1.9vw;
+	font-size: 3.9vw;
 }
 
 /* Format of a possible answer of a question that is not the last one */
 .normalQAnswer{
 	padding-left: 10px; 
-	font-size: 1.9vw; 
+	font-size: 3.9vw; 
 	font-family: 'FontTexto';
+}
+
+/* Format for the hand that appears below the question to advance to the next one */
+#handToRight img{
+	height: 10vmin;
 }
 
 /* Button in which the user selects an option for an answer */

@@ -40,6 +40,3 @@ function auto_height(elem, idToCompare){
 		elem.style.height = scrollHeight;
 	}	
 }
-
-
-//function convertSpacesToBrTag(text)

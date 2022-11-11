@@ -10,8 +10,6 @@ var sendEmailAllowed = true;
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var centralImage = true; // It refers to any of the views: Presentation, Instructions, etc., that actually consist on an image on the center
-var tabNavigator = false; // In the narrow version the Presentation, Introduction and Instructions views are 
-						  // contained in a common tab navigator, so this indicates if the user is currently in any of them.
 var figures = false; // It is false when there is no slider figure in the view; otherwise it indicates if it is a petroglyph or a rock painting
 var quiz = false; // Indicates if the user is currently solving the quiz
 var quizFinished = false;

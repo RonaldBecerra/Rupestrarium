@@ -187,6 +187,11 @@ main {
 	font-family: 'FontTexto';
 }
 
+/* Format for the hand that appears below the question to advance to the next one */
+#handToRight img{
+	height: 6vmin;
+}
+
 /* Button in which the user selects an option for an answer */
 input[type=radio] {
 	width: 15px;

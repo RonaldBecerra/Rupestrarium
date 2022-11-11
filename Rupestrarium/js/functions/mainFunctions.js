@@ -130,6 +130,7 @@ function change_language(newLanguage){
 
 		// This makes the question and answers of the quiz load again with the new language
 		if(quiz){
+			createNarrowVersionHeader("recapitulate");
 			if (sendingEmail){
 				change_language_sendingEmail();
 			}
@@ -225,7 +226,6 @@ function loadCentralImage(num){
 	// In the narrow version the presentation, introduction and instructions view are contained in a common tab navigator
 	// They all appear in the "start" option of the index menu
 	if (num < 3){
-		tabNavigator = true;
 		createNarrowVersionHeader("startMenu", num);
 	} else if (num == 3){
 		createNarrowVersionHeader("credits");
@@ -236,7 +236,7 @@ function loadCentralImage(num){
 
 // In this function we also restore variables that indicate the state of the view to their default values
 function restoreDefaultValues(){
-	centralImage = tabNavigator = figures = quiz = false;
+	centralImage = figures = quiz = false;
 	head_body_feet = [0, 0, 0];
 	loadDef(); // Put the "Sur_de_marruecos.jpg" image in its place
 	resetDiv("main-background"); // Restore the default background of the central section

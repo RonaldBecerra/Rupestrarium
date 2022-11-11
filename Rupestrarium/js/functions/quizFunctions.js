@@ -67,7 +67,7 @@ function nextQuestion(figureNotCreated=true){
 
 		// Here we put the image of the hand to advance to the next question
 		document.getElementById("handToRight").innerHTML =
-			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();" style="height:6vmin" 
+			`<img onclick="submitA(` + numQuestion.toString()+`); numQuestion+=1; nextQuestion();"
 				onmouseover="this.src='img/derblue.png'" onmouseout="this.src='img/derecha.png'" src="img/derecha.png">`;
 	}
 	else{ // The last question needs a different treatment
