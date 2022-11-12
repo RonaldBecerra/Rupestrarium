@@ -210,12 +210,12 @@ input[type=radio] {
 	width: 90%; 
 }
 .emailInput label{
-	font-size: 2vh; 
+	font-size: 2.2vh; 
 }
 .emailInput input, .emailInput textarea{
 	height: 28%; 
 	width: 100%; 
-	font-size: 2vh; 
+	font-size: 2.2vh; 
 	padding: 5px;
 }
 .emailInput textarea{

@@ -41,7 +41,7 @@ function getDescription(){
 		`<p id="figureDesc" class="centered_FontRupes" style='color:` + color +`; visibility:hidden'>`+ object.description + `</p>`;
 
 	let div = document.getElementById("kind_rotulos");
-	div.innerHTML = `<p id="figureKind" class="centered_FontSub" style="z-index:1; color:` + color +`"
+	div.innerHTML = `<p id="figureKind" class="centered_FontSub" style="z-index:1; text-decoration:underline; color:` + color +`"
 						onmouseover="if (kindNotClicked){
 										this.style.cursor='pointer';
 										this.style.boxShadow='inset -2px -3px 10px -0.5px `+ color + 
@@ -49,7 +49,7 @@ function getDescription(){
 									}"
 						onmouseout="this.style.boxShadow='none'"
 						onclick="document.getElementById('figureDesc').style.visibility='visible';
-								this.style.boxShadow='none'; kindNotClicked=false; this.style.cursor='auto'">`
+								this.style.boxShadow='none'; kindNotClicked=false; this.style.cursor='auto'; this.style.textDecoration='none'">`
 						+ object.kind + 
 					`</p>`;
 
