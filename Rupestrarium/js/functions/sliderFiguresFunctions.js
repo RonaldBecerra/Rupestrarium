@@ -63,14 +63,14 @@ function getDescription(){
 }
 
 // Build the three sections of the figure
-function buildFigure(array = [true, true, true]){
+function buildFigure(){
 	let hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
 	let sections = ["head", "body", "feet"];
 	let str;
 
 	for (i=0; i<3; i++){
 		if (array[i]){
-			str =  loadArrow(i, "left") + `<img class="figureSection whole" src=` + currentFigure[i][hbf[i]] + `>` + loadArrow(i, "right");
+			str = loadArrow(i, "left") + `<img class="figureSection whole" src=` + currentFigure[i][hbf[i]] + `>` + loadArrow(i, "right");
 			document.getElementById(sections[i]).innerHTML = str;
 		}
 	}
@@ -89,6 +89,51 @@ function loadArrow(figurePosition, direction){
 
 // Slide one of the three sections of the figre to the left or to the right
 function slideFigure(figurePosition, direction){
+	let hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
+
+	if (direction == "left"){ // Slide to the left
+		hbf[figurePosition] -= 1;
+		if (hbf[figurePosition] < 0){
+			hbf[figurePosition] = 2;
+		}
+	} else { // Slide to the right
+		hbf[figurePosition] += 1;
+		if (hbf[figurePosition] > 2){
+			hbf[figurePosition] = 0;
+		}				
+	}
+	let array = [false, false, false];
+	array[figurePosition] = true;
+	buildFigure(array);
+}
+
+// Build the three sections of the figure
+function buildFigure_deprecated(array = [true, true, true]){
+	let hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
+	let sections = ["head", "body", "feet"];
+	let str;
+
+	for (i=0; i<3; i++){
+		if (array[i]){
+			str = loadArrow(i, "left") + `<img class="figureSection whole" src=` + currentFigure[i][hbf[i]] + `>` + loadArrow(i, "right");
+			document.getElementById(sections[i]).innerHTML = str;
+		}
+	}
+}
+
+// Arrows that let the user slide the sections of the figures
+function loadArrow_deprecated(figurePosition, direction){
+	let str = 
+		`<div class="arrowContainer centeredFlex"; style="height:100%">
+			<img onclick="slideFigure(` + figurePosition + `, '` + direction + `'); ` + ( quiz ? `" ` : `getDescription()" `) + 
+				`src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
+			>
+		</div>`;
+	return str;
+}
+
+// Slide one of the three sections of the figre to the left or to the right
+function slideFigure_deprecated(figurePosition, direction){
 	let hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
 
 	if (direction == "left"){ // Slide to the left
