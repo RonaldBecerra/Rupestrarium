@@ -20,7 +20,8 @@ var sendingEmail = false; // Indicates if the user is in the form view to send a
 var figureType = 0; // Kind of slider figure that the user could be currently seeing (0: petroglyph1, 1: petroglyph2, 2: rockPainting1; 3: rockPainting2)
 var currentFigure = null; // Unlike "figureType", it has the array with the uris of the images that represent the figure.
 var head_body_feet = [0, 0, 0]; // Indicates in which of the three parts below each of the three sections of the figure currently is
-var kindNotClicked = true; // Dtermines if the kind of the figure must be box shadowed when hovering it.
+var kindNotClicked = true; // Determines if the kind of the figure must be box shadowed when hovering it.
+var draggingAvailable = true; // Semaphore that determines if the user can drag the figure and slide it, or not.
 // ------ END
 
 // ------ BEGIN: Variables related to the quiz
@@ -29,7 +30,7 @@ var currentAttempt = 1;
 var userAnswers = [];
 var incorrectAnswers = []; // This will be ["a", "a", ...]
 var head_body_feet_forQuiz = [0, 0, 0]; // Equivalent to "head_body_feet", but used for the quiz figure
-var figureNum = 0;
+var quizFigureNum = 0;
 var totalQuestions = null;
 // This will be shuflled later and will indicate the order of the options in the dropdown menu,
 // because we don't want them to always appear in the same order. It will be initialized as [0,1,2,3,...]

@@ -94,6 +94,23 @@ header {
 
 /* ------------- END OF FORMAT FOR BUTTONS THAT DISPLAY ON LATERAL MENUS ------------ */
 
+
+/* ------------------------- FORMAT FOR THE SLIDER FIGURES -------------------------- */
+.carousel{
+	cursor: pointer;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.carousel.dragging{
+	cursor: grab;
+	scroll-behavior: auto;
+}
+.carousel.dragging img{
+	pointer-events: none;
+}
+
+/* ---------------------- END OF FORMAT FOR THE SLIDER FIGURES ---------------------- */
+
 /* These two styles let the respective buttons change their respective colors when the mouse
    is located over them */ 
 #finishButton:hover, #sendEmailButton:hover{

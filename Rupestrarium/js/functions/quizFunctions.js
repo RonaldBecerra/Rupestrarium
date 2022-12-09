@@ -85,13 +85,13 @@ function submitA(num){
 // Last question of the quiz, that has the same layout format of a slider figure view
 function lastQuestion(currentQ, figureNotCreated){
 	if (figureNotCreated){
-		figureNum = getRandomInt(0,4); // The 4 is the number of currently available figures, that is the max index plus one
-		loadFigure(figureNum, true);
+		quizFigureNum = getRandomInt(0,4); // The 4 is the number of currently available figures, that is the max index plus one
+		loadFigure(quizFigureNum, true);
 		lastQ_optionsOrder = _.shuffle(lastQ_optionsOrder);
 		lastQ_selectedOption = lastQ_optionsOrder[0];	
 	}
 	else {
-		loadFigure(figureNum);
+		loadFigure(quizFigureNum);
 	}
 	document.getElementById("desc").innerHTML = 
 		`<form id="lastQDesc" class="centeredFlex whiteBackground_blackBorder">

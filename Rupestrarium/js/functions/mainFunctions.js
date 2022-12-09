@@ -246,6 +246,14 @@ function restoreDefaultValues(){
 	document.querySelectorAll("button").forEach(element => {
 		element.style.removeProperty("background");
 	});
+
+	// Delete the listeners that could have been added. 
+	// If the function to remove is null, this doesn't do anything (does not throw an exception)
+
+	// (At the moment there are always 3 carousels)
+	window.removeEventListener('resize', window.adjustCarouselToResize_0);
+	window.removeEventListener('resize', window.adjustCarouselToResize_1);
+	window.removeEventListener('resize', window.adjustCarouselToResize_2);
 }
 
 // Restablish a div to its default state
