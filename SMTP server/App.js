@@ -49,8 +49,7 @@ app.post('/mailServer', async(request, response) => {
 
 		transporter.sendMail(message, function(err, info) {
 			if (err) {
-				console.log("err = ", err);
-				throw Error("");
+				response.send(false);
 			} else {
 				response.send(true);
 			}

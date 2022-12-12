@@ -126,17 +126,11 @@ function submitForm(){
 	// Eliminate tags added to give format to the text, and also the extra spaces
 	body = deleteHTMLTagsFromText(body);
 
-	/* ------------- BORRAR * ----------------- */
-	// console.log(body);
-
-	// 			alert(texts2[0]); // Message: "The email was sent successfully"
-	// 			currentAttempt += 1; 
-	// 			numQuestion = 0; 
-	// 			sendingEmail = false;
-	// 			showResultsView();
-
-	// return;
-	/* ------------------- FIN BORRAR ----------- */
+	// Function to handle any error when sending the email
+	let errorCase = () => {
+		alert(texts2[1]); // Message: "The email could not be sent"
+		sendEmailAllowed = true;			
+	}
 
 	// Send the email
 	$.ajax({
@@ -158,12 +152,11 @@ function submitForm(){
 				sendEmailAllowed = true;	
 				showResultsView();
 			} else {
-				throw Error("");
+				errorCase();
 			}
 		},
 		error: function(e){
-			alert(texts2[1]); // Message: "The email could not be sent"
-			sendEmailAllowed = true;	
+			errorCase();
 		}
 	})
 }
