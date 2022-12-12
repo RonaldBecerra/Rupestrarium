@@ -113,7 +113,7 @@ main {
 
 /* Description that appears above a slider figure */
 #figureDesc{
-	font-size: 3.7vw; 
+	font-size: 3.75vw; 
 	width: 97%;
 }
 
@@ -169,7 +169,7 @@ input[type=radio] {
 	height:auto;
 }
 #lastQDesc p{
-	font-size: 3.08vw;
+	font-size: 2.8vw;
 }
 
 /* Box of choosable options in the last question */

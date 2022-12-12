@@ -5,18 +5,22 @@
 
 // It calls the correct css file depending on the 
 function adjustStyle(width, height) {
-	let rel = width/height;
-	if (rel < 0.8) {
-		sizeStyleSheet = 'narrow';
-		document.getElementById("size-stylesheet").href = "css/narrow.css";
-	} else if (rel < 1.42) {
-		sizeStyleSheet = 'medium';
-		document.getElementById("size-stylesheet").href = "css/medium.css";
-		closeIndex();
-	} else {
-		sizeStyleSheet = 'wide';
-		document.getElementById("size-stylesheet").href = "css/wide.css";
-		closeIndex();
+	// The keyboard that appears in the sending email view in the narrow version of 
+	// a mobile device may change the stylesheet, but we don't want that
+	if (!(sendingEmail && isMobileDevice && (sizeStyleSheet == 'narrow'))){
+		let rel = width/height;
+		if (rel < 0.8) {
+			sizeStyleSheet = 'narrow';
+			document.getElementById("size-stylesheet").href = "css/narrow.css";
+		} else if (rel < 1.42) {
+			sizeStyleSheet = 'medium';
+			document.getElementById("size-stylesheet").href = "css/medium.css";
+			closeIndex();
+		} else {
+			sizeStyleSheet = 'wide';
+			document.getElementById("size-stylesheet").href = "css/wide.css";
+			closeIndex();
+		}
 	}
 }
 

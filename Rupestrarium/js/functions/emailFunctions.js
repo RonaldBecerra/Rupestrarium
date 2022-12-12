@@ -13,7 +13,9 @@ function sendEmailView({username_val="", additionalInfo_val="", addresseeEmail_v
 		"column"
 	);
 
-	document.getElementById("main-background-container").style.cssText += "color:white";
+	let mainContainer = document.getElementById("main-background-container");
+	mainContainer.style.color = "white";
+	mainContainer.style.overflow = "auto";
 
 	// Subtitle: Submit results
 	document.getElementById("desc").innerHTML =
