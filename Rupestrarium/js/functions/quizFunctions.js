@@ -101,12 +101,21 @@ function lastQuestion(currentQ, figureNotCreated){
 	let div = document.getElementById("kind_rotulos");
 	div.style["flex-direction"] = "row-reverse"; // We will start creating from right to left
 
-	// Create the finish button
+	// Create the finish button. Its background is similar to red
 	div.innerHTML = 
 		`<div class="centeredFlex" style="padding-bottom:5%">
 			<div class="centeredFlex" onClick="finishQuiz()">
-				<form id="finishButton" class"centeredFlex">
-					<p style="font-family:'Arial'">`+ currentQ.finishButton + `</p>
+				<form id="finishButton" class"centeredFlex" 
+						style="
+							border-radius:8px; 
+							border-style:solid; 
+							border-color:black;
+							background: #ed1c24;
+							padding: 7%;
+							cursor: pointer;
+						"
+				>
+					<p class="unselectable_text" style="font-family:'Arial'">`+ currentQ.finishButton + `</p>
 				</form>
 			</div>
 		</div>`;
@@ -130,7 +139,15 @@ function lastQuestion(currentQ, figureNotCreated){
 function finishQuiz(){
 	quizFinished = true;
 	evaluateQuiz();
-	sendEmailView();
+
+	// This is what creates the two possible versions of the app, one in which an email
+	// must be sent first, and one in which the quiz results appear directly
+	if (SEND_EMAIL_IN_THIS_VERSION){
+		sendEmailView();
+	}
+	else {
+		showResultsView();
+	}
 }
 
 // It inserts the numbers of questions that the user failed to the global array "incorrectAnswers"

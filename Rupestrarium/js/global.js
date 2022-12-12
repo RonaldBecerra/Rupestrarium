@@ -17,16 +17,19 @@ const isMobileDevice = window.mobileAndTabletCheck();
 // 'wide', 'medium' or 'narrow';
 var sizeStyleSheet = null;
 
-// TO BE CHANGED
+// ------------ TO BE CHANGED -----------------
 const smtpServerURL = "http://localhost:2526/mailServer";
 // If true, when finishing the quiz it will appear a view for sending the email results.
 // If false, it will directly appear the quiz results view.
-const SEND_EMAIL_IN_THIS_VERSION = false; 
+const SEND_EMAIL_IN_THIS_VERSION = true; 
+// ------------ END OF TO BE CHANGED -----------------
 
 
 var language = null;
 const possible_languages = ["spanish", "english"];
-var sendEmailAllowed = true;
+// This is to avoid that two equivalent emails are sent by clicking two times the button.
+// Don't confuse it with the constant that determines if in this version the send email view will appear or not
+var sendEmailAllowed = true; 
 
 // ------ BEGIN: Variables that determine if the user is currently in a determined view ---------------
 var centralImage = true; // It refers to any of the views: Presentation, Instructions, etc., that actually consist on an image on the center

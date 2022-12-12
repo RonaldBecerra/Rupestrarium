@@ -8,22 +8,9 @@ header {
 	height: 9vh; 
 }
 
-header #stone-texture {
-	width: 100%;
+#stone-texture {
 	height: 90%;
-	background-color: #cfc8c2;
-	background-image: url("../img/textura-de-piedra.png");
-	background-size: calc(100% / 4) auto;
-	background-repeat: space;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: 1fr;
-	grid-column-gap: 0px;
-	grid-row-gap: 0px;
 }
-#stone-texture .div1 { grid-area: 1 / 1 / 2 / 2;}
-#stone-texture .div2 { grid-area: 1 / 2 / 2 / 4;}
-#stone-texture .div3 { grid-area: 1 / 4 / 2 / 5;}
 
 /* Necessary class for the header when the user is in any of the views Presentation, Introduction or Instructions */
 .headerStartMenu{
@@ -184,16 +171,11 @@ input[type=radio] {
 	padding-bottom: 10%;
 }
 
-/* It appears in the last question of the quiz */
+/* It appears in the last question of the quiz. 
+   We put the color here in order that it changes when the cursor is over it*/
 #finishButton{
-	border-radius: 8px;
-	border-style: solid;
-	border-color: black;
-	background: #ed1c24; /*Similar to red*/
-	padding: 7%;
-	cursor: default;
-	color: black;
 	font-size: 3.2vw;
+	color: black;
 }
 
 /* ------------- END OF FORMAT FOR ELEMENTS RELATED TO THE QUIZ ------------ */
@@ -222,13 +204,8 @@ input[type=radio] {
 	height: 14%;
 }
 
+/* We put the color here in order that it changes when the cursor is over it*/
 #sendEmailButton{
-	border-radius: 8px;
-	border-style: solid;
-	border-color: black;
-	background: #4285F4; /*Blue color used by Google*/
-	padding: 9%;
-	cursor: pointer;
 	color: black;
 }
 #sendEmailButton p{
@@ -262,12 +239,6 @@ input[type=radio] {
 
 
 /* ------------------- FORMAT FOR THE FOOTER -------------------- */
-footer{
-	bottom: 0px;
-	width: 100%;
-	height: 7vh;
-	background: black;
-}
 
 /* Menu in which the user can change the language of the app and has the links to social networks */
 .links_language{

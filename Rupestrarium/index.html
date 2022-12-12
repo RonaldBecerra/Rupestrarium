@@ -13,14 +13,27 @@
 	<!-- Header, with light brown color -->
 	<header>
 		<!-- Web normal version: Logo container, with stone texture background -->
-		<div id="stone-texture">
-			<div class="div1 web_div">
+		<div id="stone-texture" 
+			style="
+				width: 100%; 
+				background-color: #cfc8c2; 
+				background-image: url('img/textura-de-piedra.png');
+				background-size: calc(100% / 4) auto;
+				background-repeat: space;
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				grid-template-rows: 1fr;
+				grid-column-gap: 0px;
+				grid-row-gap: 0px;
+			"
+		>
+			<div class="web_div" style="grid-area: 1 / 1 / 2 / 2">
 				<img id="logo-fundabitat" class="webOnly" src="img/logo-FUNDABITAT.png">
 			</div>
-			<div class="div2 web_div">
+			<div class="web_div" style="grid-area: 1 / 2 / 2 / 4">
 				<img class="webOnly rupestrarium-title">
 			</div>
-			<div class="div3 web_div">
+			<div class="web_div" style="grid-area: 1 / 4 / 2 / 5">
 				<img id="logo-anar" class="webOnly"src="img/logo ANAR.png">
 			</div>
 
@@ -89,7 +102,7 @@
 
 	</main>
 
-	<footer>
+	<footer style="bottom:0px; width:100%; height:7vh; background:black">
 		<div class="centeredFlex" style="flex-direction: row;">
 			<!-- Web normal version -->
 			<div class="links_language" style="justify-content:flex-end; padding-right:3%">

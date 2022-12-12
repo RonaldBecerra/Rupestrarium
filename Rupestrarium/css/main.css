@@ -151,6 +151,15 @@ p {
 	vertical-align: middle;
 }
 
+/* To avoid that the user highlights a text */
+.unselectable_text{
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;	
+}
+
 /* This inculdes the index-view, and an empty space (transparent) in which the user can click
    to close the index*/
 #index-view-container {

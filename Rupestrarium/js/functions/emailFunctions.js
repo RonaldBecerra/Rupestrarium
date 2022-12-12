@@ -43,11 +43,20 @@ function sendEmailView({username_val="", additionalInfo_val="", addresseeEmail_v
 	let buttonDiv = document.getElementById("sendButton");
 	buttonDiv.style["flex-direction"] = "row";
 
-	// SEND button
+	// SEND button. Its background is the blue color used by Google
 	buttonDiv.innerHTML =
 		`<div class="centeredFlex" style="padding-bottom:1%" onClick="submitForm()">
-			<form id="sendEmailButton" class"centeredFlex">
-				<p style="font-family:'Arial'">`+ sendEmail_texts[language][4] + `</p>
+			<form id="sendEmailButton" class"centeredFlex"
+					style="
+						border-radius: 8px;
+						border-style: solid;
+						border-color: black;
+						background: #4285F4;
+						padding: 9%;
+						cursor: pointer;
+					"
+			>
+				<p class="unselectable_text" style="font-family:'Arial'">`+ sendEmail_texts[language][4] + `</p>
 			</form>
 		</div>`;
 }
@@ -145,7 +154,6 @@ function submitForm(){
 			if (data){
 				alert(texts2[0]); // Message: "The email was sent successfully"
 				currentAttempt += 1; 
-				numQuestion = 0; 
 				sendingEmail = false;
 				sendEmailAllowed = true;	
 				showResultsView();

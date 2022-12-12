@@ -60,10 +60,13 @@ function showResultsView(){
 		`<div id="results-container" class="centeredFlex whiteBackground_blackBorder" style="flex-direction:column">
 			<p class="centered_FontRupes">` + str + 
 
-			// The "Try again" button is only shown if the user is going for the second attempt
-			((currentAttempt == 2) ? auxiliarDiv(texts["tryAgain"], "tryAgain()") : ``) + 
+			// The "Try again" button is only shown if the user is going for the second attempt or if 
+			// in this version it does not appear the send email view
+			(((currentAttempt == 2) || !SEND_EMAIL_IN_THIS_VERSION) ? auxiliarDiv(texts["tryAgain"], "tryAgain()") : ``) + 
 			auxiliarDiv(texts["backMenu"], "loadCentralImage(5); restoreDefaultValues()") + 
 		`</div>`;
+
+	numQuestion = 0;
 }
 
 function tryAgain(){
