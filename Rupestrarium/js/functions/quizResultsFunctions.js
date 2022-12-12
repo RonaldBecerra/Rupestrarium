@@ -49,7 +49,7 @@ function showResultsView(){
 	}
 
 	let auxiliarDiv = (text, onClick) => (
-		`<div style="cursor:default; padding-top:1%; padding-bottom:2%" onClick=` + onClick + `>
+		`<div style="cursor:pointer; padding-top:1%; padding-bottom:2%" onclick="` + onClick + `">
 			<form class="results_clickableText">
 				<p style="color:#F26D0B; text-align:center">` + text + `</p>
 			</form>

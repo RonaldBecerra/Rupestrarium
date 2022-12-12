@@ -5,7 +5,11 @@
 
 // Load the corresponding figure, divided into three sections 
 function loadFigure(num, randomizeParts=false){
-	createNarrowVersionHeader("sliderFigure", num);
+	// Remember that in the quiz we also create a figure, but we don't want to
+	// update the header in that case
+	if (!quiz){
+		createNarrowVersionHeader("sliderFigure", num);
+	}
 	figureType = num;
 	currentFigure = possible_figures[num];
 
@@ -96,7 +100,7 @@ function buildFigure(){
 function loadArrow(carouselNumber, direction){
 	let str = 
 		`<div class="arrowContainer centeredFlex"; style="height:100%">
-			<img onclick="updateSlidingFigureArray({carouselNumber: ` + carouselNumber + `, direction: '` + direction + `'})"` +
+			<img onclick="updateSliderFigure({carouselNumber: ` + carouselNumber + `, direction: '` + direction + `'})"` +
 				`src="img/art/arrow_` + direction + ((figures == 'petroglyph') ? `` : `_pint`) + `.png"
 			>
 		</div>`;
@@ -120,15 +124,16 @@ function initializeCarousels(){
 			positionDiff = Math.abs(positionDiff); // Making positionDiff value to positive
 
 			// We don't move the carousel to the next image if the drag was lower than a certain threshold.
-			// Otherwise, we return the same image to its original position
+			// Instead, we return the same image to its original position
 			if (positionDiff <= carousel.clientWidth/4.5){
-				slideFigure({carouselObject: carousel, carouselNumber, smoothBehavior: true, boolGetDescription: false});
+				slideCarousel({carouselObject: carousel, carouselNumber, hbf});
 			}
 			else {
-				updateSlidingFigureArray({
+				updateSliderFigure({
 					carouselObject: carousel, 
 					carouselNumber,
 					direction: ((carousel.scrollLeft <= prevScrollLeft) ? "left" : "right"),
+					hbf,
 				});
 			}
 		}
@@ -162,9 +167,9 @@ function initializeCarousels(){
 			approveSliding();
 		}
 
-		// This is necessary because since the sliding causes the scrollLeft property change
-		// according to the size of the image, if the user changes the screen dimensions that
-		// scrollLeft will be inappropiate. Part of the nearby images will be seen
+		/* This is necessary because since the sliding causes the scrollLeft property change
+		   according to the size of the image, if the user changes the screen dimensions that
+		   scrollLeft will be inappropiate. Part of the nearby images will be seen */
 		const adjustCarouselToResize = () => {
 			const factor = (hbf[carouselNumber]+1); // The +1 is due to the first fake image
 			carousel.scrollLeft = carousel.clientWidth * factor;
@@ -192,13 +197,16 @@ function initializeCarousels(){
 	})
 }
 
-// Here we update the appropiate "head_body_feet" array, and then invoke the slideFigure function
-// to slide the figure according to the new value of the array
-function updateSlidingFigureArray({carouselObject=null, carouselNumber, direction} = {}){
+/*
+ * Here we update the appropiate "head_body_feet" array, and then invoke the "slideCarousel" function
+ * to slide the figure according to the new value of the array. In the appropiate case,
+ * we will invoke the "getDescription" function
+ */
+function updateSliderFigure({carouselObject=null, carouselNumber, direction, hbf} = {}){
 	if (!draggingAvailable) return;
 
-	const hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
 	const possibleKinds = currentFigure[0].length; // Currently this is always 3: antro, geo and zoo
+	hbf = (hbf!=null) ? hbf : (quiz ? head_body_feet_forQuiz : head_body_feet);
 
 	carouselObject = (null!=carouselObject) ? carouselObject : document.querySelector(`.carousel[name="`+ carouselNumber + `"]`);
 
@@ -225,35 +233,41 @@ function updateSlidingFigureArray({carouselObject=null, carouselNumber, directio
 		// Slide to the extreme image (but just for a moment)
 		elementToSlideInto.scrollIntoView({behavior:"smooth"});
 		draggingAvailable = false;
+
+		// In the quiz we never get the description
 		if (!quiz){
 			getDescription();
 		}
+
 		// Instantaneous sliding to the real image that will be shown, nut we must wait
 		// for the previous scroll to have ended
 		setTimeout(function() {
-			slideFigure({carouselObject, carouselNumber, smoothBehavior:false, boolGetDescription:false});
+			slideCarousel({carouselObject, carouselNumber, hbf, smoothBehavior:false});
 			draggingAvailable = true;
 		}, 450);
 		
 	}
 	// Case when the sliding is normal
 	else{
-		slideFigure({carouselObject, carouselNumber});
+		slideCarousel({carouselObject, carouselNumber, hbf});
+
+		// In the quiz we never get the description
+		if (!quiz){
+			getDescription();
+		}
 	}
 }
 
-// Here is where we really slide the figure of a specific carousel
-function slideFigure({carouselObject=null, carouselNumber, smoothBehavior=true, boolGetDescription=true} = {}){
-	const hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
-	carouselObject = (null!=carouselObject) ? carouselObject : document.querySelector(`.carousel[name="`+ carouselNumber + `"]`);
-
-	//The smooth behavior does not work in Google Chrome and neither in Microsoft Edge to this date: 10/12/2022
-	carouselObject.querySelector('img[name="'+ (hbf[carouselNumber]+1) +'"]').scrollIntoView({
-		behavior: smoothBehavior ? "smooth" : "auto"
-	});
-
-	// In the quiz we never get the description, it does not matter what the variable "boolGetDescription" says
-	if (boolGetDescription && !quiz){
-		getDescription();
+// Here is where we really slide to a figure in a specific carousel
+function slideCarousel({carouselObject, carouselNumber, hbf, smoothBehavior=true} = {}){
+	// The smooth behavior does not work in Google Chrome and neither in Microsoft Edge to this date: 10/12/2022
+	// so we only allow the smooth behavior is the user has the cursor or the arrow buttons
+	let behavior = "auto";
+	if (smoothBehavior && !(isMobileDevice && (sizeStyleSheet == 'narrow')
+							&& ["chrome", "edge"].includes(fnBrowserDetect())) 
+	   )
+	{
+		behavior = "smooth";
 	}
+	carouselObject.querySelector('img[name="'+ (hbf[carouselNumber]+1) +'"]').scrollIntoView({behavior});
 }

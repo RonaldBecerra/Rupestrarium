@@ -7,12 +7,31 @@ function makeMainButtonBlack(buttonNumber){
 	document.getElementById("b" + buttonNumber).style.background = 'black';
 }
 
+// To know the index option number of the narrow version, corresponding to
+// a main button number of the wide/medium versions
+function correspondingIndexOptionToButton(buttonNum){
+	if (buttonNum < 3){
+		return 0;
+	}
+	else if (buttonNum == 3){
+		return 6;
+	}
+	else if (buttonNum == 4){
+		return null;
+	}
+	else {
+		return buttonNum - 4;
+	}
+}
+
 
 /* Makes the background of an index option darker and its text be red */
 function showIndexOptionAsSelected(optionNumber){
-	const indexOption = document.getElementById("index-options").querySelector('div[name="'+ optionNumber +'"]');
-	indexOption.style.background = "rgba(0, 0, 0, 0.14)";
-	indexOption.style.color = "var(--font-color-selected-index-option)";
+	if (optionNumber != null){
+		const indexOption = document.getElementById("index-options").querySelector('div[name="'+ optionNumber +'"]');
+		indexOption.style.background = "rgba(0, 0, 0, 0.14)";
+		indexOption.style.color = "var(--font-color-selected-index-option)";
+	}
 }
 
 // To look for the main button that is selected currently (its color is black)
@@ -68,4 +87,36 @@ function auto_height(elem, idToCompare){
 	else {
 		elem.style.height = scrollHeight;
 	}	
+}
+
+// To detect the current browser being used
+function fnBrowserDetect(){
+	try{
+		let userAgent = navigator.userAgent;
+		let browserName;
+
+		if(userAgent.match(/chrome|chromium|crios/i)){
+			browserName = "chrome";
+		} 
+		else if(userAgent.match(/firefox|fxios/i)){
+			browserName = "firefox";
+		} 
+		else if(userAgent.match(/safari/i)){
+			browserName = "safari";
+		} 
+		else if(userAgent.match(/opr\//i)){
+			browserName = "opera";
+		} 
+		else if(userAgent.match(/edg/i)){
+			browserName = "edge";
+		} 
+		else{
+			browserName="No browser detection";
+		}
+
+		return browserName;
+	} 
+	catch(e){
+		return null;
+	}
 }

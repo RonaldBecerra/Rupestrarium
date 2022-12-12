@@ -7,11 +7,14 @@
 function adjustStyle(width, height) {
 	let rel = width/height;
 	if (rel < 0.8) {
+		sizeStyleSheet = 'narrow';
 		document.getElementById("size-stylesheet").href = "css/narrow.css";
 	} else if (rel < 1.42) {
+		sizeStyleSheet = 'medium';
 		document.getElementById("size-stylesheet").href = "css/medium.css";
 		closeIndex();
 	} else {
+		sizeStyleSheet = 'wide';
 		document.getElementById("size-stylesheet").href = "css/wide.css";
 		closeIndex();
 	}
@@ -35,14 +38,15 @@ window.onload = async function(){
 
 // To poblate the "leftColumnMenu" and "rightColumnMenu" divs
 function generateColumnMenus(){
-	let str, div, i, j;
+	let str, div, i, j, indexOption;
 	i = k = 0;
 
 	// --- Left side
 	div = document.getElementById("leftColumnMenu");
 	str = "";
 	while(i < 5){ // Number of buttons on the left side
-		str += `<button id="b`+i+`" class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadCentralImage(`+i+`);">`;
+		str += `<button id="b`+i+`" class="mainMenuButton darkRed_mb" onclick="restoreDefaultValues(); this.style.background='black'; 
+						loadCentralImage(`+i+`); showIndexOptionAsSelected(correspondingIndexOptionToButton(`+i+`))">`;
 		str += `<b id="textButton`+i+`" class="text_mb"></b></button>`;
 		i += 1;
 	}
@@ -54,13 +58,14 @@ function generateColumnMenus(){
 	str = "";
 	while (k < 4){ // Number of buttons with the same structure on the right side: petroglyphs and rock paintings
 		str += `<button id="b`+i+`" class="mainMenuButton ` + ((k < 2) ? `gray_mb` : `orange_mb`) + `" onclick="restoreDefaultValues(); this.style.background='black';`;
-		str += `loadDef(`+k+`);">`;
+		str += 		`loadDef(`+k+`); showIndexOptionAsSelected(correspondingIndexOptionToButton(`+i+`))">`;
 		str += `<b id="textButton`+i+`" class="text_mb"></b></button>`;
 		k += 1;
 		i += 1;
 	}
 	// "Recapitulate" button
-	str += `<button id="b`+i+`" class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; loadQuiz()">`;
+	str += `<button id="b`+i+`" class="mainMenuButton red_mb" onclick="restoreDefaultValues(); this.style.background='black'; 
+					loadQuiz(); showIndexOptionAsSelected(correspondingIndexOptionToButton(`+i+`))">`;
 	str += `<b id="textButton`+i+`" class="text_mb"></b></button>`;
 
 	// Here there will be the description of the current petroglyph or rock painting, and if neither of those is selected there will be an image: "Sur_de_marruecos.jpg"
@@ -365,7 +370,7 @@ function createNarrowVersionHeader(kind=null, num=null){
 				}
 				tabOptions += 
 					`<div class="centeredFlex" style="height:100%; width:calc(100%/3); padding-bottom:3%; cursor:pointer; color:`+color+`; `+borderStyle+`"
-						onclick="restoreDefaultValues(); loadCentralImage(`+ i +`); makeMainButtonBlack(`+ i +`)"
+						onclick="restoreDefaultValues(); loadCentralImage(`+ i +`); makeMainButtonBlack(`+ i +`); showIndexOptionAsSelected(0)"
 					>` 
 						+ buttons_texts[language][i].toUpperCase() +
 					`</div>`;
