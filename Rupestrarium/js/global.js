@@ -41,14 +41,14 @@ var lastQ_selectedOption = 0;
 // ------ BEGIN: Processes to perform when an index option is chosen
 const indexOptionsFunctions = [
 	`if( !['b0', 'b1', 'b2'].includes(pressedMainButtonId()) ){
-	 	restoreDefaultValues(); loadCentralImage(0); makeMainButtonBlack(0);
+	 	restoreDefaultValues(); loadCentralImage(0); makeMainButtonBlack(0); showIndexOptionAsSelected(0)
 	 }`, // 0
-	`restoreDefaultValues(); loadDef(0); makeMainButtonBlack(5)`, // 1
-	`restoreDefaultValues(); loadDef(1); makeMainButtonBlack(6)`, // 2
-	`restoreDefaultValues(); loadDef(2); makeMainButtonBlack(7)`, // 3
-	`restoreDefaultValues(); loadDef(3); makeMainButtonBlack(8)`, // 4
-	`restoreDefaultValues(); loadQuiz(); makeMainButtonBlack(9)`, // 5
-	`restoreDefaultValues(); loadCentralImage(3); makeMainButtonBlack(3)`, // 6
+	`restoreDefaultValues(); loadDef(0); makeMainButtonBlack(5); showIndexOptionAsSelected(1)`, // 1
+	`restoreDefaultValues(); loadDef(1); makeMainButtonBlack(6); showIndexOptionAsSelected(2)`, // 2
+	`restoreDefaultValues(); loadDef(2); makeMainButtonBlack(7); showIndexOptionAsSelected(3)`, // 3
+	`restoreDefaultValues(); loadDef(3); makeMainButtonBlack(8); showIndexOptionAsSelected(4)`, // 4
+	`restoreDefaultValues(); loadQuiz(); makeMainButtonBlack(9); showIndexOptionAsSelected(5)`, // 5
+	`restoreDefaultValues(); loadCentralImage(3); makeMainButtonBlack(3); showIndexOptionAsSelected(6)`, // 6
 ]
 // ------ END
 

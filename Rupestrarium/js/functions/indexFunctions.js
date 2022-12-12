@@ -15,7 +15,7 @@ function generate_indexOptionsRows(){
 			currentStyle = "height:65%; width:auto; max-width:80%";
 		}
 		str += 
-			`<div style="height:calc(100%/7); width:100%; display:flex; flex-direction:row; align-items:center; cursor:pointer"
+			`<div name="`+ i + `" style="height:calc(100%/7); width:100%; display:flex; flex-direction:row; align-items:center; cursor:pointer"
 					onclick="`+indexOptionsFunctions[i]+`; closeIndex()">
 				<div style="width:3.45%"></div>
 				<div class="centeredFlex" style="height:100%; width:30.17%">

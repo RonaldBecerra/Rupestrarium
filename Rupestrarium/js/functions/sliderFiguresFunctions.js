@@ -89,7 +89,7 @@ function buildFigure(){
 		str += `</div>` + loadArrow(i, "right");
 		document.getElementById(sections[i]).innerHTML = str;
 	}
-	establishSliderListeners();
+	initializeCarousels();
 }
 
 // Arrows that let the user slide the sections of the figures
@@ -104,16 +104,16 @@ function loadArrow(carouselNumber, direction){
 }
 
 // Source: https://www.codingnepalweb.com/draggable-image-slider-html-css-javascript/
-function establishSliderListeners(){
+// (This is not an exact copy of that source)
+function initializeCarousels(){
 	document.querySelectorAll(".carousel").forEach(carousel => {
 		const carouselNumber = parseInt(carousel.getAttribute("name"));
 		let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
 
 		const hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
 
-		// At the start, since the first element of the carousel is a fake image, we need to scroll it to the second one
-		// This is the same as to put "carousel.querySelector('img[name="1"]').scrollIntoView()"
-		carousel.scrollLeft = carousel.clientWidth;
+		// At the start, we need to scroll the carousel to the desired image
+		carousel.scrollLeft = carousel.clientWidth * (hbf[carouselNumber]+1); // The +1 is due to the first fake image;
 
 		// This is what allows that if the user has only slided part of the image, it ends sliding the rest
 		const approveSliding = () => {
@@ -225,10 +225,13 @@ function updateSlidingFigureArray({carouselObject=null, carouselNumber, directio
 		// Slide to the extreme image (but just for a moment)
 		elementToSlideInto.scrollIntoView({behavior:"smooth"});
 		draggingAvailable = false;
+		if (!quiz){
+			getDescription();
+		}
 		// Instantaneous sliding to the real image that will be shown, nut we must wait
 		// for the previous scroll to have ended
 		setTimeout(function() {
-			slideFigure({carouselObject, carouselNumber, smoothBehavior:false});
+			slideFigure({carouselObject, carouselNumber, smoothBehavior:false, boolGetDescription:false});
 			draggingAvailable = true;
 		}, 450);
 		

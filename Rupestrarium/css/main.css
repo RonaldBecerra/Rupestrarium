@@ -17,6 +17,9 @@
 
 	/* Color of the letters that appear in the header of the narrow version */
 	--font-color-narrow-header: #e0bab5;
+
+	/* Color of the text of a selected index option */
+	--font-color-selected-index-option: #98210f;
 }
 
 html {

@@ -144,27 +144,6 @@ function change_language(newLanguage){
 	}
 }
 
-/* Makes the color of one of the main buttons be black.
-   This is necessary when we access to the function related to the button
-   but not pressing the button, like through the index menu.
- */
- function makeMainButtonBlack(buttonNumber){
- 	document.getElementById("b" + buttonNumber).style.background = 'black';
- }
-
- // To look for the main button that is selected currently (its color is black)
- function pressedMainButtonId(){
- 	mainButtons = document.getElementsByClassName("mainMenuButton");
- 	for (i=0; i < mainButtons.length; i++){
- 		let elem = mainButtons[i];
- 		if (elem.style.background === 'black'){
- 			return elem.id;
- 		}
- 	}
- 	return null;
-}
-
-
 // Load definitions of Petroglyphs and Rock Paintings or to restore the "Sur_de_marruecos.jpg" image
 function loadDef(num=null){
 	var div = document.getElementById("def");
@@ -246,6 +225,12 @@ function restoreDefaultValues(){
 	document.querySelectorAll("button").forEach(element => {
 		element.style.removeProperty("background");
 	});
+
+	// Since the index options get darker and with red text color when selected, we need to restore their original status
+	document.getElementById("index-options").querySelectorAll("div").forEach(indexOption => {
+		indexOption.style.background = null;
+		indexOption.style.color = null;
+	})
 
 	// Delete the listeners that could have been added. 
 	// If the function to remove is null, this doesn't do anything (does not throw an exception)
@@ -401,12 +386,7 @@ function createNarrowVersionHeader(kind=null, num=null){
 			}
 			else if (kind === "sliderFigure"){
 				indexOptionNum = num + 1;
-				if ([2,3].includes(indexOptionNum)){
-					imageStyle = "height:68%; width:58%";
-				}
-				else {
-					imageStyle = "height:55%; width:auto";
-				}	
+				imageStyle = ([2,3].includes(indexOptionNum)) ? "height:68%; width:58%" : "height:55%; width:auto";
 			}
 			else{
 				return;

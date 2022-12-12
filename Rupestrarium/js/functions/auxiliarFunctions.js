@@ -1,3 +1,32 @@
+/* 
+ * Makes the color of one of the main buttons be black.
+ * This is necessary when we access to the function related to the button
+ * but not pressing the button, like through the index menu.
+ */
+function makeMainButtonBlack(buttonNumber){
+	document.getElementById("b" + buttonNumber).style.background = 'black';
+}
+
+
+/* Makes the background of an index option darker and its text be red */
+function showIndexOptionAsSelected(optionNumber){
+	const indexOption = document.getElementById("index-options").querySelector('div[name="'+ optionNumber +'"]');
+	indexOption.style.background = "rgba(0, 0, 0, 0.14)";
+	indexOption.style.color = "var(--font-color-selected-index-option)";
+}
+
+// To look for the main button that is selected currently (its color is black)
+function pressedMainButtonId(){
+	mainButtons = document.getElementsByClassName("mainMenuButton");
+	for (i=0; i < mainButtons.length; i++){
+		let elem = mainButtons[i];
+		if (elem.style.background === 'black'){
+			return elem.id;
+		}
+	}
+	return null;
+}
+
 // Returns an integer between the min and the max indicated
 function getRandomInt(min, max){
 	return Math.floor(Math.random(min, max) * (max - min)) + min;
