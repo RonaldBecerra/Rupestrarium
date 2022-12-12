@@ -92,29 +92,30 @@ function auto_height(elem, idToCompare){
 // To detect the current browser being used
 function fnBrowserDetect(){
 	try{
-		let userAgent = navigator.userAgent;
-		let browserName;
-
-		if(userAgent.match(/chrome|chromium|crios/i)){
-			browserName = "chrome";
-		} 
-		else if(userAgent.match(/firefox|fxios/i)){
-			browserName = "firefox";
-		} 
-		else if(userAgent.match(/safari/i)){
-			browserName = "safari";
-		} 
-		else if(userAgent.match(/opr\//i)){
-			browserName = "opera";
-		} 
-		else if(userAgent.match(/edg/i)){
-			browserName = "edge";
-		} 
-		else{
-			browserName="No browser detection";
+		const nAgt = navigator.userAgent;
+		// In Opera, the true version is after "Opera" or after "Version"
+		if (nAgt.indexOf("Opera")!=-1) {
+			return "Opera";
 		}
-
-		return browserName;
+		// In MSIE, the true version is after "MSIE" in userAgent
+		else if (nAgt.indexOf("MSIE")!=-1) {
+			return "Microsoft Internet Explorer";
+		}
+		// In Chrome, the true version is after "Chrome" 
+		else if (nAgt.indexOf("Chrome")!=-1) {
+			return "Chrome";
+		}
+		// In Safari, the true version is after "Safari" or after "Version" 
+		else if (nAgt.indexOf("Safari")!=-1) {
+			return "Safari";
+		}
+		// In Firefox, the true version is after "Firefox" 
+		else if (nAgt.indexOf("Firefox")!=-1) {
+			return "Firefox";
+		}
+		else {
+			return null;
+		}
 	} 
 	catch(e){
 		return null;
