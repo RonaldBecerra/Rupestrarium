@@ -76,9 +76,10 @@ function buildFigure(){
 		let possibleKinds = currentFigure[0].length; // Currently this is always 3: antro, geo and zoo
 
 		for (let k=0; k < possibleKinds+2; k++){
-			// To make the carousel circular, we make the trick of adding the last image at the beginning
-			// of it, and the first image at the end of it, so we slide to them momentaneously, but then
-			// we instantaneously (the user does not notice it) slide to the real ones.
+			/* To make the carousel circular, we make the trick of adding the last image at the beginning
+			   of it, and the first image at the end of it, so we slide to them momentaneously, but then
+			   we instantaneously (the user does not notice it) slide to the real ones.
+			 */
 			if (k == 0){
 				imageSrc = currentFigure[i][possibleKinds-1];
 			}
@@ -108,25 +109,33 @@ function loadArrow(carouselNumber, direction){
 }
 
 // Source: https://www.codingnepalweb.com/draggable-image-slider-html-css-javascript/
-// (This is not an exact copy of that source)
+// (This is not an exact copy of that source).
 function initializeCarousels(){
 	document.querySelectorAll(".carousel").forEach(carousel => {
 		const carouselNumber = parseInt(carousel.getAttribute("name"));
-		let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
+		let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff, lastEventKind;
 
 		const hbf = quiz ? head_body_feet_forQuiz : head_body_feet;
 
 		// At the start, we need to scroll the carousel to the desired image
 		carousel.scrollLeft = carousel.clientWidth * (hbf[carouselNumber]+1); // The +1 is due to the first fake image;
 
-		// This is what allows that if the user has only slided part of the image, it ends sliding the rest
-		const approveSliding = () => {
+		/* This is what allows that if the user has only slided part of the image, it ends sliding the rest
+		   It needs to know the kind of the event because the "slideCarousel" function acts differently when
+		   the event was a touch 
+		 */
+		const approveSliding = (eventKind) => {
 			positionDiff = Math.abs(positionDiff); // Making positionDiff value to positive
 
 			// We don't move the carousel to the next image if the drag was lower than a certain threshold.
 			// Instead, we return the same image to its original position
 			if (positionDiff <= carousel.clientWidth/4.5){
-				slideCarousel({carouselObject: carousel, carouselNumber, hbf});
+				slideCarousel({
+					carouselObject: carousel, 
+					carouselNumber, 
+					hbf, 
+					touchSlide: eventKind.includes("touch"),
+				});
 			}
 			else {
 				updateSliderFigure({
@@ -134,6 +143,7 @@ function initializeCarousels(){
 					carouselNumber,
 					direction: ((carousel.scrollLeft <= prevScrollLeft) ? "left" : "right"),
 					hbf,
+					touchSlide: eventKind.includes("touch"),
 				});
 			}
 		}
@@ -144,11 +154,12 @@ function initializeCarousels(){
 				isDragStart = true;
 				prevPageX = e.pageX || e.touches[0].pageX;
 				prevScrollLeft = carousel.scrollLeft;
+				lastEventKind = e.type;
 			}
 		}
 
 		// Scrolling images/carousel to left according to mouse pointer
-		const dragging = (e) => {	
+		const dragging = (e) => {
 			if(isDragStart){
 				e.preventDefault();
 				isDragging = true;
@@ -164,12 +175,13 @@ function initializeCarousels(){
 
 			if(!isDragging) return;
 			isDragging = false;
-			approveSliding();
+			approveSliding(lastEventKind);
 		}
 
 		/* This is necessary because since the sliding causes the scrollLeft property change
 		   according to the size of the image, if the user changes the screen dimensions that
-		   scrollLeft will be inappropiate. Part of the nearby images will be seen */
+		   scrollLeft will be inappropiate. Part of the nearby images will be seen 
+		 */
 		const adjustCarouselToResize = () => {
 			const factor = (hbf[carouselNumber]+1); // The +1 is due to the first fake image
 			carousel.scrollLeft = carousel.clientWidth * factor;
@@ -191,8 +203,9 @@ function initializeCarousels(){
 		carousel.addEventListener("touchend", dragStop);
 
 		window.addEventListener("resize", adjustCarouselToResize);
-		// Store the function "adjustCarouselToResize" in the global scope to be able to remove that listener later
-		// But remember that we need to store oen function for each carousel, so we append the number to the property name
+
+		// Store the function "adjustCarouselToResize" in the global scope to be able to remove that listener later.
+		// But remember that we need to store oen function for each carousel, so we append the number to the property name.
 		window["adjustCarouselToResize_"+carouselNumber] = adjustCarouselToResize;
 	})
 }
@@ -202,7 +215,7 @@ function initializeCarousels(){
  * to slide the figure according to the new value of the array. In the appropiate case,
  * we will invoke the "getDescription" function
  */
-function updateSliderFigure({carouselObject=null, carouselNumber, direction, hbf} = {}){
+function updateSliderFigure({carouselObject=null, carouselNumber, direction, hbf, touchSlide=false} = {}){
 	if (!draggingAvailable) return;
 
 	const possibleKinds = currentFigure[0].length; // Currently this is always 3: antro, geo and zoo
@@ -231,7 +244,7 @@ function updateSliderFigure({carouselObject=null, carouselNumber, direction, hbf
 	// Case in which we must slide to an extreme, and then make an imperceptible sliding
 	if (null != elementToSlideInto){
 		// Slide to the extreme image (but just for a moment)
-		elementToSlideInto.scrollIntoView({behavior:"smooth"});
+		slideCarousel({smoothBehavior:true, elementToSlideInto, touchSlide});
 		draggingAvailable = false;
 
 		// In the quiz we never get the description
@@ -249,7 +262,7 @@ function updateSliderFigure({carouselObject=null, carouselNumber, direction, hbf
 	}
 	// Case when the sliding is normal
 	else{
-		slideCarousel({carouselObject, carouselNumber, hbf});
+		slideCarousel({carouselObject, carouselNumber, hbf, touchSlide});
 
 		// In the quiz we never get the description
 		if (!quiz){
@@ -259,15 +272,29 @@ function updateSliderFigure({carouselObject=null, carouselNumber, direction, hbf
 }
 
 // Here is where we really slide to a figure in a specific carousel
-function slideCarousel({carouselObject, carouselNumber, hbf, smoothBehavior=true} = {}){
-	// The smooth behavior does not work in Google Chrome and neither in Microsoft Edge to this date: 10/12/2022
-	// so we only allow the smooth behavior is the user has the cursor or the arrow buttons
-	let behavior = "auto";
-	if (smoothBehavior && !(isMobileDevice && (sizeStyleSheet == 'narrow')
-							&& ["chrome", "edge"].includes(fnBrowserDetect())) 
-	   )
-	{
-		behavior = "smooth";
+function slideCarousel({carouselObject, carouselNumber, hbf, smoothBehavior=true, elementToSlideInto=null, touchSlide=false} = {}){
+	let behavior = smoothBehavior ? "smooth" : "auto";
+
+	let auxiliar = () => {
+		if (null == elementToSlideInto){
+			carouselObject.querySelector('img[name="'+ (hbf[carouselNumber]+1) +'"]').scrollIntoView({behavior});
+		}
+		else {
+			elementToSlideInto.scrollIntoView({behavior});
+		}
 	}
-	carouselObject.querySelector('img[name="'+ (hbf[carouselNumber]+1) +'"]').scrollIntoView({behavior});
+	
+	/* The smooth behavior does not work in Google Chrome and neither in Microsoft Edge to this date: 10/12/2022
+	   for a slide that was made by touching. The error remains even when compiling to an .apk because the 
+	   Apache Cordova does it in a way that considers that the browser is still Chrome. When checking that,
+	   the auxiliar function "fnBrowserDetect" was created. In Modzilla Firefox it does work.
+
+	   But it was found that it works if we wait a little for that case, so it may be a concurrency problem.
+	 */
+	if (touchSlide && (behavior == "smooth")){
+		setTimeout(() => auxiliar(), 50);
+	}
+	else{
+		auxiliar();
+	}
 }

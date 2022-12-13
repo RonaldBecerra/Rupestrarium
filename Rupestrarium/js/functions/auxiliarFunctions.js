@@ -90,6 +90,7 @@ function auto_height(elem, idToCompare){
 }
 
 // To detect the current browser being used
+// >>> UNUSED FOR THE MOMENT, because even in the apk version it says the browser is Chrome
 function fnBrowserDetect(){
 	try{
 		const nAgt = navigator.userAgent;

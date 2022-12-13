@@ -11,6 +11,7 @@ window.mobileAndTabletCheck = function() {
 };
 
 // It is "true" in case a mobile device is used, like a phone or a tablet, and "false" in case a PC is used
+// >>> UNUSED FOR THE MOMENT
 const isMobileDevice = window.mobileAndTabletCheck();
 
 // String that indicates the kind of stylesheet used at the moment: 
