@@ -191,16 +191,16 @@ p {
 
 /* Imported font families */
 @font-face {
-	font-family: FontRupes;
-	src: url(../ttf/BAHAMASN.ttf);
+	font-family: "FontRupes";
+	src: url("fonts/BAHAMASN.TTF") format("opentype");;
 }
 
 @font-face {
 	font-family: FontTexto;
-	src: url(../ttf/Florsn01.ttf);
+	src: url("fonts/Florsn01.TTF") format("opentype");;
 }
 
 @font-face {
 	font-family: FontSub;
-	src: url(../ttf/BAHAMASB.ttf);
+	src: url("fonts/BAHAMASB.TTF") format("opentype");;
 }
