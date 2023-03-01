@@ -6,6 +6,7 @@
 // NOTE: For design reasons, "currentAttempt" represents here the number 
 // of the attempt that could start later, not what has already been made
 function showResultsView(){
+	console.log("currentAttempt = ", currentAttempt);
 	let numIncorrects = incorrectAnswers.length;
 	let numCorrects = totalQuestions - numIncorrects;
 	let texts = quizResults_texts[language];
@@ -40,7 +41,7 @@ function showResultsView(){
 			// You won <number> point(s)
 			str += texts["youWon"] + numCorrects.toString() + ((numCorrects > 1) ? texts["multiplePoints"] : texts["onePoint"]) + `<br>`;
 
-			if (currentAttempt == 2){
+			if (!SEND_EMAIL_IN_THIS_VERSION || currentAttempt == 2){
 				// You must correct the answer(s) of the question(s)
 				str += `<br>` + ( (numIncorrects > 1) ? texts["multipleIncorrect"] + `<br>` : texts["oneIncorrect"]) + stringIncorrects;
 			}	
