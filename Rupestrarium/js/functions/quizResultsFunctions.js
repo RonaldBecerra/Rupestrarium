@@ -6,7 +6,6 @@
 // NOTE: For design reasons, "currentAttempt" represents here the number 
 // of the attempt that could start later, not what has already been made
 function showResultsView(){
-	console.log("currentAttempt = ", currentAttempt);
 	let numIncorrects = incorrectAnswers.length;
 	let numCorrects = totalQuestions - numIncorrects;
 	let texts = quizResults_texts[language];
