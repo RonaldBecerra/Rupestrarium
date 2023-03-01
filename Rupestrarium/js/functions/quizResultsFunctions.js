@@ -40,6 +40,8 @@ function showResultsView(){
 			// You won <number> point(s)
 			str += texts["youWon"] + numCorrects.toString() + ((numCorrects > 1) ? texts["multiplePoints"] : texts["onePoint"]) + `<br>`;
 
+			// The message of correcting some answers only appears if the user is going for the second attempt of if in
+			// this version it does not appear the same email view
 			if (!SEND_EMAIL_IN_THIS_VERSION || currentAttempt == 2){
 				// You must correct the answer(s) of the question(s)
 				str += `<br>` + ( (numIncorrects > 1) ? texts["multipleIncorrect"] + `<br>` : texts["oneIncorrect"]) + stringIncorrects;
